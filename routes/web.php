@@ -20,3 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/*Route::resource('/admin/crudrol', 'RolController');*/
+Route::resource('/admin/cruduser', 'UserController');
+/*Route::resource('/admin/crudu', 'ClienteController');*/
+
+/*Route::get('/admin/cruduser/edit', 'UserController@edit');*/
+/*Route::get('/admin/cruduser/edit', 'UserController@index');*/
+
+
