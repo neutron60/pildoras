@@ -59,9 +59,20 @@ class UserController extends Controller {
      */
     public function edit($id) {
         $usuarios=User::findOrfail($id);
-        $roles=Role::findOrfail($usuarios->role_id);
+        /*$roles=Role::findOrfail($usuarios->role_id);*/
 
-        return view("admin.cruduser.edit", compact("usuarios","roles"));
+       /*  return view("admin.cruduser.edit", compact("usuarios","roles"));*/
+        return view("admin.cruduser.edit", compact("usuarios"));
+    }
+
+    public function edit1() {
+        $id=2;
+        echo 'hola';
+        $usuarios=User::findOrfail($id);
+       /*$roles=Role::findOrfail($usuarios->role_id);*/
+
+      /*  return view("admin.cruduser.edit", compact("usuarios","roles"));*/
+       return view("admin.cruduser.edit", compact("usuarios"));
     }
 
     /**

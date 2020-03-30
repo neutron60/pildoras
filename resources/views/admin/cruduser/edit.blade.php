@@ -65,7 +65,7 @@
             </div>
             <div class="form-group  col-md-3 centrar">
                 <label for="codigorol">rol</label>
-                <input type="text" class="form-control" id="role_id" name="role_id" value="{{$roles->nombre_rol}}">
+                <input type="text" class="form-control" id="role_id" name="role_id" value=" ">
             </div>
         </div>
         <br>
@@ -73,7 +73,7 @@
         <div class="form-group col-md-2 centrar">
             <label for="estado">seleccione el nuevo rol</label>
             <select name="role_id" id="estado" class="form-control">
-                <option selected>{{$roles->nombre_rol}}</option>
+                <option selected> </option>
                 <option value="1">administrador</option>
                 <option value="2">cliente</option>
                 <option value="3">vendedor</option>

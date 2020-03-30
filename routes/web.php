@@ -25,7 +25,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/admin/cruduser', 'UserController');
 /*Route::resource('/admin/crudu', 'ClienteController');*/
 
-/*Route::get('/admin/cruduser/edit', 'UserController@edit');*/
-/*Route::get('/admin/cruduser/edit', 'UserController@index');*/
+/*Route::get('/admin/cruduser/edit', 'UserController@edit1');
+Route::get('/admin/cruduser', 'UserController@index');*/
 
 
