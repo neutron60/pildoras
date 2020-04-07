@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\User;
+use App\Role;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +27,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('/admin/cruduser', 'UserController');
 /*Route::resource('/admin/crudu', 'ClienteController');*/
 
-/*Route::get('/admin/cruduser/edit', 'UserController@edit1');
-Route::get('/admin/cruduser', 'UserController@index');*/
+Route::get('/role/2/prueba', function(){
+    dd (Role::find(1)->user);
+});
 
 

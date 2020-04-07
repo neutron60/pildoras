@@ -16,9 +16,17 @@
 
     <style>
     .centrar {margin-left:auto; margin-right: auto;}
-    .centrar1 {margin-left:auto; margin-right: ;}
-    .centrar2 {margin-left: 50%;}
+    .centrar1 {margin-left:auto; margin-right: }
+    .centrar2 {margin-left: 40%; margin-right: }
     .centrar3{margin-right: auto;}
+    .centrar4 {margin-left: 5%;  margin-right: auto;}
+    .centrar5 {margin-left: 5%;}
+    .centrar6 {margin-right: 0%;}
+
+
+
+    .ancho {width: 50px;}
+
 
     </style>
 </head>
@@ -31,11 +39,11 @@
         <form action="">
 
             <div class="form-row ">
-                <div class="form-group col-md-4 centrar">
+                <div class="form-group col-md-3 centrar">
                     <label for="nombre">nombre</label>
                     <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="nombre">
                 </div>
-                <div class="form-group  col-md-4 centrar">
+                <div class="form-group  col-md-3 centrar4">
                     <label for="apellido">apellido</label>
                     <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="apellido">
                 </div>
@@ -49,12 +57,12 @@
                         <option value="E">E</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2 ">
+                <div class="form-group col-md-1 ">
                     <label for="numcedula"> . </label>
                     <input type="number" min="9999" max="999999999"  class="form-control" id="numcedula" placeholder="numero">
                 </div>
 
-                <div class="form-group col-md-1 centrar1">
+                <div class="form-group col-md-1 centrar5">
                     <label for="tmovil">telefono</label>
                     <select id="tmovil" class="form-control">
                         <option> </option>
@@ -65,18 +73,18 @@
                         <option value="0424">0424</option>
                     </select>
                 </div>
-                <div class="form-group col-md-2 ">
+                <div class="form-group col-md-1 centrar6 ">
                     <label for="tmovilnum">movil </label>
-                    <input type="text"  maxlength="7" class="form-control" id="tmovilnum" placeholder="numero">
+                    <input type="tel"  maxlength="7" class="form-control" id="tmovilnum" placeholder="numero">
                 </div>
 
-                <div class="form-group col-md-1 centrar1">
+                <div class="form-group col-md-1 centrar5">
                     <label for="tfijo">telefono</label>
                     <input type="text"  maxlength="4" class="form-control" id="tfijo" placeholder="codigo area">
                 </div>
-                <div class="form-group col-md-2 centrar3 ">
+                <div class="form-group col-md-1 centrar3 ">
                     <label for="tfijonum">fijo</label>
-                    <input type="text"  maxlength="7" class="form-control" id="tfijonum" placeholder="numero">
+                    <input type="tel"  maxlength="7" class="form-control" id="tfijonum" placeholder="numero">
                 </div>
             </div>
 
@@ -90,11 +98,11 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group col-md-3 centrar">
+                <div class="form-group col-md-3 centrar1">
                     <label for="ciudad">ciudad</label>
                     <input type="text" maxlength="30" class="form-control" pattern="[A-Za-z]" id="ciudad">
                 </div>
-                <div class="form-group col-md-2 centrar">
+                <div class="form-group col-md-2 centrar5">
                     <label for="estado">estado</label>
                     <select id="estado" class="form-control">
                         <option> </option>
@@ -123,7 +131,7 @@
                         <option value="zulia">zulia</option>
                     </select>
                 </div>
-                <div class="form-group col-md-1 centrar">
+                <div class="form-group col-md-1 centrar4">
                     <label for="Zip">codigo postal</label>
                     <input type="text" class="form-control" maxlength="4" id="Zip">
                 </div>

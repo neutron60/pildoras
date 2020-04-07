@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="web de neutron">
+    <meta name="keywords" content="neutron vender comprar">
+    <title> neutron </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+
+    <script src="https://kit.fontawesome.com/40d555d624.js" crossorigin="anonymous"></script>
+
+    <style>
+
+
+    </style>
+
+    <style>
+        .celdas {
+            width: 150px;
+            height: 30px;
+        }
+
+        .celdas1 {
+            width: 150px;
+            height: 50px;
+        }
+
+        .centrar {
+            margin-right: auto%;
+            margin-left: 5%;
+        }
+        .centrar1 {
+            margin-right: ;
+            margin-left: 40%;
+        }
+
+        .borde {
+            border-top: 5px double black;
+            border-bottom: 5px double black;
+            border-left: 5px double black;
+            border-right: 5px double black;
+        }
+
+        .borde1 {
+            border-top: 5px double black;
+            border-bottom: 1px solid black;
+            border-left: 5px double black;
+            border-right: 5px double black;
+        }
+
+        .borde2 {
+            border-bottom: 1px solid black;
+            border-left: 5px double black;
+            border-right: 5px double black;
+        }
+
+        .borde3 {
+            border-bottom: 1px solid black;
+            border-left: 5px double black;
+            border-right: 1px solid black;
+        }
+
+        .borde4 {
+            border-bottom: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        .borde5 {
+            border-bottom: 1px solid black;
+            border-left: 1px solid black;
+            border-right: 5px double black;
+        }
+
+        .borde6 {
+            border-bottom: 5px double black;
+            border-left: 5px double black;
+            border-right: 1px solid black;
+        }
+
+        .borde7 {
+            border-bottom: 5px double black;
+            border-left: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        .borde8 {
+            border-bottom: 5px double black;
+            border-left: 1px solid black;
+            border-right: 5px double black;
+        }
+
+        .margen {
+            margin-top: 10%;
+            margin-bottom: 10px;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    @include('layouts.plantillaencabezado')
+
+    <div class="container-fluid">
+        <h1 class="text-center mb-5"> DEPARTAMENTOS</h1>
+    <!----------------------------------------------------------------------------------------------->
+
+        <table class="centrar  table-responsive ">
+            <thead>
+                <tr>
+                    <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+                    <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+                    <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+                    <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+                </tr>
+            </tbody>
+            <thead>
+                <tr>
+                    <th class="text-center celdas borde3" scope="col">TITULO</th>
+                    <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+                    <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+                    <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                    <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                    <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                    <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                    <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                    <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                    <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    <br>
+    <form action="/layouts/create" method="GET" class="centrar1">
+        <input type="submit" name="editar" value="editar" id="">
+        <input type="submit" name="regresar" value="regresar" id="">
+
+    </form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+    <table class="centrar  table-responsive ">
+        <thead>
+            <tr>
+                <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+                <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+                <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+                <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+            </tr>
+        </tbody>
+        <thead>
+            <tr>
+                <th class="text-center celdas borde3" scope="col">TITULO</th>
+                <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+                <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+                <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+                <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+                <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<br>
+<form action="/layouts/create" method="GET" class="centrar1">
+    <input type="submit" name="editar" value="editar" id="">
+    <input type="submit" name="regresar" value="regresar" id="">
+
+</form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+<table class="centrar  table-responsive ">
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+            <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th class="text-center celdas borde3" scope="col">TITULO</th>
+            <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<form action="/layouts/create" method="GET" class="centrar1">
+<input type="submit" name="editar" value="editar" id="">
+<input type="submit" name="regresar" value="regresar" id="">
+
+</form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+
+<table class="centrar  table-responsive ">
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+            <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th class="text-center celdas borde3" scope="col">TITULO</th>
+            <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<form action="/layouts/create" method="GET" class="centrar1">
+<input type="submit" name="editar" value="editar" id="">
+<input type="submit" name="regresar" value="regresar" id="">
+
+</form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+<table class="centrar  table-responsive ">
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+            <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th class="text-center celdas borde3" scope="col">TITULO</th>
+            <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<form action="/layouts/create" method="GET" class="centrar1">
+<input type="submit" name="editar" value="editar" id="">
+<input type="submit" name="regresar" value="regresar" id="">
+
+</form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+<table class="centrar  table-responsive ">
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center celdas borde1" scope="col">DEPARTAMENTO</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2 margen">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="3" class="text-center celdas borde3" scope="col">TITULO</th>
+            <th colspan="3" class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th colspan="3" class="text-center celdas borde5" scope="col">IMAGEN</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="3" class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td colspan="3" class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th colspan="9" class="text-center anchoceldas borde2" scope="col">SECCION</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="9" class="text-center celdas1 borde2">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+    <thead>
+        <tr>
+            <th class="text-center celdas borde3" scope="col">TITULO</th>
+            <th class="text-center celdas borde4" scope="col">DESCRIPCION</th>
+            <th class="text-center celdas borde4" scope="col">IMAGEN</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde4" scope="col">SUB-SECCION</th>
+            <th class="text-center celdas borde5" scope="col">SUB-SECCION</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-center celdas1 borde6">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde7">{{$articulo->ruta_imagen}}</td>
+            <td class="text-center celdas1 borde8">{{$articulo->ruta_imagen}}</td>
+        </tr>
+    </tbody>
+</table>
+</div>
+
+<br>
+<form action="/layouts/create" method="GET" class="centrar1">
+<input type="submit" name="editar" value="editar" id="">
+<input type="submit" name="regresar" value="regresar" id="">
+
+</form>
+<br><br>
+    <!----------------------------------------------------------------------------------------------->
+
+
+    @include('layouts.plantillapie')
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+
+</div>
+
+</body>
+
+</html>

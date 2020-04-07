@@ -17,6 +17,9 @@ class UserController extends Controller {
     public function index() {
         $usuarios=User::all();
         $roles=Role::all();
+        dd($usuario1=User::find(2)->role);
+
+        $roles=Role::find($usuarios->role_id);
         return view("admin.cruduser.index", compact("usuarios", "roles"));
     }
 
@@ -46,8 +49,8 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $usuarios=User::findOrfail($id);
-        $roles=Role::findOrfail($usuarios->role_id);
+        $usuarios=User::find($id);
+        $roles=Role::find($usuarios->role_id);
         return view("admin.cruduser.show", compact("usuarios","roles"));
     }
 
@@ -58,22 +61,13 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $usuarios=User::findOrfail($id);
-        /*$roles=Role::findOrfail($usuarios->role_id);*/
-
-       /*  return view("admin.cruduser.edit", compact("usuarios","roles"));*/
-        return view("admin.cruduser.edit", compact("usuarios"));
+        $usuarios=User::find($id);
+        $roles=Role::find($usuarios->role_id);
+       /* $usuarios=User::find($id)->role();*/
+        return view("admin.cruduser.edit", compact("usuarios","roles"));
     }
 
-    public function edit1() {
-        $id=2;
-        echo 'hola';
-        $usuarios=User::findOrfail($id);
-       /*$roles=Role::findOrfail($usuarios->role_id);*/
 
-      /*  return view("admin.cruduser.edit", compact("usuarios","roles"));*/
-       return view("admin.cruduser.edit", compact("usuarios"));
-    }
 
     /**
      * Update the specified resource in storage.
@@ -84,7 +78,7 @@ class UserController extends Controller {
      */
     public function update(Request $request, $id) {
         echo 'hola update';
-        $usuarios=User::findOrfail($id);
+        $usuarios=User::find($id);
         $usuarios->update($request->only(['name','email','role_id']));
 
        /* $usuarios->update($request->all());*/
@@ -98,7 +92,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $usuarios=User::findOrfail($id);
+        $usuarios=User::find($id);
         $usuarios->delete();
         return redirect("/admin/cruduser");
     }

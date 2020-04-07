@@ -42,7 +42,7 @@
             <thead>
                 <tr>
                     <th class="text-center anchoceldas" scope="col">Name</th>
-                    <th class="text-center anchoceldas" scope="col">Rol id</th>
+                    <th class="text-center anchoceldas" scope="col">rol</th>
                     <th class="text-center anchoceldas" scope="col">Email</th>
 
                 </tr>
@@ -51,7 +51,18 @@
                 @foreach ($usuarios as $usuario)
                 <tr>
                     <td class="text-center anchoceldas"><a href="http://pildoras.test/admin/cruduser/{{$usuario->id}}/edit">{{$usuario->name}}</a></td>
-                    <td class="text-center anchoceldas">{{$usuario->role_id}}</td>
+                    @if($usuario->role_id==1)
+                  <td class="text-center anchoceldas">administrador</td>
+
+                @elseif($usuario->role_id==2)
+                    <td class="text-center anchoceldas">cliente</td>
+
+                @elseif($usuario->role_id==3)
+                    <td class="text-center anchoceldas">vendedor</td>
+
+                @else
+                    <td class="text-center anchoceldas">error</td>
+                @endif
                     <td class="text-center anchoceldas">{{$usuario->email}}</td>
                 </tr>
                 @endforeach

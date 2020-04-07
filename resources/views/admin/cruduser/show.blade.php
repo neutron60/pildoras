@@ -78,9 +78,9 @@
                 <label class="borde"> {{$usuarios->email}} </label>
             </div>
             <div class="form-group  col-md-3 centrar">
-                <label for="codigorol">codigo rol</label>
+                <label for="codigorol">rol</label>
                 <br>
-                <label class="borde"> {{$usuarios->role_id}} </label>
+                <label class="borde"> {{$roles->nombre_rol}} </label>
             </div>
         </div>
         <br>
