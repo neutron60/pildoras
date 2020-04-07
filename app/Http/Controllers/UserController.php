@@ -17,9 +17,10 @@ class UserController extends Controller {
     public function index() {
         $usuarios=User::all();
         $roles=Role::all();
-        dd($usuario1=User::find(2)->role);
+        /*dd($usuario1=User::find($usuarios->id)->role);*/
+       /* dd($usuario2=Role::find(2));*/
 
-        $roles=Role::find($usuarios->role_id);
+        /*$roles=Role::find($usuarios->role_id);*/
         return view("admin.cruduser.index", compact("usuarios", "roles"));
     }
 
@@ -62,8 +63,8 @@ class UserController extends Controller {
      */
     public function edit($id) {
         $usuarios=User::find($id);
-        $roles=Role::find($usuarios->role_id);
-       /* $usuarios=User::find($id)->role();*/
+        /*$roles=Role::find($usuarios->role_id);*/
+        $roles=User::find($id)->role;
         return view("admin.cruduser.edit", compact("usuarios","roles"));
     }
 
