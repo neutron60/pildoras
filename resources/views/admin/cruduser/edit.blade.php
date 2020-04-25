@@ -47,41 +47,58 @@
     <br>
     <div class="container-fluid">
 
+        @if($errors->any())
+        <div class="alert alert-danger">
+            <p> por favor corrige los siguientes errores</p>
+            <!--<ul>
+               @foreach ($errors->all() as $error)
+                <li> {{ $error }}</li>
+                @endforeach
+            </ul> -->
+        </div>
+        @endif
+
         <form action="/admin/cruduser/{{$usuarios->id}}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <!--el metodo es exigido por update-->
 
 
-        <br><br>
-        <div class="form-row ">
-            <div class="form-group col-md-3 centrar">
-                <label for="nombre">name</label>
-                <input type="text" class="form-control" id="nombre" name="name" value="{{$usuarios->name}}">
+            <br><br>
+            <div class="form-row ">
+                <div class="form-group col-md-3 centrar">
+                    <label for="nombre">name</label>
+                    <input type="text" class="form-control" id="nombre" name="name" value="{{$usuarios->name}}">
+                    @if ($errors->has('name'))
+                    <p> {{$errors->first('name')}}</p>
+                    @endif
+                </div>
+                <div class="form-group  col-md-3 centrar">
+                    <label for="email">email</label>
+                    <input type="email" class="form-control" id="email" name="email" value="{{$usuarios->email}}">
+                    @if ($errors->has('email'))
+                    <p> {{$errors->first('email')}}</p>
+                    @endif
+                </div>
+
+                <div class="form-group col-md-2 centrar">
+                    <label for="rol">rol</label>
+                    <select name="role_id" id="estado" class="form-control">
+                        <option selected value="{{$usuarios->role_id}}">{{$roles->nombre_rol}}</option>
+                        <option value="1">administrador</option>
+                        <option value="2">cliente</option>
+                        <option value="3">vendedor</option>
+
+                    </select>
+                </div>
             </div>
-            <div class="form-group  col-md-3 centrar">
-                <label for="email">email</label>
-                <input type="email" class="form-control" id="email" name="email" value="{{$usuarios->email}}">
-            </div>
-
-            <div class="form-group col-md-2 centrar">
-                <label for="rol">rol</label>
-                <select name="role_id" id="estado" class="form-control">
-                    <option selected value="{{$usuarios->role_id}}">{{$roles->nombre_rol}}</option>
-                    <option value="1">administrador</option>
-                    <option value="2">cliente</option>
-                    <option value="3">vendedor</option>
-
-                </select>
-            </div>
-        </div>
-        <br>
+            <br>
 
 
 
 
-        <input type="submit" name="actualizar registro" value="actualizar registro" id="">
-        <input type="reset" name="borrar planilla" value="borrar planilla" id="">
+            <input type="submit" name="actualizar registro" value="actualizar registro" id="">
+            <input type="reset" name="borrar planilla" value="borrar planilla" id="">
 
         </form>
     </div>

@@ -1,6 +1,21 @@
+<style>
+    .icono {
+        color: blue;
+    }
 
+    .icono1 {
+        color: aquamarine;
+    }
 
+    .icono2 {
+        color: deeppink;
+    }
 
+    .icono3 {
+        color: red;
+    }
+
+</style>
 <div class="container-fluid">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"

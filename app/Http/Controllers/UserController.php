@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 use App\User;
 use App\Role;
 
@@ -51,7 +52,8 @@ class UserController extends Controller {
      */
     public function show($id) {
         $usuarios=User::find($id);
-        $roles=Role::find($usuarios->role_id);
+       /* $roles=Role::find($usuarios->role_id);*/
+        $roles=User::find($id)->role;
         return view("admin.cruduser.show", compact("usuarios","roles"));
     }
 
@@ -77,8 +79,8 @@ class UserController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
-        echo 'hola update';
+    /*public function update(Request $request, $id) {*/
+    public function update(UserRequest $request, $id) {
         $usuarios=User::find($id);
         $usuarios->update($request->only(['name','email','role_id']));
 

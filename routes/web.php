@@ -21,11 +21,22 @@ Route::get('/', function () {
 
 Auth::routes();
 
+
 Route::get('/home', 'HomeController@index')->name('home');
 
-/*Route::resource('/admin/crudrol', 'RolController');*/
+/* rutas del crud de user */
 Route::resource('/admin/cruduser', 'UserController');
-/*Route::resource('/admin/crudu', 'ClienteController');*/
+
+/*            */
+
+/* rutas del crud de department */
+Route::get('/admin/main/', 'DepartmentController@main');
+Route::resource('/admin/department', 'DepartmentController');
+Route::resource('/admin/section', 'SectionController');
+
+
+/*            */
+
 
 Route::get('/role/2/prueba', function(){
     dd (Role::find(1)->user);

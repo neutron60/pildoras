@@ -14,86 +14,91 @@
 
     <script src="https://kit.fontawesome.com/40d555d624.js" crossorigin="anonymous"></script>
 
-    <style>
-
-
-    </style>
 
     <style>
+        .icono {
+            color: blue;
+        }
+
+        .icono1 {
+            color: aquamarine;
+        }
+
+        .icono2 {
+            color: deeppink;
+        }
+
+        .icono3 {
+            color: red;
+        }
+
+        img {
+            max-width: 100%;
+            max-height:
+        }
+
         .centrar {
             margin-left: auto;
             margin-right: auto;
         }
 
         .centrar1 {
-            margin-left: 30%;
-            margin-right: ;
+            margin-left: 40%;
+            margin-right: auto;
         }
 
         .centrar2 {
-            margin-left: 35%;
+            margin-left: 5%;
+            margin-right:
         }
 
-        .borde {
-            width: 80%;
-  border: 2px solid black;
-  padding: 5px;
-  margin: ;}
-
-  .editar {  border: 2px solid black; color: black; width: 150px; margin-left: 45%; text-align: center;
-
-  }
+        .imagen {
+            padding-right: ;
+            padding-left: ;
+            padding-top: ;
+            padding-bottom: ;
+            height: 140px;
+            margin-left: ;
+            width: 50%
+        }
 
     </style>
 </head>
 
-
 <body>
-
     @include('admin.plantillaencabezado')
 
 
-    <h1 class="text-center">MOSTRAR USUARIO</h1>
-    <br>
-    <div class="container-fluid">
 
-        <form action="">
-            <div class="centrar2">
-                <label for="bcedula" class="centrar">numero de cedula: </label>
-                <input type="search" id="bcedula" name="bcedula">
-                <input type="submit" value="buscar">
-            </div>
-        </form>
+    <div class='container-fluid'>
 
+
+
+
+
+        @extends('admin.layout')
+        @section('content')
+        <h3 class="text-center">CREACION DE UN NUEVO ARTICULO</h3>
         <br><br>
-        <div class="form-row ">
-            <div class="form-group col-md-3 centrar">
-                <label for="nombre">name</label>
-                <br>
-                <label class="borde"> {{$usuarios->name}} </label>
-            </div>
-            <div class="form-group  col-md-3 centrar">
-                <label for="email">email</label>
-                <br>
-                <label class="borde"> {{$usuarios->email}} </label>
-            </div>
-            <div class="form-group  col-md-3 centrar">
-                <label for="codigorol">rol</label>
-                <br>
-                <label class="borde"> {{$roles->nombre_rol}} </label>
-            </div>
-        </div>
-        <br>
+        <h4 class="text-center">SELECIONE EL DEPARTAMENTO</h4>
+        <ul class="list-group">
+            @foreach (departments as department)
+            <a href=""><li class="list-group-item" value={{$department->id}}>{{$department->name}}</li></a>
+
+            @endforeach
+          </ul>
+
+
+        @endsection
+
+
 
     </div>
-<a href="http://pildoras.test/admin/cruduser/{{$usuarios->id}}/edit">
-<h1 class="editar">editar</h1>
-<br>
+    <br>
 
-</a>
-    <br>
-    <br>
     @include('admin.plantillapie')
+
+
 
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
         integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
