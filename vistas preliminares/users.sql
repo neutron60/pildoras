@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 30, 2020 at 07:00 PM
+-- Generation Time: May 02, 2020 at 01:11 PM
 -- Server version: 5.7.28-0ubuntu0.18.04.4
 -- PHP Version: 7.4.1
 
@@ -30,29 +30,37 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` int(11) DEFAULT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
+  `id_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_number` int(10) UNSIGNED DEFAULT NULL,
+  `mobil_phone_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mobil_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `area_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address1` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address2` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `zip_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
-(2, 3, 'ramon oliver', 'ramon@gmail.com', NULL, '$2y$10$IJeMFcAWOsdfrqPAHtyq8OB94ZSrNnId7hyUWQSBysYBmm6yd5SEC', NULL, '2020-03-27 15:08:27', '2020-03-29 19:59:02'),
-(3, NULL, 'ricardo gomez', 'ricardo@gmail.com', NULL, '$2y$10$7ClsnfZxPfVe5dt42obiI.cBt6xhX44JtbdcaIk8HeCZ3zmIaI6Ei', NULL, '2020-03-27 15:09:55', '2020-03-27 15:09:55'),
-(4, NULL, 'luisa caraballo', 'luisa@gmail.com', NULL, '$2y$10$5cnPhpEMcMdoUtuF6/s5dOcY3t9DCoLZOdMYtjl/ob2ikASa5Y86q', NULL, '2020-03-27 15:11:07', '2020-03-27 15:11:07'),
-(5, NULL, 'ricardo hernandez', 'ricardoh@gmail.com', NULL, '$2y$10$ZbaoJw1twCenkXabb9o.0OaeksZfFENHpaTg/Zl1C50sOiXKdtJZe', NULL, '2020-03-27 15:12:24', '2020-03-27 15:12:24'),
-(6, NULL, 'tomas fernandez', 'tomas@gmail.com', NULL, '$2y$10$7uTbADzER4WT08PAqX3ojekY1luJcqBb6IVuUXHbbfiEZUN5grkoy', NULL, '2020-03-27 15:13:10', '2020-03-27 15:13:10'),
-(7, NULL, 'ana rivera', 'ana@gmail.com', NULL, '$2y$10$rQrIEHnkOfxPj5blxp/BauiB0V03HxHJVKOGGtL1XAs5/gHV0YvKa', NULL, '2020-03-27 15:13:54', '2020-03-27 15:13:54'),
-(8, NULL, 'miriam chacin', 'miriam@gmail.com', NULL, '$2y$10$syCE3qM5vMiWGA9rtjR0EuSx2QNW5HJK5cFlVaFH1dd6diqvgR18u', NULL, '2020-03-27 15:14:39', '2020-03-27 15:14:39'),
-(9, NULL, 'juan arismendi', 'juan1@gmail.com', NULL, '$2y$10$oYD1PHoeOvlvPHUF.642vO5plUblIAg2DLcNm55aUtWTaCm78S.4y', NULL, '2020-03-27 15:15:21', '2020-03-27 15:15:21');
+INSERT INTO `users` (`id`, `name`, `lastname`, `role_id`, `email`, `email_verified_at`, `id_type`, `id_number`, `mobil_phone_code`, `mobil_phone`, `area_code`, `phone_number`, `address1`, `address2`, `city`, `state`, `zip_code`, `password`, `remember_token`, `created_at`, `updated_at`, `deleted_at`) VALUES
+(1, 'juan', 'perez', 2, 'juan@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$mED1eL7gE9hVrZFYC5gmueNji9fruyqIw5Y28j5clUghubg64Neci', NULL, '2020-04-30 20:18:37', '2020-04-30 20:18:37', NULL),
+(2, 'ramon', 'oliver', 3, 'ramon@gmail.com', NULL, 'V', 3598621, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$zWaBbHmmPi1Slhkwyd2n5uJY2pPnNIDOnGlU8871t45dFVNO4tvpq', NULL, '2020-04-30 20:20:16', '2020-04-30 21:06:36', NULL),
+(3, 'ricardo', 'gomez', 3, 'ricardo@gmail.com', NULL, 'V', 25169874, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '$2y$10$bIqz5rl82p31vQSRQYwTBuvzAeP3a0PvYeNl24XjMOXm4V5vMNwKG', NULL, '2020-04-30 20:21:13', '2020-04-30 21:06:10', NULL);
 
 --
 -- Indexes for dumped tables
@@ -64,7 +72,8 @@ INSERT INTO `users` (`id`, `role_id`, `name`, `email`, `email_verified_at`, `pas
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_role_id_index` (`role_id`);
+  ADD UNIQUE KEY `users_id_number_unique` (`id_number`),
+  ADD KEY `users_role_id_foreign` (`role_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -74,7 +83,17 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE SET NULL;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

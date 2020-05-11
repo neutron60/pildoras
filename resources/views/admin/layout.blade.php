@@ -27,21 +27,26 @@
         .icono2 {
             color: deeppink;
         }
+
         .icono3 {
             color: red;
         }
+
         img {
             max-width: 100%;
             max-height:
         }
+
         .centrar {
             margin-left: auto;
             margin-right: auto;
         }
+
         .centrar1 {
             margin-left: 40%;
             margin-right: auto;
         }
+
         .centrar2 {
             margin-left: 5%;
             margin-right:
@@ -53,13 +58,17 @@
 <body>
     @include('admin.plantillaencabezado')
 
+    <div class="row">
 
+        <div class="col-md-2">
 
-    <div class='container-fluid'>
+        </div>
 
-    @yield('content')
+        <div class='container-fluid col-md-10'>
 
+            @yield('content')
 
+        </div>
     </div>
     <br>
 
@@ -83,15 +92,3 @@
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

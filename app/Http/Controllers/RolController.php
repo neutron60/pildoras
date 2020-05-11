@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
+use App\Role;
 
 class RolController extends Controller
 {
@@ -13,7 +14,9 @@ class RolController extends Controller
      */
     public function index()
     {
-        //
+        $roles=Role::all();
+
+        return view("admin.role.index", compact("roles"));
     }
 
     /**
@@ -23,7 +26,7 @@ class RolController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin.role.create");
     }
 
     /**
@@ -32,9 +35,12 @@ class RolController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        //
+        $entrada=$request->only('role_name');
+        $archivo=Role::create($entrada);
+
+        return redirect()->route('role.index')->with('info', 'el rol fue creado');
     }
 
     /**
@@ -56,7 +62,8 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        //
+        $role=Role::findOrfail($id);
+        return view("admin.role.edit", compact("role"));
     }
 
     /**
@@ -66,9 +73,12 @@ class RolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(RoleRequest $request, $id)
     {
-        //
+        $entrada=Role::findOrfail($id);
+        $entrada->update($request->only('role_name'));
+
+        return redirect()->route('role.index')->with('info', 'el rol fue actualizado');
     }
 
     /**
@@ -79,6 +89,8 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role=Role::findOrfail($id);
+        $role->delete();
+        return redirect()->route('role.index')->with('info', 'el rol fue eliminado');
     }
 }

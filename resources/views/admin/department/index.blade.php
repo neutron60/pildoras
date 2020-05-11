@@ -22,30 +22,24 @@
             </tr>
         </thead>
         <tbody>
+
             @foreach ($departments as $department)
             <tr>
-                <td class="text-center" scope="row" width="150px" padding-top="10%" ><a>{{$department->name}}</a></td>
+                <td class="text-center" scope="row" width="150px" padding-top="10%" >{{$department->name}}</td>
 
                 <td class="text-center" width="200px">{{$department->title}}</td>
 
-                <td class="text-center" width="200px">{{$department->status}}</td>
+                <td class="text-center" width="200px">{{$is_active[$department->id]}}</td>
 
-                </td>
                 <td class="text-center" width="100px"><a href="{{route('department.show', $department->id)}}"> ver
-                        datos</a></td>
+                        datos departamento</a></td>
                 <td class="text-center" width="100px"><a href="{{route('department.edit', $department->id)}}">
                         editar</a></td>
             </tr>
             @endforeach
         </tbody>
     </table>
-    <br>
-    <div class="centrar1">
-        {!! $departments->render()!!}
-    </div>
+
 </div>
-<br>
-<!--  <form action="/layouts/create" method="GET">
-        <input type="submit" name="registro" value="crear registro" id="">
-    </form> -->
+
 @endsection

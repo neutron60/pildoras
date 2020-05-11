@@ -24,13 +24,8 @@ class SectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:50',
-            'title' => 'required|min:2\max:50',
-            'category' => 'required|min:2\max:50',
-            'description' => 'required|min:2\max:200',
-            'image' => 'required|filled|image|max:1000|min:100',
-            'category' => 'required|min:2|max:50',
-            'department_id' => 'required'
+            'name' => 'required|min:2|max:40',
+            'department_id' => 'sometimes|required'
         ];
     }
 }

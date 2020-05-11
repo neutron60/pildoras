@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use App\Department;
 use Illuminate\Foundation\Http\FormRequest;
 
 class DepartmentRequest extends FormRequest
@@ -24,10 +24,10 @@ class DepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:50\unique',
-            'title' => 'required|min:2\max:50',
-            'description' => 'required|min:2\max:200',
-            'image' => 'required|filled|image|max:1000|min:100'
+            'name' => 'required|min:2|max:40|unique:departments',
+            'title' => 'required|min:2|max:40',
+            'description' => 'required|min:2|max:50',
+            'image' => 'filled|image|max:1000|min:50'
         ];
     }
 }

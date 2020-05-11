@@ -1,5 +1,8 @@
+
 @extends('admin.layout')
 @section('content')
+
+
 <div class="container-fluid">
     <div class="">
         <h2 class="text-center">REGISTRAR UN NUEVO DEPARTAMENTO</h2>
@@ -7,7 +10,9 @@
     <br>
     <form action="/admin/department" method="POST" enctype="multipart/form-data" novalidate="">
         @csrf
+
         <!-- DEPARTAMENTO -->
+
         <div class=" col-md-5 centrar form-row">
             <div class="col-md-5">
                 <label class=" " for="name">
@@ -15,18 +20,19 @@
                 </label>
             </div>
             <div class="col-md-7 ">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="name" name="name"
+                <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.department.fragment.error_name')
             </div>
         </div>
         <br><br>
+
         <div class=" col-md-5 centrar form-row">
             <div class="col-md-4">
                 <label class="" for="nombre">TITULO:</label>
             </div>
             <div class="col-md-8 ">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="title" name="title"
+                <input type="text" maxlength="40" pattern="" class="form-control" id="title" name="title"
                     value="{{old('title')}}">
                 @include('admin.department.fragment.error_title')
             </div>
@@ -37,22 +43,22 @@
                 <label class="" for="nombre">DESCRIPCION:</label>
             </div>
             <div class="col-md-8 ">
-                <textarea maxlength="200" rows="10" cols="10" pattern="" class="form-control" id="description"
+                <textarea maxlength="50" rows="8" cols="8" pattern="" class="form-control" id="description"
                     name="description">{{old('description')}} </textarea>
                 @include('admin.department.fragment.error_description')
             </div>
         </div>
-        <br>
+        <br><br>
         <div class=" col-md-5 centrar form-row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <label class="" for="nombre">IMAGEN:</label>
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-6 ">
                 <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
                 @include('admin.department.fragment.error_image')
             </div>
-            <input type="hidden" value="activo" id="status" name="status">
         </div>
+        <input type="hidden" class=" " id="is_active" name="is_active" value="1">
         <br><br>
         <div class="centrar1">
             <input class="" type="submit" name="enviar" value="registrar" id="">

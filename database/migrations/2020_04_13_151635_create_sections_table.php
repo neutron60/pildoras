@@ -14,16 +14,16 @@ class CreateSectionsTable extends Migration
     public function up()
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name')->nullable();
-            $table->string('title')->nullable();
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
-            $table->string('category')->nullable();
-            $table->integer('department_id')->nullable();
-            $table->string('status')->default($value='inactivo');
+            $table->bigInteger('department_id')->nullable()->unsigned();
+            $table->tinyInteger('is_active')->nullable()->unsigned();
             $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');
+
+
         });
     }
 

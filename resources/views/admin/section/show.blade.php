@@ -1,86 +1,74 @@
+<style>
+    .imagen {
+        padding-right: ;
+        padding-left: ;
+        padding-top: ;
+        padding-bottom: ;
+        height: 200px;
+        margin-left: ;
+        width: 100%
+    }
+
+</style>
 @extends('admin.layout')
 @section('content')
+
+
 <div class="container-fluid">
-    <div class=" col-md-10 centrar form-row">
+    <!-- SECCION -->
+
+    <div class=" col-md-6 centrar form-row">
         <div class="col-md-3">
             <label class=" " for="name">
-                <h4>DEPARTAMENTO:</h4>
+                <h5>DEPARTAMENTO:</h4>
             </label>
         </div>
         <div class="col-md-3 ">
-            <label for=""></label>
+            <label for="">{{$department->name}}</label>
         </div>
-        <br>
+        <br> <br>
     </div>
-    <!-- SECCION -->
     @include('admin.section.fragment.info')
-    <div class=" col-md-10 centrar form-row">
-        <div class="col-md-1">
+    <div class=" col-md-6 centrar form-row">
+        <div class="col-md-2">
             <label class=" " for="name">
                 <h5>SECCION:</h5>
             </label>
         </div>
-        <div class="col-md-2 ">
+        <div class="col-md-3 ">
             <label for="">{{$section->name}}</label>
-        </div>
-        <div class="col-md-1">
-            <label class="" for="title">TITULO:</label>
-        </div>
-        <div class="col-md-2 ">
-            <label for="">{{$section->title}}</label>
-        </div>
-        <div class="col-md-1">
-            <label class="" for="title">CATEGORIA:</label>
-        </div>
-        <div class="col-md-2 ">
-            <label for="">{{$section->category}}</label>
         </div>
     </div>
     <br>
-    <div class="col-md-10 form-row  centrar">
-        <div class="col-md-1">
-            <label for="status">ESTADO:</label>
+    <div class="col-md-5 form-row  centrar">
+        <div class="col-md-2">
+            <label for="is_active">ESTADO:</label>
         </div>
         <div class="col-md-2">
-            <label for="">{{$section->status}}</label>
+            <label for="">{{$is_active}}</label>
         </div>
-
+    </div>
+    <br>
+    <div class="col-md-8 form-row  centrar">
         <div class="col-md-1">
-            <label for="status">CREADO:</label>
+            <label for="">CREADO:</label>
         </div>
         <div class="col-md-2">
             <label for="">{{$section->created_at->toFormattedDateString()}}</label>
         </div>
         <div class="col-md-2">
-            <label for="status">ACTUALIZADO:</label>
+            <label for="">ACTUALIZADO:</label>
         </div>
         <div class="col-md-2">
             <label for="">{{$section->updated_at->toFormattedDateString()}}</label>
         </div>
     </div>
     <br><br>
-    <div class=" col-md-10 centrar form-row">
-        <div class="col-md-2">
-            <label class="" for="nombre">DESCRIPCION:</label>
-        </div>
-        <div class="col-md-4 ">
-            <textarea name="" id="" cols="30" rows="10">{{$section->description}}</textarea>
-        </div>
-        <div class="col-md-1">
-            <label class="" for="nombre">IMAGEN:</label>
-        </div>
-        <div class="col-md-3 ">
-            <img class="imagen" src="{{$section->image}}" alt="imagen" />
-        </div>
-    </div>
-    <br>
-
-    <br>
     <div class="">
-        <a href="{{route('section.edit', $section->id)}}" class="btn btn-primary centrar1" name="editar" id="">editar
+        <a href="{{route('section.edit', $section->id)}}" class="btn btn-primary centrar1" name="editar" id="">editar seccion
         </a>
         <a class="btn btn-primary centrar2" href="{{route('section.index')}}">ver secciones </a>
     </div>
-    </form>
+
 </div>
 @endsection

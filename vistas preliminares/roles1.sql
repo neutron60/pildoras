@@ -1,29 +1,8 @@
--
-INSERT INTO `roles` (`id`, `nombre_rol`, `created_at`, `updated_at`) VALUES
-(1, 'administrador', NULL, NULL),
-(2, 'cliente', NULL, NULL);
 
---
--- Indexes for dumped tables
---
+INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
+(1, 'administrador', '2020-04-30 19:20:31', '2020-04-30 19:20:31'),
+(2, 'cliente', '2020-04-30 19:20:47', '2020-04-30 19:20:47'),
+(3, 'vendedor', '2020-04-30 19:21:13', '2020-04-30 19:21:13'),
+(4, 'inactivo', '2020-04-30 19:21:30', '2020-04-30 19:21:30');
 
---
--- Indexes for table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
 
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

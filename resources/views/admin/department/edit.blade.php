@@ -1,31 +1,32 @@
-@extends('admin.layout')
-@section('content')
-
 <style>
-    .centrar {
-        margin: 0 auto;
-    }
-    .imagen {
+
+.imagen {
         padding-right: ;
         padding-left: ;
         padding-top: ;
         padding-bottom: ;
-        height: 140px;
+        height: 200px;
         margin-left: ;
-        width: 50%
+        width: 100%
     }
 </style>
+
+@extends('admin.layout')
+@section('content')
+
+
 <div class="container-fluid">
     <div class="">
         <h2 class="text-center">EDICION DE UN DEPARTAMENTO</h2>
     </div>
 
     <br>
-    <form action="/admin/department/{{$departments->id}}" method="POST" enctype="multipart/form-data"
+    <form action="/admin/department/{{$department->id}}" method="POST" enctype="multipart/form-data"
         novalidate="novalidate">
         @csrf
         <input type="hidden" name="_method" value="PUT">
         <!--el metodo es exigido por update-->
+
         <!-- DEPARTAMENTO -->
         <div class=" col-md-5 centrar form-row">
             <div class="col-md-5">
@@ -34,9 +35,7 @@
                 </label>
             </div>
             <div class="col-md-7 ">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="name" name="name"
-                    value="{{$departments->name}}">
-                @include('admin.department.fragment.error_name')
+              <label for="">{{$department->name}}</label>
             </div>
         </div>
         <br><br>
@@ -45,8 +44,8 @@
                 <label class="" for="nombre">TITULO:</label>
             </div>
             <div class="col-md-8 ">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="name" name="title"
-                    value="{{$departments->title}}">
+                <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="title"
+                    value="{{$department->title}}">
                 @include('admin.department.fragment.error_title')
             </div>
         </div>
@@ -56,32 +55,33 @@
                 <label class="" for="nombre">DESCRIPCION:</label>
             </div>
             <div class="col-md-8 ">
-                <textarea maxlength="150" rows="10" cols="10" pattern="" class="form-control" id="description"
-                    name="description">{{$departments->description}} </textarea>
+                <textarea maxlength="50" rows="5" cols="8" pattern="" class="form-control" id="description"
+                    name="description">{{$department->description}} </textarea>
                 @include('admin.department.fragment.error_description')
             </div>
         </div>
         <br>
         <div class="col-md-5 form-row  centrar">
             <div class="col-md-4">
-                <label for="status">ESTADO</label>
+                <label for="is_active">ESTADO</label>
             </div>
             <div class="col-md-4">
-                <select name="status" id="status" class="form-control">
-                    <option selected value="{{$departments->status}}">{{$departments->status}}</option>
-                    <option value="activo">activo</option>
-                    <option value="inactivo">inactivo</option>
+                <select name="is_active" id="is_active" class="form-control">
+                    <option selected value="{{$department->is_active}}">{{$is_active}}</option>
+                    <option value="1">activo</option>
+                    <option value="0">inactivo</option>
                 </select>
             </div>
         </div>
         <br><br>
         <div class=" col-md-5 centrar form-row">
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <label class="" for="nombre">IMAGEN:</label>
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-6 ">
                 <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
-                <img class="imagen" src="{{$departments->image}}" alt="imagen" />
+                <br><br>
+                <img class="imagen" src="{{$department->image}}" alt="imagen" />
                 @include('admin.department.fragment.error_image')
             </div>
         </div>
@@ -93,11 +93,11 @@
     </form>
     <br>
     <div class="centrar1">
-        <form action="/admin/department/{{$departments->id}}" method="POST" enctype="multipart/form-data"
+        <form action="/admin/department/{{$department->id}}" method="POST" enctype="multipart/form-data"
             novalidate="novalidate">
             @csrf
             <input type="hidden" name="_method" value="DELETE">
-            <input type="submit" name="eliminar registro" value="eliminar registro" id="" class="btn btn-secondary">
+            <input type="submit" name="eliminar departamento" value="eliminar departamento" id="" class="btn btn-secondary">
             <!--el metodo es exigido por destroy-->
         </form>
     </div>

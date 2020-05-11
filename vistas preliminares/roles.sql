@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Mar 30, 2020 at 07:02 PM
+-- Generation Time: Apr 30, 2020 at 09:19 PM
 -- Server version: 5.7.28-0ubuntu0.18.04.4
 -- PHP Version: 7.4.1
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `roles` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `nombre_rol` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `role_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -39,9 +39,11 @@ CREATE TABLE `roles` (
 -- Dumping data for table `roles`
 --
 
-INSERT INTO `roles` (`id`, `nombre_rol`, `created_at`, `updated_at`) VALUES
-(1, 'administrador', NULL, NULL),
-(2, 'cliente', NULL, NULL);
+INSERT INTO `roles` (`id`, `role_name`, `created_at`, `updated_at`) VALUES
+(1, 'administrador', '2020-04-30 19:20:31', '2020-04-30 19:20:31'),
+(2, 'cliente', '2020-04-30 19:20:47', '2020-04-30 19:20:47'),
+(3, 'vendedor', '2020-04-30 19:21:13', '2020-04-30 19:21:13'),
+(4, 'inactivo', '2020-04-30 19:21:30', '2020-04-30 19:21:30');
 
 --
 -- Indexes for dumped tables
@@ -61,7 +63,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `roles`
 --
 ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -19,13 +19,15 @@ class SectionController extends Controller
 
     public function index()
     {
-
-        /*$departments=Department::all();*/
         $departments=Department::all();
         $sections=Section::all();
-        return view("admin.section.index", compact("departments", "sections"));
 
+        foreach($sections as $section){
+        if($section->is_active){
+            $is_active[$section->id]='activo';}
+            else{$is_active[$section->id]='inactivo';}}
 
+        return view("admin.section.index", compact("departments", "sections", "is_active"));
     }
 
     /**
@@ -48,23 +50,12 @@ class SectionController extends Controller
      */
     public function store(SectionRequest $request)
     {
-        $entrada=$request->only('name','title','description','image','category','department_id','status');
-
-
-
-        /* cargando el archivo al disco duro*/
-        /*$archivo=$request->file('image');
-        $imageName=$archivo->getClientOriginalName();
-        $archivo->move('images',$imageName);
-        $entrada['image']=$imageName;*/
-
+        $entrada=$request->only('name','department_id','is_active');
         $archivo=Section::create($entrada);
-        if($request->file('image')){        // verifica si hay un archivo
-            $path=Storage::disk('public')->put('images', $request->file('image'));  //almacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['image'=>asset($path)])->save();   //guardar en base de datos la ruta
-        }
+
         return redirect()->route('section.index')->with('info', 'la seccion fue creada');
     }
+
 
     /**
      * Display the specified resource.
@@ -74,13 +65,16 @@ class SectionController extends Controller
      */
     public function show($id)
     {
+        $departments=Department::all();
         $section=Section::find($id);
-
-
+        $department=$section->department;
         $section->created_at->toFormattedDateString();
         $section->updated_at->toFormattedDateString();
+        if($section->is_active){$is_active='activo';}
+        else{$is_active='inactivo';}
 
-        return view("admin.section.show", compact("section"));
+
+        return view("admin.section.show", compact("section", "department", "is_active"));
 
     }
 
@@ -95,7 +89,9 @@ class SectionController extends Controller
         //
 
         $section=Section::find($id);
-        return view("admin.section.edit", compact("section"));
+        if($section->is_active){$is_active='activo';}
+        else{$is_active='inactivo';}
+        return view("admin.section.edit", compact("section", "is_active"));
     }
 
     /**
@@ -106,14 +102,12 @@ class SectionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function update(Request $request, $id)
+    public function update(SectionRequest $request, $id)
     {
+
         $entrada=Section::findOrfail($id);
-        $entrada->update($request->only('name','title','description','image','status', 'category', 'department_id'));
-        if($request->file('image')){        // verifica si hay un archivo
-            $path=Storage::disk('public')->put('images', $request->file('image'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['image'=>asset($path)])->update();   //guardar en base de datos la ruta
-        }
+        $entrada->update($request->only('name','is_active'));
+
         return redirect()->route('section.show', $entrada->id)->with('info', 'la seccion fue actualizada');
 
     }
