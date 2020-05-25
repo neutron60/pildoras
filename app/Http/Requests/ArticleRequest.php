@@ -26,11 +26,13 @@ class ArticleRequest extends FormRequest
         return [
             'category_id' => 'sometimes|required',
             'code' => 'sometimes|required|unique:articles|min:2|max:20',
-            'name' => 'required|min:2|max:60',
-            'description' => 'required|min:2|max:400',
-            'image1' => 'filled|image|max:1000|min:50',
-            'image2' => 'filled|image|max:1000|min:50',
-            'image3' => 'filled|image|max:1000|min:50'
+            'name' => 'required|min:2|max:100',
+            'stock' => 'required',
+            'price' => 'required',
+            'description' => 'required|min:2|max:2000',
+            'image1' => 'filled|image|max:1000|min:10',
+            'image2' => 'filled|image|max:1000|min:10',
+            'image3' => 'filled|image|max:1000|min:10'
         ];
     }
 }

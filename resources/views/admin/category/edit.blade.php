@@ -1,15 +1,4 @@
-<style>
-    .imagen {
-        padding-right: ;
-        padding-left: ;
-        padding-top: ;
-        padding-bottom: ;
-        height: 140px;
-        margin-left: ;
-        width: 50%
-    }
 
-</style>
 
 @extends('admin.layout')
 @section('content')
@@ -26,27 +15,27 @@
         <input type="hidden" name="_method" value="PUT">
         <!--el metodo es exigido por update-->
 
-        <!-- SECCION -->
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-5">
+        <!-- CATEGORIA -->
+        <div class="form-row">
+            <div class="">
                 <label class=" " for="name">
                     <h5>CATEGORIA:</h5>
                 </label>
             </div>
-            <div class="col-md-7 ">
+            <div class="ml-3">
                 <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
                     value="{{$category->name}}">
                 @include('admin.category.fragment.error_name')
             </div>
         </div>
        <br>
-       <div class="col-md-5 form-row  centrar">
-        <div class="col-md-4">
+       <div class="form-row">
+        <div class="">
             <label for="is_active">ESTADO</label>
         </div>
-        <div class="col-md-4">
+        <div class="ml-3">
             <select name="is_active" id="is_active" class="form-control">
-                <option selected value="{{$category->is_active}}">{{$is_active}}</option>
+                <option selected value="{{$category->is_active}}">{{$category->is_active?'activo':'inactivo'}}</option>
                 <option value="1">activo</option>
                 <option value="0">inactivo</option>
             </select>

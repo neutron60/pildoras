@@ -13,13 +13,13 @@
 
         <!-- DEPARTAMENTO -->
 
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-5">
+        <div class="form-row">
+            <div class="">
                 <label class=" " for="name">
                     <h5>DEPARTAMENTO:</h5>
                 </label>
             </div>
-            <div class="col-md-7 ">
+            <div class="ml-3">
                 <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.department.fragment.error_name')
@@ -27,33 +27,33 @@
         </div>
         <br><br>
 
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-4">
+        <div class="form-row">
+            <div class="">
                 <label class="" for="nombre">TITULO:</label>
             </div>
-            <div class="col-md-8 ">
+            <div class="ml-3">
                 <input type="text" maxlength="40" pattern="" class="form-control" id="title" name="title"
                     value="{{old('title')}}">
                 @include('admin.department.fragment.error_title')
             </div>
         </div>
         <br>
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-4">
+        <div class="form-row">
+            <div class="">
                 <label class="" for="nombre">DESCRIPCION:</label>
             </div>
-            <div class="col-md-8 ">
+            <div class="col-md-3 ml-3">
                 <textarea maxlength="50" rows="8" cols="8" pattern="" class="form-control" id="description"
                     name="description">{{old('description')}} </textarea>
                 @include('admin.department.fragment.error_description')
             </div>
         </div>
         <br><br>
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-2">
+        <div class="form-row">
+            <div class="">
                 <label class="" for="nombre">IMAGEN:</label>
             </div>
-            <div class="col-md-6 ">
+            <div class="ml-3">
                 <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
                 @include('admin.department.fragment.error_image')
             </div>

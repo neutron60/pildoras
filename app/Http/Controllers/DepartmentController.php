@@ -15,21 +15,16 @@ class DepartmentController extends Controller
      */
 
     public function main() {
-        $departments=Department::all();
 
-        return view("admin.main", compact("departments"));
+
+        return view("admin.main");
     }
 
     public function index()
     {
         $departments=Department::all();
 
-        foreach($departments as $department){
-            if($department->is_active){
-            $is_active[$department->id]='activo';}
-            else{$is_active[$department->id]='inactivo';}}
-
-        return view("admin.department.index", compact("departments", "is_active"));
+        return view("admin.department.index", compact("departments"));
     }
 
     /**
@@ -71,10 +66,8 @@ class DepartmentController extends Controller
         $department=Department::findOrfail($id);
         $department->created_at->toFormattedDateString();
         $department->updated_at->toFormattedDateString();
-        if($department->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
 
-        return view("admin.department.show", compact("department","is_active"));
+        return view("admin.department.show", compact("department"));
     }
 
     /**
@@ -86,10 +79,8 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department=Department::findOrfail($id);
-        if($department->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
 
-        return view("admin.department.edit", compact("department", "is_active"));
+        return view("admin.department.edit", compact("department"));
     }
 
     /**

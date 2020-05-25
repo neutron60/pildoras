@@ -21,16 +21,32 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $departments=department::all();
-        $sections=Section::all();
-        $categories=Category::all();
+        $departments=Department::all();
+        $categories=Category::join('sections','sections.id','=','categories.section_id')
+        ->join('departments','departments.id','=','sections.department_id')
+        ->select('categories.id','categories.name', 'departments.name as name_department', 'sections.name as name_section',
+          'categories.is_active')
+        ->orderBy('name_department')->orderby('name_section')
+        ->get();
 
-        foreach($categories as $category){
-            if($category->is_active){
-                $is_active[$category->id]='activo';}
-                else{$is_active[$category->id]='inactivo';}}
+        return view("admin.category.index", compact("categories", "departments"));
+    }
 
-        return view("admin.category.index", compact("departments", "sections", "categories", "is_active"));
+    public function search(Request $request)
+    {
+            $departments=Department::all();
+            $query=trim($request->get('search_department'));
+            if (!$query) {$query='%';}
+
+            $categories=Category::join('sections','sections.id','=','categories.section_id')
+            ->join('departments','departments.id','=','sections.department_id')
+            ->select('categories.id','categories.name', 'departments.name as name_department', 'sections.name as name_section',
+              'categories.is_active')
+            ->orderBy('name_department')->orderby('name_section')
+            ->where('departments.name', 'LIKE', '%'.$query.'%')
+            ->get();
+
+            return view("admin.category.index", compact("categories", "departments"));
     }
 
     /**
@@ -79,10 +95,8 @@ class CategoryController extends Controller
         $department=$section->department;
         $category->created_at->toFormattedDateString();
         $category->updated_at->toFormattedDateString();
-        if($category->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
 
-        return view("admin.category.show", compact("section", "department", "category", "is_active"));
+        return view("admin.category.show", compact("section", "department", "category"));
 
     }
 
@@ -97,9 +111,8 @@ class CategoryController extends Controller
         //
 
         $category=Category::find($id);
-        if($category->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
-        return view("admin.category.edit", compact("category", "is_active"));
+
+        return view("admin.category.edit", compact("category"));
     }
 
     /**

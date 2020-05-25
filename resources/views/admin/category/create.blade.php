@@ -14,20 +14,20 @@
         <!-- SECCION -->
 
 
-        <div class=" col-md-6 centrar form-row">
-            <div class="col-md-4">
+        <div class="form-row">
+            <div class="">
                 <h5 class=""> DEPARTAMENTO:</h5>
             </div>
-            <div class="col-md-6 ">
+            <div class="ml-3">
 
                 <label for=""> {{$department->name}} </label>
             </div>
         </div>
-        <div class=" col-md-6 centrar form-row">
-            <div class="col-md-4">
+        <div class="form-row">
+            <div class="">
                 <h5 class=""> SECCION:</h5>
             </div>
-            <div class="col-md-6 ">
+            <div class="ml-3">
                 <select name="section_id" id="section_id" class="form-control">
                     <option selected value="">seleccione</option>
                     @foreach($sections as $section)
@@ -38,13 +38,13 @@
             </div>
         </div>
         <br>
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-5">
+        <div class="form-row">
+            <div class="">
                 <label class=" " for="name">
                     <h5>CATEGORY:</h5>
                 </label>
             </div>
-            <div class="col-md-7 ">
+            <div class="ml-3">
                 <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.category.fragment.error_name')

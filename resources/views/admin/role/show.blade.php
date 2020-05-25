@@ -19,16 +19,7 @@
 
     </style>
 
-    <style>
-        .anchoceldas {
-            width: 170px;
-        }
 
-        .centrar {
-            margin: 0 auto;
-        }
-
-    </style>
 </head>
 
 
@@ -41,29 +32,29 @@
         <table class="centrar table-bordered table-responsive ">
             <thead>
                 <tr>
-                    <th class="text-center anchoceldas" scope="col">Departamento</th>
-                    <th class="text-center anchoceldas" scope="col">Seccion</th>
-                    <th class="text-center anchoceldas" scope="col">Codigo</th>
-                    <th class="text-center anchoceldas" scope="col">Articulo</th>
-                    <th class="text-center anchoceldas" scope="col">Marca</th>
-                    <th class="text-center anchoceldas" scope="col">Modelo</th>
-                    <th class="text-center anchoceldas" scope="col">Descripcion</th>
-                    <th class="text-center anchoceldas" scope="col">Status</th>
-                    <th class="text-center anchoceldas" scope="col">Ruta imagen</th>
+                    <th class="text-center" scope="col">Departamento</th>
+                    <th class="text-center" scope="col">Seccion</th>
+                    <th class="text-center" scope="col">Codigo</th>
+                    <th class="text-center" scope="col">Articulo</th>
+                    <th class="text-center" scope="col">Marca</th>
+                    <th class="text-center" scope="col">Modelo</th>
+                    <th class="text-center" scope="col">Descripcion</th>
+                    <th class="text-center" scope="col">Status</th>
+                    <th class="text-center" scope="col">Ruta imagen</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
 
-                    <td class="text-center anchoceldas">{{$articulos->departamento}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->seccion}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->codigo}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->articulo}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->marca}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->modelo}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->descripcion}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->status}}</td>
-                    <td class="text-center anchoceldas">{{$articulos->ruta_imagen}}</td>
+                    <td class="text-center">{{$articulos->departamento}}</td>
+                    <td class="text-center">{{$articulos->seccion}}</td>
+                    <td class="text-center">{{$articulos->codigo}}</td>
+                    <td class="text-center">{{$articulos->articulo}}</td>
+                    <td class="text-center">{{$articulos->marca}}</td>
+                    <td class="text-center">{{$articulos->modelo}}</td>
+                    <td class="text-center">{{$articulos->descripcion}}</td>
+                    <td class="text-center">{{$articulos->status}}</td>
+                    <td class="text-center">{{$articulos->ruta_imagen}}</td>
 
                 </tr>
 

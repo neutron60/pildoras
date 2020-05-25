@@ -1,15 +1,4 @@
-<style>
-    .imagen {
-        padding-right: ;
-        padding-left: ;
-        padding-top: ;
-        padding-bottom: ;
-        height: 200px;
-        margin-left: ;
-        width: 100%
-    }
 
-</style>
 @extends('admin.layout')
 @section('content')
 
@@ -17,49 +6,49 @@
 <div class="container-fluid">
     <!-- SECCION -->
 
-    <div class=" col-md-6 centrar form-row">
-        <div class="col-md-3">
+    <div class="form-row">
+        <div class="">
             <label class=" " for="name">
                 <h5>DEPARTAMENTO:</h4>
             </label>
         </div>
-        <div class="col-md-3 ">
+        <div class="ml-3">
             <label for="">{{$department->name}}</label>
         </div>
         <br> <br>
     </div>
     @include('admin.section.fragment.info')
-    <div class=" col-md-6 centrar form-row">
-        <div class="col-md-2">
+    <div class="form-row">
+        <div class="">
             <label class=" " for="name">
                 <h5>SECCION:</h5>
             </label>
         </div>
-        <div class="col-md-3 ">
+        <div class="ml-3">
             <label for="">{{$section->name}}</label>
         </div>
     </div>
     <br>
-    <div class="col-md-5 form-row  centrar">
-        <div class="col-md-2">
+    <div class="form-row">
+        <div class="">
             <label for="is_active">ESTADO:</label>
         </div>
-        <div class="col-md-2">
-            <label for="">{{$is_active}}</label>
+        <div class="ml-3">
+            <label for="">{{$section->is_active?'activo':'inactivo'}}</label>
         </div>
     </div>
     <br>
-    <div class="col-md-8 form-row  centrar">
-        <div class="col-md-1">
+    <div class="form-row">
+        <div class="">
             <label for="">CREADO:</label>
         </div>
-        <div class="col-md-2">
+        <div class="ml-3">
             <label for="">{{$section->created_at->toFormattedDateString()}}</label>
         </div>
-        <div class="col-md-2">
+        <div class="">
             <label for="">ACTUALIZADO:</label>
         </div>
-        <div class="col-md-2">
+        <div class="ml-3">
             <label for="">{{$section->updated_at->toFormattedDateString()}}</label>
         </div>
     </div>

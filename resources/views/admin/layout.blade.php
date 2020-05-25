@@ -32,10 +32,52 @@
             color: red;
         }
 
-        img {
+        .image2 {
             max-width: 100%;
+            width: 100%;
+            height: 250px;
+            padding-left: %;
+            padding-right: %;
+            margin-left: %;
+            margin-right: %;
             max-height:
         }
+
+        .image1 {
+            max-width: 100%;
+            width: ;
+            height: 250px;
+            padding-left: %;
+            padding-right: %;
+            margin-left: %;
+            margin-right: %;
+            max-height:
+        }
+
+        .image {
+            max-width: 100%;
+            width: auto;
+            height: ;
+            padding-left: %;
+            padding-right: %;
+            margin-left: %;
+            margin-right: %;
+            max-height:
+        }
+
+        .image3 {
+            max-width: 100%;
+            max-height: ;
+            width: auto;
+            height: 250px ;
+            padding-left: %;
+            padding-right: %;
+            margin-left: %;
+            margin-right: %;
+            max-height:
+        }
+
+
 
         .centrar {
             margin-left: auto;
@@ -52,24 +94,56 @@
             margin-right:
         }
 
+        .borde {
+            border: 2px solid blue
+        }
+
+        .borde1 {
+            border: 2px solid orangered
+        }
+
+        .borde2 {
+            border: 2px solid green
+        }
+
+        .borde3 {
+            border: 2px solid yellow
+        }
+        .contenedor{
+            overflow-x: scroll;
+        }
+        .back {
+            background: #EDEFEF;
+        }
+
     </style>
 </head>
 
 <body>
     @include('admin.plantillaencabezado')
 
-    <div class="row">
+    <div class="row ">
 
-        <div class="col-md-2">
-
+        <div class="col-md-2 borde back">
+            @include('admin.store.aside_left')
+            @yield('left_side')
         </div>
 
-        <div class='container-fluid col-md-10'>
+        <div class='col-md-8 borde1'>
+
 
             @yield('content')
 
         </div>
+
+        <div class="col-md-2 borde2">
+
+            @yield('right_side')
+
+        </div>
     </div>
+
+
     <br>
 
     @include('admin.plantillapie')

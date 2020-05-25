@@ -13,13 +13,13 @@
 
         <!-- DEPARTAMENTO -->
 
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-5">
+        <div class="form-row">
+            <div class="">
                 <label class=" " for="role_name">
                     <h5>ROL:</h5>
                 </label>
             </div>
-            <div class="col-md-7 ">
+            <div class="ml-3">
                 <input type="text" maxlength="30" pattern="" class="form-control" id="role_name" name="role_name"
                     value="{{old('role_name')}}">
                 @include('admin.role.fragment.error_role_name')

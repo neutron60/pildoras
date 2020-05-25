@@ -15,9 +15,34 @@ class UserController extends Controller {
      */
 
     public function index() {
-        $users=User::all();
 
-        return view("admin.user.index", compact("users"));
+        $roles=Role::all();
+        $users=User::join('roles','roles.id','=','users.role_id')
+        ->select('users.id','users.name', 'users.lastname', 'users.id_number','users.id_type', 'users.email', 'roles.role_name')
+        ->orderBy('name')
+        ->get();
+
+        return view("admin.user.index", compact("users", "roles"));
+    }
+
+    public function search(Request $request)
+    {
+        $roles=Role::all();
+        $query1=trim($request->get('search_role'));
+        $query2=trim($request->get('search_user_name'));
+        $query3=trim($request->get('search_user_lastname'));
+        if (!$query2) {$query2='%';}
+        if (!$query3) {$query3='%';}
+
+        $users=User::join('roles','roles.id','=','users.role_id')
+        ->select('users.id','users.name', 'users.lastname', 'users.id_number','users.id_type', 'users.email', 'roles.role_name')
+        ->orderBy('name')
+        ->where('roles.role_name', 'LIKE', '%'.$query1. '%')
+        ->where('users.name', 'LIKE', '%'. $query2. '%')
+        ->where('users.lastname', 'LIKE', '%'. $query3. '%')
+        ->get();
+
+        return view("admin.user.index", compact("users","roles"));
     }
 
     /**

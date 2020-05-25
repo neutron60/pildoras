@@ -27,26 +27,26 @@
         <!--el metodo es exigido por update-->
 
         <!-- SECCION -->
-        <div class=" col-md-5 centrar form-row">
-            <div class="col-md-5">
+        <div class="form-row">
+            <div class="">
                 <label class=" " for="name">
                     <h5>SECCION:</h5>
                 </label>
             </div>
-            <div class="col-md-7 ">
+            <div class="ml-3">
                 <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
                     value="{{$section->name}}">
                 @include('admin.section.fragment.error_name')
             </div>
         </div>
         <br><br>
-        <div class="col-md-5 form-row  centrar">
-            <div class="col-md-4">
+        <div class="form-row">
+            <div class="">
                 <label for="is_active">ESTADO</label>
             </div>
-            <div class="col-md-4">
+            <div class="ml-3">
                 <select name="is_active" id="is_active" class="form-control">
-                    <option selected value="{{$section->is_active}}">{{$is_active}}</option>
+                    <option selected value="{{$section->is_active}}">{{$section->is_active?'activo':'inactivo'}}</option>
                     <option value="1">activo</option>
                     <option value="0">inactivo</option>
                 </select>

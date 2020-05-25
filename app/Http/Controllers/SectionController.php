@@ -19,15 +19,28 @@ class SectionController extends Controller
 
     public function index()
     {
-        $departments=Department::all();
-        $sections=Section::all();
+            $departments=Department::all();
+            $sections=Section::join('departments','departments.id','=','sections.department_id')
+            ->select('departments.name as name_department','sections.id', 'sections.name', 'sections.is_active')
+            ->orderBy('name_department')->orderby('name')
+            ->get();
 
-        foreach($sections as $section){
-        if($section->is_active){
-            $is_active[$section->id]='activo';}
-            else{$is_active[$section->id]='inactivo';}}
+        return view("admin.section.index", compact("sections", "departments"));
+    }
 
-        return view("admin.section.index", compact("departments", "sections", "is_active"));
+    public function search(Request $request)
+    {
+            $departments=Department::all();
+            $query=trim($request->get('search_department'));
+            if (!$query) {$query='%';}
+
+            $sections=Section::join('departments','departments.id','=','sections.department_id')
+            ->select('departments.name as name_department','sections.id', 'sections.name', 'sections.is_active')
+            ->orderBy('name_department')->orderby('name')
+            ->where('departments.name', 'LIKE', '%'.$query.'%')
+            ->get();
+
+            return view("admin.section.index", compact("sections", "departments"));
     }
 
     /**
@@ -70,11 +83,8 @@ class SectionController extends Controller
         $department=$section->department;
         $section->created_at->toFormattedDateString();
         $section->updated_at->toFormattedDateString();
-        if($section->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
 
-
-        return view("admin.section.show", compact("section", "department", "is_active"));
+        return view("admin.section.show", compact("section", "department"));
 
     }
 
@@ -89,9 +99,8 @@ class SectionController extends Controller
         //
 
         $section=Section::find($id);
-        if($section->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
-        return view("admin.section.edit", compact("section", "is_active"));
+
+        return view("admin.section.edit", compact("section"));
     }
 
     /**

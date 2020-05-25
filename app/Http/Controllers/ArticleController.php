@@ -19,18 +19,49 @@ class ArticleController extends Controller
     public function index()
     {
         $departments=Department::all();
-        $articles=Article::all();
-        $sections=Section::all();
-        $categories=Category::all();
 
-        foreach($articles as $article){
-        if($article->is_active){
-            $is_active[$article->id]='activo';}
-            else{$is_active[$article->id]='inactivo';}}
+        $articles=Article::join('categories','categories.id','=','articles.category_id')
+        ->join('sections','sections.id','=','categories.section_id')
+        ->join('departments','departments.id','=','sections.department_id')
+        ->select('articles.id','articles.code', 'articles.name', 'categories.name as name_category', 'sections.name as name_section',
+          'departments.name as name_department', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
+          'departments.is_active' )
+        ->where('departments.is_active', 1)
+        ->orderBy('name_department')->orderby('name_section')->orderBy('code')
+        ->paginate(20);
 
 
-        return view("admin.article.index", compact("articles", "sections", "departments", "categories", "is_active"));
+
+        return view("admin.article.index", compact("articles", "departments"));
     }
+
+    public function search(Request $request)
+    {
+        $departments=Department::all();
+            $query1=trim($request->get('search_department'));
+            $query2=trim($request->get('search_article'));
+            $query3=trim($request->get('search_is_bargain'));
+            $query4=trim($request->get('search_is_new_collection'));
+            if (!$query2) {$query2='%';}
+
+                $articles=Article::join('categories','categories.id','=','articles.category_id')
+                ->join('sections','sections.id','=','categories.section_id')
+                ->join('departments','departments.id','=','sections.department_id')
+                ->select('articles.id','articles.code', 'articles.name', 'categories.name as name_category', 'sections.name as name_section',
+                  'departments.name as name_department', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection' )
+                ->orderBy('name_department')->orderby('name_section')->orderBy('code')
+                ->where('departments.name', 'LIKE', '%'.$query1.'%')
+                ->where('articles.name', 'LIKE', '%'. $query2. '%')
+                ->where('articles.is_bargain', 'LIKE', '%'. $query3. '%')
+                ->where('articles.is_new_collection', 'LIKE', '%'. $query4. '%')
+                ->paginate(20);
+
+
+        return view("admin.article.index", compact("articles", "departments"))
+        ->with('info', 'El resultado de su busqueda es el siguiente');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
@@ -42,7 +73,6 @@ class ArticleController extends Controller
         $section=Section::find($id);
         $department=$section->department;
         $categories=$section->categories;
-
 
         return view("admin.article.create", compact("department","section", "categories"));
     }
@@ -90,15 +120,8 @@ class ArticleController extends Controller
         $department=$section->department;
         $article->created_at->toFormattedDateString();
         $article->updated_at->toFormattedDateString();
-        if($article->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
-        if($article->is_bargain){$is_bargain='si';}
-        else{$is_bargain='no';}
-        if($article->is_new_collection){$is_new_collection='si';}
-        else{$is_new_collection='no';}
 
-
-        return view("admin.article.show", compact("article", "department", "section", "category", "is_active", "is_bargain", "is_new_collection"));
+        return view("admin.article.show", compact("article", "department", "section", "category"));
     }
 
     /**
@@ -113,10 +136,10 @@ class ArticleController extends Controller
         $category=$article->category;
         $section=$category->section;
         $department=$section->department;
-        if($article->is_active){$is_active='activo';}
-        else{$is_active='inactivo';}
-        return view("admin.article.edit", compact("article", "category", "section", "department", "is_active"));
+
+        return view("admin.article.edit", compact("article", "category", "section", "department"));
     }
+
 
     /**
      * Update the specified resource in storage.

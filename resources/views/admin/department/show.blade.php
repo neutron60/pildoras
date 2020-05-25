@@ -14,65 +14,65 @@
 <div class="container-fluid">
     <!-- DEPARTAMENTO -->
 
-    <div class=" col-md-5 centrar form-row">
-        <div class="col-md-5">
+    <div class="form-row">
+        <div class="">
             <label class=" " for="name">
                 <h5>DEPARTAMENTO:</h5>
             </label>
         </div>
-        <div class="col-md-7 ">
+        <div class="ml-3 ">
             <label for="">{{$department->name}}</label>
         </div>
     </div>
     <br><br>
-    <div class=" col-md-5 centrar form-row">
-        <div class="col-md-4">
+    <div class=" form-row">
+        <div class="">
             <label class="" for="nombre">TITULO:</label>
         </div>
-        <div class="col-md-8 ">
+        <div class="ml-3">
             <label for="">{{$department->title}}</label>
         </div>
     </div>
     <br>
-    <div class=" col-md-5 centrar form-row">
-        <div class="col-md-4">
+    <div class="form-row">
+        <div class="">
             <label class="" for="nombre">DESCRIPCION:</label>
         </div>
-        <div class="col-md-8 ">
+        <div class="ml-3">
             <label class="" for="nombre">{{$department->description}}</label>
         </div>
     </div>
     <br>
-    <div class="col-md-5 form-row  centrar">
-        <div class="col-md-4">
+    <div class="form-row">
+        <div class="">
             <label for="is_active">ESTADO:</label>
         </div>
-        <div class="col-md-4">
-            <label for="">{{$is_active}}</label>
+        <div class="ml-3">
+            <label for="">{{$department->is_active?'activo':'inactivo'}}</label>
         </div>
     </div>
     <br>
-    <div class="col-md-6 form-row  centrar">
-        <div class="col-md-2">
+    <div class="form-row">
+        <div class="">
             <label for="">CREADO:</label>
         </div>
-        <div class="col-md-2">
+        <div class="ml-2">
             <label for="">{{$department->created_at->toFormattedDateString()}}</label>
         </div>
-        <div class="col-md-2">
+        <div class="ml-5">
             <label for="">ACTUALIZADO:</label>
         </div>
-        <div class="col-md-2">
+        <div class="ml-2">
             <label for="">{{$department->updated_at->toFormattedDateString()}}</label>
         </div>
     </div>
     <br><br>
-    <div class=" col-md-5 centrar form-row">
-        <div class="col-md-2">
+    <div class="form-row">
+        <div class="">
             <label class="" for="nombre">IMAGEN:</label>
         </div>
-        <div class="col-md-6 ">
-            <img class="imagen" src="{{$department->image}}" alt="imagen" />
+        <div class="col-md-3 ">
+            <img class="image" src="{{$department->image}}" alt="imagen" height=150px/>
         </div>
     </div>
     <br><br>

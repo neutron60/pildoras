@@ -26,9 +26,14 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-
-
+/* rutas del crud de advertising */
+Route::get('/admin/article-detail/{id}', 'AdvertisingController@article_detail');
+Route::get('/admin/article-list/{id}', 'AdvertisingController@article_list');
+Route::resource('/admin/advertising', 'AdvertisingController');
+/* rutas del crud de aside advertising */
+Route::resource('/admin/aside-advertising', 'AsideAdvertisingController');
 /* rutas del crud de user */
+Route::get('/admin/user/search', 'UserController@search');
 Route::resource('/admin/user', 'UserController');
 /* rutas del crud de role */
 Route::resource('/admin/role', 'RolController');
@@ -36,12 +41,15 @@ Route::resource('/admin/role', 'RolController');
 Route::get('/admin/main', 'DepartmentController@main');
 Route::resource('/admin/department', 'DepartmentController');
 /* rutas del route de section  */
+Route::get('/admin/section/search', 'SectionController@search');
 Route::resource('/admin/section', 'SectionController');
 /* rutas del route de category  */
+Route::get('/admin/category/search', 'CategoryController@search');
 Route::get('/admin/category/select-department', 'CategoryController@selectDepartment');
 Route::get('/admin/category/create1/{id}', 'CategoryController@create');
 Route::resource('/admin/category', 'CategoryController');
 /* rutas del crud de article   */
+Route::get('/admin/article/search', 'ArticleController@search');
 Route::get('/admin/article/select-department', 'ArticleController@selectDepartment');
 Route::get('/admin/article/select-section/{id}', 'ArticleController@selectSection');
 Route::get('/admin/article/create1/{id}', 'ArticleController@create');

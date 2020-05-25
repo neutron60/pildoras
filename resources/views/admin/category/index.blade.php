@@ -1,51 +1,61 @@
-<style>
-.centrar3 {
-    margin-left: 80;
-    margin-right: ;
-}
-</style>
+
 
 @extends('admin.layout')
 @section('content')
 
 <div class="container-fluid">
-    <h1 class="text-center mb-5"> CATEGORIAS</h1>
-    <div pull-right class="centrar3">
-    <a class="btn btn-primary  pull-right"  href="/admin/main">menu principal </a>
-     </div>
+    <h1 class="text-center"> CATEGORIAS</h1>
+
+    <form action="/admin/category/search" class="form-inline">
+        <div class="input-group input-group-sm ">
+            <div class="">
+                <select name="search_department" id="search_department" class="form-control">
+                    <option selected value="%">todos</option>
+                    @foreach($departments as $department){
+                    <option value="{{$department->name}}">{{$department->name}}</option>
+                    @endforeach
+                </select>
+                <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"> </i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <div pull-right class="">
+        <a class="btn btn-primary  pull-right" href="/admin/main">menu principal </a>
+    </div>
     @include('admin.section.fragment.info')
-    <table class="table-bordered table-hover table-responsive ">
+    <table class="table-striped table-hover table-responsive ">
         <thead>
             <tr>
-                <th class="text-center" width="150px" height="40px" scope="col">Departamento</th>
-                <th class="text-center" width="150px" height="40px" scope="col">Seccion</th>
-                <th class="text-center" width="150px" height="40px" scope="col">categoria</th>
-                <th class="text-center" width="200px" scope="col">Estado</th>
-                <th class="text-center" width="100px" colspan="2">&nbsp;</th>
+                <th class="text-center" scope="col">Departamento</th>
+                <th class="text-center" scope="col">Seccion</th>
+                <th class="text-center" scope="col">categoria</th>
+                <th class="text-center" scope="col">Estado</th>
+                <th class="text-center" colspan="2">&nbsp;</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($departments as $department)
-            @foreach ($department->sections as $section)
-            @foreach ($section->categories as $category)
+
+            @foreach ($categories as $category)
             <tr>
 
-                <td class="text-center" scope="row" width="150px" padding-top="10%" >{{$department->name}}</td>
+                <td class="text-center" scope="row" width="150px">{{$category->name_department}}</td>
 
-                <td class="text-center" scope="row" width="150px" padding-top="10%" >{{$section->name}}</td>
+                <td class="text-center" scope="row" width="150px">{{$category->name_section}}</td>
 
-                <td class="text-center" scope="row" width="150px" padding-top="10%" >{{$category->name}}</td>
+                <td class="text-center" scope="row" width="150px">{{$category->name}}</td>
 
-                <td class="text-center" width="200px">{{$is_active[$section->id]}}</td>
+                <td class="text-center" width="80px">{{$category->is_active?'activo':'inactivo'}}</td>
 
                 </td>
-                <td class="text-center" width="100px"><a href="{{route('category.show', $section->id)}}"> ver
-                        datos categoria</a></td>
-                <td class="text-center" width="100px"><a href="{{route('category.edit', $section->id)}}">
-                        editar categoria</a></td>
+                <td class="text-center" width="100px"><button type="button" class="btn btn-default"><a href="{{route('category.show', $category->id)}}"> ver
+                        datos categoria</a></button></td>
+                <td class="text-center" width="100px"><button type="button" class="btn btn-default"><a href="{{route('category.edit', $category->id)}}">
+                        editar categoria</a></button></td>
             </tr>
-            @endforeach
-            @endforeach
+
             @endforeach
         </tbody>
     </table>
