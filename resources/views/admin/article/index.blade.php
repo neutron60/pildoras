@@ -6,13 +6,13 @@
 <div class="container-fluid">
     <h1 class="text-center mb-5"> ARTICULOS</h1>
 
-    <form action="/admin/article/search" class="form-inline">
+    <form action="/admin/article/search" class="form-inline mt-n3">
         <div class="input-group input-group-sm">
             <input type="search" class="form-control form-control-navbar col-md-2" name="search_article"
-                placeholder="Search" aria-label="Search" size="80px">
+                placeholder="articulo" aria-label="Search" size="50px" value="">
             <div class="ml-2">
-                <select name="search_department" id="search_department" class="form-control">
-                    <option selected value="%">departamentos</option>
+                <select name="search_department" id="search_department" class="form-control" >
+                    <option selected value="%">departamento</option>
                     @foreach($departments as $department){
                     <option value="{{$department->name}}">{{$department->name}}</option>
                     @endforeach
@@ -20,7 +20,7 @@
             </div>
             <div class="ml-2">
                 <select name="search_is_bargain" id="search_is_bargain" class="form-control">
-                    <option selected value="%">en oferta</option>
+                    <option selected value="%" >en oferta</option>
                     <option value="1">si</option>
                     <option value="0">no</option>
                 </select>
@@ -40,10 +40,26 @@
         </div>
     </form>
     <br>
-    <div pull-right class="centrar3">
-        <a class="btn btn-primary  pull-right" href="/admin/main">menu principal </a>
-    </div>
-    @include('admin.article.fragment.info')
+
+    @if($query2 <> '%')
+    <p>Resultado de la busqueda del articulo {{$query2}} </p>
+    @endif
+    @if($query1 <> '%')
+    <p>Resultado de la busqueda del departamento {{$query1}} </p>
+    @endif
+    @if($query3 <> '%' and $query3==1)
+    <p>Resultado de la busqueda de los articulos en oferta  </p>
+    @endif
+    @if($query3 <> '%' and $query3==0)
+    <p>Resultado de la busqueda de los articulos sin oferta  </p>
+    @endif
+    @if($query4 <> '%' and $query4==1)
+    <p>Resultado de la busqueda de los articulos que pertenecen a la nueva coleccion </p>
+    @endif
+    @if($query4 <> '%' and $query4==0)
+    <p>Resultado de la busqueda de los articulos que no pertenecen a la nueva coleccion </p>
+    @endif
+
 
     <table class="table-striped table-hover table-responsive ">
         <thead>
@@ -73,13 +89,13 @@
 
                 <td class="text-center" scope="row" width="80px">{{$article->code}}</td>
 
-                <td class="text-center" width="80px">{{$article->is_active?'activo':'inactivo'}}</td>
+                <td class="text-center" width="80px">{{$article->is_active?'activo':'inactivo'}} </td>
 
                 <td class="text-center" width="70px">{{$article->is_bargain?'si':'no'}}</td>
 
                 <td class="text-center" width="70px">{{$article->is_new_collection?'si':'no'}}</td>
 
-                </td>
+
                 <td class="text-center" width="100px"><button type="button" class="btn btn-default"><a href="{{route('article.show', $article->id)}}"> ver
                         datos articulo</a> </button></td>
                 <td class="text-center" width="70px"><button type="button" class="btn btn-default"><a href="{{route('article.edit', $article->id)}}">
@@ -88,9 +104,11 @@
 
             @endforeach
         </tbody>
-    </table>
 
+
+    </table>
+    {{$articles->withQueryString()->links()}}
 </div>
-{{$articles->links()}}
+
 
 @endsection

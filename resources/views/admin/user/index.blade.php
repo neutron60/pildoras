@@ -26,9 +26,16 @@
         </div>
     </form>
 
-    <div pull-right class="centrar3">
-        <a class="btn btn-primary  pull-right"  href="/admin/main">menu principal </a>
-         </div>
+<br>
+@if($query1 <> '%')
+    <p>Resultado de la busqueda de los usuarios con el rol {{$query1}} </p>
+    @endif
+    @if($query2 <> '%')
+    <p>Resultado de la usuarios con el nombre {{$query2}} </p>
+    @endif
+    @if($query3 <> '%')
+    <p>Resultado de la usuarios con el apellido {{$query3}} </p>
+    @endif
 
     <table class="table-striped table-responsive table-hover">
         <thead>
@@ -62,6 +69,7 @@
                 @endforeach
         </tbody>
     </table>
+    {{$users->withQueryString()->links()}}
 </div>
 <br>
 

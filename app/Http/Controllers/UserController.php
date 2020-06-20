@@ -5,6 +5,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
 use App\User;
 use App\Role;
+use App\AsideAdvertising;
 
 class UserController extends Controller {
 
@@ -20,9 +21,13 @@ class UserController extends Controller {
         $users=User::join('roles','roles.id','=','users.role_id')
         ->select('users.id','users.name', 'users.lastname', 'users.id_number','users.id_type', 'users.email', 'roles.role_name')
         ->orderBy('name')
-        ->get();
+        ->paginate(20);
+        $aside_advertisings=AsideAdvertising::all();
+        $query1='%';
+        $query2='%';
+        $query3='%';
 
-        return view("admin.user.index", compact("users", "roles"));
+        return view("admin.user.index", compact("users", "roles", "aside_advertisings", "query1", "query2", "query3"));
     }
 
     public function search(Request $request)
@@ -40,9 +45,10 @@ class UserController extends Controller {
         ->where('roles.role_name', 'LIKE', '%'.$query1. '%')
         ->where('users.name', 'LIKE', '%'. $query2. '%')
         ->where('users.lastname', 'LIKE', '%'. $query3. '%')
-        ->get();
+        ->paginate(20);
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.user.index", compact("users","roles"));
+        return view("admin.user.index", compact("users","roles", "aside_advertisings", "query1", "query2", "query3"));
     }
 
     /**
@@ -75,8 +81,9 @@ class UserController extends Controller {
         $roles=Role::all();
         $user->created_at->toFormattedDateString();
         $user->updated_at->toFormattedDateString();
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.user.show", compact("user", "roles"));
+        return view("admin.user.show", compact("user", "roles", "aside_advertisings"));
     }
 
     /**
@@ -88,7 +95,9 @@ class UserController extends Controller {
     public function edit($id) {
         $user=User::find($id);
         $roles=Role::all();
-        return view("admin.user.edit", compact("user", "roles"));
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("admin.user.edit", compact("user", "roles", "aside_advertisings"));
     }
     /**
      * Update the specified resource in storage.
@@ -100,7 +109,7 @@ class UserController extends Controller {
     /*public function update(Request $request, $id) {*/
     public function update(UserRequest $request, $id) {
         $entrada=user::findOrfail($id);
-        $entrada->update($request->only('name','lastname','role_id','id_type','id_number','mobile_phone_code','mobile_phone','area_code','phone_number','address1','address2','city','state','zip_code'));
+        $entrada->update($request->only('name','lastname','role_id','id_type','id_number','mobil_phone_code','mobil_phone','area_code','phone_number','address','city','state','zip_code'));
 
         return redirect()->route('user.show', $entrada->id)->with('info', 'la informacion del usuario fue actualizada');
     }

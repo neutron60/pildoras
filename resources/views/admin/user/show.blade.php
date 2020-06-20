@@ -66,10 +66,7 @@
             <label for="">Direccion:</label>
         </div>
         <div class="">
-            <label for="">{{$user->address1}}</label>
-        </div>
-        <div class="">
-            <label for="">{{$user->address2}}</label>
+            <label for="">{{$user->address}}</label>
         </div>
     </div>
     <br>

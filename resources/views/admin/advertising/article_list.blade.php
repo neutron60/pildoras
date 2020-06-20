@@ -1,4 +1,7 @@
+
+
 @extends('admin.layout')
+
 @section('content')
 
 
@@ -13,8 +16,8 @@
                     </div>
                     <div class="card-body ml-3">
                         <a href="/admin/article-detail/{{$article->id}}">
-                        <h5 class="card-title">Precio: {{$article->price}}</h5>
-                        <p class="card-text">{{$article->name}}</p>
+                        <h5 class="card-title text-dark">Precio: {{ $price=number_format($article->price,2,",",".")}}</h5>
+                        <p class="card-text text-dark">{{$article->name}}</p>
                     </a>
                     </div>
                 </div>

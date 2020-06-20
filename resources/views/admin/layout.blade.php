@@ -125,8 +125,8 @@
     <div class="row ">
 
         <div class="col-md-2 borde back">
-            @include('admin.store.aside_left')
-            @yield('left_side')
+            @include('admin.left_aside')
+            @yield('left_aside')
         </div>
 
         <div class='col-md-8 borde1'>
@@ -138,8 +138,10 @@
 
         <div class="col-md-2 borde2">
 
-            @yield('right_side')
 
+            @yield('right_aside')
+
+            @include('neutron.right_aside')
         </div>
     </div>
 

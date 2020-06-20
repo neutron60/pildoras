@@ -8,6 +8,7 @@ use App\Department;
 use App\Section;
 use App\Category;
 use App\Article;
+use App\AsideAdvertising;
 
 class ArticleController extends Controller
 {
@@ -23,32 +24,42 @@ class ArticleController extends Controller
         $articles=Article::join('categories','categories.id','=','articles.category_id')
         ->join('sections','sections.id','=','categories.section_id')
         ->join('departments','departments.id','=','sections.department_id')
-        ->select('articles.id','articles.code', 'articles.name', 'categories.name as name_category', 'sections.name as name_section',
-          'departments.name as name_department', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
-          'departments.is_active' )
-        ->where('departments.is_active', 1)
+        ->select('articles.id','articles.code', 'articles.name', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
+        'categories.name as name_category',
+        'sections.name as name_section',
+        'departments.name as name_department')
         ->orderBy('name_department')->orderby('name_section')->orderBy('code')
         ->paginate(20);
 
+        $query1='%';
+        $query2='%';
+        $query3='%';
+        $query4='%';
 
 
-        return view("admin.article.index", compact("articles", "departments"));
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings","query1", "query2", "query3", "query4"));
     }
 
     public function search(Request $request)
     {
         $departments=Department::all();
+
             $query1=trim($request->get('search_department'));
             $query2=trim($request->get('search_article'));
             $query3=trim($request->get('search_is_bargain'));
             $query4=trim($request->get('search_is_new_collection'));
+
             if (!$query2) {$query2='%';}
 
                 $articles=Article::join('categories','categories.id','=','articles.category_id')
                 ->join('sections','sections.id','=','categories.section_id')
                 ->join('departments','departments.id','=','sections.department_id')
-                ->select('articles.id','articles.code', 'articles.name', 'categories.name as name_category', 'sections.name as name_section',
-                  'departments.name as name_department', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection' )
+                ->select('articles.id','articles.code', 'articles.name', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
+                 'categories.name as name_category',
+                  'sections.name as name_section',
+                  'departments.name as name_department' )
                 ->orderBy('name_department')->orderby('name_section')->orderBy('code')
                 ->where('departments.name', 'LIKE', '%'.$query1.'%')
                 ->where('articles.name', 'LIKE', '%'. $query2. '%')
@@ -56,9 +67,9 @@ class ArticleController extends Controller
                 ->where('articles.is_new_collection', 'LIKE', '%'. $query4. '%')
                 ->paginate(20);
 
+                $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.index", compact("articles", "departments"))
-        ->with('info', 'El resultado de su busqueda es el siguiente');
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "query1", "query2", "query3", "query4"));
     }
 
 
@@ -73,8 +84,9 @@ class ArticleController extends Controller
         $section=Section::find($id);
         $department=$section->department;
         $categories=$section->categories;
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.create", compact("department","section", "categories"));
+        return view("admin.article.create", compact("department","section", "categories", "aside_advertisings"));
     }
     /**
      * Store a newly created resource in storage.
@@ -120,8 +132,11 @@ class ArticleController extends Controller
         $department=$section->department;
         $article->created_at->toFormattedDateString();
         $article->updated_at->toFormattedDateString();
+        $price=number_format($article->price,2,",",".");
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.show", compact("article", "department", "section", "category"));
+
+        return view("admin.article.show", compact("article", "department", "section", "category","price", "aside_advertisings"));
     }
 
     /**
@@ -136,8 +151,9 @@ class ArticleController extends Controller
         $category=$article->category;
         $section=$category->section;
         $department=$section->department;
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.edit", compact("article", "category", "section", "department"));
+        return view("admin.article.edit", compact("article", "category", "section", "department", "aside_advertisings"));
     }
 
 
@@ -189,7 +205,9 @@ class ArticleController extends Controller
     public function selectDepartment ()
     {
         $departments=Department::all();
-        return view("admin.article.selectDepartment", compact("departments"));
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("admin.article.selectDepartment", compact("departments", "aside_advertisings"));
     }
 
     public function selectSection ($id)
@@ -197,7 +215,9 @@ class ArticleController extends Controller
 
         $department=Department::find($id);
         $sections=$department->sections;
-        return view("admin.article.selectSection", compact("department", "sections"));
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("admin.article.selectSection", compact("department", "sections", "aside_advertisings"));
     }
 
 

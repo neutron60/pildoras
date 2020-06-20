@@ -17,5 +17,9 @@ class Article extends Model
 
     public function category(){
         return $this->belongsTo('App\Category');
-        }
+    }
+
+    public function purchase_details(){
+        return $this->hasMany('App\PurchaseDetail');
+    }
 }

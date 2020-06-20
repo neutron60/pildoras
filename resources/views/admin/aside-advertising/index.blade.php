@@ -3,9 +3,7 @@
 @section('content')
 <div class="container-fluid">
     <h1 class="text-center mb-5"> PUBLICIDAD LATERAL</h1>
-    <div pull-right class="centrar3">
-    <a class="btn btn-primary  pull-right"  href="/admin/main">menu principal </a>
-     </div>
+
     @include('admin.department.fragment.info')
     <table class="table-striped table-hover table-responsive ">
         <thead>

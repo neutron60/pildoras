@@ -26,7 +26,8 @@ class AsideAdvertisingController extends Controller
      */
     public function create()
     {
-        return view("admin.aside-advertising.create");
+        $aside_advertisings=AsideAdvertising::all();
+        return view("admin.aside-advertising.create", compact("aside_advertisings"));
     }
 
     /**
@@ -59,10 +60,12 @@ class AsideAdvertisingController extends Controller
     public function show($id)
     {
         $aside_advertising=AsideAdvertising::findOrfail($id);
+        $aside_advertisings=AsideAdvertising::all();
         $aside_advertising->created_at->toFormattedDateString();
         $aside_advertising->updated_at->toFormattedDateString();
 
-        return view("admin.aside-advertising.show", compact("aside_advertising"));
+
+        return view("admin.aside-advertising.show", compact("aside_advertising", "aside_advertisings"));
     }
 
     /**
@@ -74,8 +77,9 @@ class AsideAdvertisingController extends Controller
     public function edit($id)
     {
         $aside_advertising=AsideAdvertising::findOrfail($id);
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.aside-advertising.edit", compact("aside_advertising"));
+        return view("admin.aside-advertising.edit", compact("aside_advertising", "aside_advertisings"));
     }
 
     /**

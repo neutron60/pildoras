@@ -55,7 +55,7 @@
         <div class="centrar1">
             <input class="" type="submit" name="registrar" value="registrar" id="">
             <input class="centrar2" type="reset" name="borrar" value="borrar" id="">
-            <button class="centrar2"><a class="" href="/admin/main"> menu principal </a></button>
+
         </div>
     </form>
 </div>

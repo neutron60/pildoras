@@ -31,7 +31,7 @@
             <input class="" type="submit" name="enviar" value="registrar" id="">
             <input class="centrar2" type="reset" name="borrar" value="borrar" id="">
             <a class="btn btn-secondary centrar2" href="{{route('role.index')}}">ver roles </a>
-            <button class="centrar2"><a class="" href="/admin/main"> menu principal </a></button>
+
         </div>
     </form>
 </div>

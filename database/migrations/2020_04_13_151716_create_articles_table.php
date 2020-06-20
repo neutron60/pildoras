@@ -25,10 +25,10 @@ class CreateArticlesTable extends Migration
             $table->string('model')->nullable();
             $table->string('use')->nullable();
             $table->string('size')->nullable();
-            $table->float('price')->nullable()->unsigned();;
-            $table->integer('stock')->nullable()->unsigned();
-            $table->tinyInteger('is_bargain')->nullable()->unsigned();
-            $table->tinyInteger('is_new_collection')->nullable()->unsigned();
+            $table->float('price',11,2)->default(0)->unsigned();
+            $table->integer('stock')->default(0)->unsigned();
+            $table->tinyInteger('is_bargain')->default(0)->unsigned();
+            $table->tinyInteger('is_new_collection')->default(0)->unsigned();
             $table->bigInteger('category_id')->nullable()->unsigned();
             $table->tinyInteger('is_active')->nullable()->unsigned();
             $table->softDeletes();

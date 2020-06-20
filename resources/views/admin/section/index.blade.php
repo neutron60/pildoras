@@ -8,9 +8,9 @@
 
     <form action="/admin/section/search" class="form-inline">
         <div class="input-group input-group-sm ">
-            <div class="">
+            <div class="form-row">
                 <select name="search_department" id="search_department" class="form-control">
-                    <option selected value="%">todos</option>
+                    <option selected value="%">departamento</option>
                     @foreach($departments as $department){
                     <option value="{{$department->name}}">{{$department->name}}</option>
                     @endforeach
@@ -22,10 +22,10 @@
         </div>
     </form>
 
-    <div pull-right class="centrar3">
-    <a class="btn btn-primary  pull-right"  href="/admin/main">menu principal </a>
-     </div>
-    @include('admin.section.fragment.info')
+    <br>
+    @if($query <> '%')
+    <p>Resultado de la busqueda del departamento {{$query}} </p>
+    @endif
     <table class="table-striped table-hover table-responsive ">
         <thead>
             <tr>
@@ -54,6 +54,7 @@
             @endforeach
         </tbody>
     </table>
+    {{$sections->withQueryString()->links()}}
 </div>
 
 @endsection

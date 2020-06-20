@@ -104,7 +104,7 @@
                     <label for="">PRECIO:</label>
                 </div>
                 <div class="ml-3">
-                    <label for="">{{$article->price}}  Bs.</label>
+                    <label for="">{{$price}}  Bs.</label>
                 </div>
                 <div class="ml-5">
                     <label for="">EXISTENCIA:</label>

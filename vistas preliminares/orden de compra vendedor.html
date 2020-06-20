@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="web de neutron">
+    <meta name="keywords" content="neutron vender comprar">
+    <title> neutron </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+
+    <script src="https://kit.fontawesome.com/40d555d624.js" crossorigin="anonymous"></script>
+
+    <style>
+
+
+    </style>
+</head>
+
+<body>
+
+    <h2 class="text-center">ORDEN DE COMPRA</h2>
+
+    <div class="form-row float-right mr-5">
+        <div class="">
+            <label class="" for="nombre">
+                <h5>fecha:</h5>
+            </label>
+        </div>
+        <div class="">
+            <label class="ml-2" for="nombre">
+                <h5>4 mayo 2020</h5>
+            </label>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class=" form-row float-right mr-5">
+        <div class="">
+            <label class=" " for="nombre">
+                <h5>Numero de orden:</h5>
+            </label>
+        </div>
+        <div class="">
+            <label class="ml-2 " for="nombre">
+                <h5>253</h5>
+            </label>
+        </div>
+    </div>
+    <br><br>
+    <div class=" form-row ">
+        <div class="ml-3">
+            <label class=" " for="nombre">
+                <h5>COMPRADOR:</h5>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">Nombre:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">juan perez</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">cedula:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">V-4567890</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">Direccion:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">xxxxxxxxxxxxx</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">Ciudad:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">maracaibo</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">estado:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">zulia</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">Codigo postal:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">8010</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">telf. fijo:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">555555555</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">telf. celular:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">555555555</label>
+        </div>
+    </div>
+    <br><br>
+    <div class=" form-row ">
+        <div class="col-md-5 lineadiv">
+            <label class="ml-3 " for="nombre">
+                <h5>DATOS DEL PRODUCTO:</h5>
+            </label>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">codigo</th>
+                <th class="text-center" scope="col">producto</th>
+                <th class="text-center" scope="col">cantidad</th>
+                <th class="text-center" scope="col">precio unitario</th>
+                <th class="text-center" scope="col">total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach ($articles as $article)
+            <tr>
+                <td class="text-center" scope="row" width="120px">{{$article->codigo}}</td>
+
+                <td class="text-center" scope="row" width="120px">{{$article->producto}}</td>
+
+                <td class="text-center" scope="row" width="120px">{{$article->cantidad}}</td>
+
+                <td class="text-center" scope="row" width="200px">{{$article->total}}</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+
+
+            @endforeach
+        </tbody>
+    </table>
+    <table>
+        <tbody>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">subtotal</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">iva</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">total</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <br><br>
+
+
+
+    <div class=" form-row ">
+        <div class="col-md-5 lineadiv">
+            <label class="ml-3 " for="nombre">
+                <h5>DATOS DEL PAGO:</h5>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">tipo de transaccion:</label>
+        </div>
+        <div class="ml-3">
+            <select id="id_type" name="id_type" class="form-control">
+                <option selected value="">seleccione</option>
+                <option value="MRW">efectivo</option>
+                <option value="TEALCA">transferencia</option>
+            </select>
+        </div>
+
+        <div class="ml-5">
+            <label class="" for="nombre">monto pagado:</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">banco emisor::</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+
+        <div class="ml-5">
+            <label class="" for="nombre">banco receptor:</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">fecha de la transaccion::</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+
+        <div class="ml-5">
+            <label class="" for="nombre">numero de operacion:</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">pago verificado:</label>
+        </div>
+        <div class="form-check ml-3">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
+            <label class="form-check-label" for="exampleRadios3">
+                si
+            </label>
+        </div>
+        <div class="form-check ml-3">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios4" value="option4"
+                checked>
+            <label class="form-check-label" for="exampleRadios4">
+                no
+            </label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">numero de factura:</label>
+        </div>
+        <div class="ml-3">
+            <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="lastname" name="lastname"
+                value="{{$user->lastname}}">
+        </div>
+    </div>
+
+
+
+    <br><br>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+</body>

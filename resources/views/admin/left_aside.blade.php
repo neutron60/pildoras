@@ -58,7 +58,7 @@
 <div class="ml-4">
     <p class="font-weight-bold text-dark">Publicidad lado derecho</p>
     <p class="mt-n1">
-        <a href="/admin/aside-advertising/create" type="" class="text-dark">registrar un nueva
+        <a href="/admin/aside-advertising/create" type="" class="text-dark">registrar una nueva
             publicidad</a>
     </p>
     <p class="mt-n3">
@@ -70,6 +70,9 @@
     <p class="font-weight-bold text-dark">Publicidad central</p>
     <p class="mt-n1">
         <a href="/admin/advertising/create" type="" class="text-dark">registrar publicidad</a>
+    </p>
+    <p class="mt-n3">
+        <a href="{{route('advertising.edit', 1)}}" type="" class="text-dark">editar publicidad</a>
     </p>
     <p class="mt-n3">
         <a href="/admin/advertising" type="" class="text-dark">ver publicidad</a>

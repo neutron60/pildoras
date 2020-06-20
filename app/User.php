@@ -39,7 +39,10 @@ class User extends Authenticatable
 
 
     public function role(){
-
         return $this->belongsTo('App\Role');
+    }
+
+    public function purchases(){
+        return $this->belongsTo('App\Purchase');
     }
 }

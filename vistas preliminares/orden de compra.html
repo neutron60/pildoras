@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="web de neutron">
+    <meta name="keywords" content="neutron vender comprar">
+    <title> neutron </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+
+    <script src="https://kit.fontawesome.com/40d555d624.js" crossorigin="anonymous"></script>
+
+    <style>
+        .centrar {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .centrar1 {
+            margin-left: 40%;
+            margin-right: ;
+        }
+
+        .centrar2 {
+            margin-left: 8%;
+            margin-right:
+        }
+
+        .centrar3 {
+            margin-left: 11%;
+            margin-right:
+        }
+
+        .centrar4 {
+            margin-left: auto;
+            margin-right: 0%
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <h2 class="text-center">ORDEN DE COMPRA</h2>
+
+
+
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample1" aria-expanded="false" aria-controls="collapseExample">
+          CASO 1
+        </button>
+        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample2" aria-expanded="false" aria-controls="collapseExample">
+            CASO 2
+          </button>
+
+
+      <div class="collapse" id="collapseExample1">
+
+          CASO 1
+
+      </div>
+      <div class="collapse" id="collapseExample2">
+        <div class="card card-body">
+          CASO 2
+        </div>
+      </div>
+
+
+    <div class="form-row float-right mr-5">
+        <div class="">
+            <label class="" for="nombre">
+                <h5>fecha:</h5>
+            </label>
+        </div>
+        <div class="">
+            <label class="ml-2" for="nombre">
+                <h5>4 mayo 2020</h5>
+            </label>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+
+    <div class=" form-row float-right mr-5">
+        <div class="">
+            <label class=" " for="nombre">
+                <h5>Numero de orden:</h5>
+            </label>
+        </div>
+        <div class="">
+            <label class="ml-2 " for="nombre">
+                <h5>253</h5>
+            </label>
+        </div>
+    </div>
+    <br><br>
+    <div class=" form-row ">
+        <div class="ml-3">
+            <label class=" " for="nombre">
+                <h5>COMPRADOR:</h5>
+            </label>
+        </div>
+    </div>
+
+    <div class="form-row">
+        <div class="">
+            <label class="ml-3" for="nombre">Nombre:</label>
+        </div>
+        <div class=" ">
+            <label for="">juan perez</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">cedula:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">V-4567890</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">Direccion:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">xxxxxxxxxxxxx</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">Ciudad:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">maracaibo</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">estado:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">zulia</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">Codigo postal:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">8010</label>
+        </div>
+    </div>
+
+    <div class="form-row ">
+        <div class="ml-3">
+            <label class="" for="nombre">telf. fijo:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">555555555</label>
+        </div>
+        <div class="ml-5">
+            <label class="" for="nombre">telf. celular:</label>
+        </div>
+        <div class="ml-3 ">
+            <label for="">555555555</label>
+        </div>
+    </div>
+    <br><br>
+    <div class=" form-row ">
+        <div class="">
+            <label class="ml-3 " for="nombre">
+                <h5>DATOS DEL PRODUCTO:</h5>
+            </label>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th class="text-center" scope="col">codigo</th>
+                <th class="text-center" scope="col">producto</th>
+                <th class="text-center" scope="col">cantidad</th>
+                <th class="text-center" scope="col">precio unitario</th>
+                <th class="text-center" scope="col">total</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @foreach ($articles as $article)
+            <tr>
+                <td class="text-center" scope="row" width="120px">{{$article->codigo}}</td>
+
+                <td class="text-center" scope="row" width="120px">{{$article->producto}}</td>
+
+                <td class="text-center" scope="row" width="120px">{{$article->cantidad}}</td>
+
+                <td class="text-center" scope="row" width="200px">{{$article->total}}</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+
+
+            @endforeach
+        </tbody>
+    </table>
+    <table>
+        <tbody>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">subtotal</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">iva</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+            <tr>
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="120px"></td>
+
+                <td class="text-center" scope="row" width="200px">total</td>
+
+                <td class="text-center" scope="row" width="80px">{{$article->total}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br><br>
+
+    <div class="form-row ml-3">
+        <label for="">requiere envio:</label>
+        <button class="ml-4" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
+            aria-controls="collapseExample">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+            <label class="form-check-label " for="exampleRadios1">
+                si
+            </label>
+        </button>
+
+        <button class="ml-5">
+            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2"
+                checked>
+            <label class="form-check-label" for="exampleRadios2">
+                no
+            </label>
+        </button>
+
+    </div>
+    <br>
+
+    <div class="collapse" id="collapseExample">
+
+        <div class=" form-row ">
+            <div class="ml-3">
+                <label class=" " for="nombre">
+                    <h5>DATOS DE ENVIO:</h5>
+                </label>
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">enviar a:</label>
+            </div>
+            <div class="ml-3 ">
+                <label for="">juan perez</label>
+            </div>
+            <div class="ml-3">
+                <label class="" for="nombre">cedula:</label>
+            </div>
+            <div class="ml-3 ">
+                <label for="">666666666</label>
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">telf. fijo:</label>
+            </div>
+            <div class="ml-3 ">
+                <label for="">555555555</label>
+            </div>
+            <div class="ml-5">
+                <label class="" for="nombre">telf. celular:</label>
+            </div>
+            <div class="ml-3 ">
+                <label for="">555555555</label>
+            </div>
+        </div>
+        <br>
+
+<label for="" class="ml-3">indique si desea envio a</label>
+<div class="form-check form-check-inline ml-3">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+    <label class="form-check-label" for="inlineRadio1">direccion</label>
+  </div>
+  <div class="form-check form-check-inline ml-3">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+    <label class="form-check-label" for="inlineRadio2">oficina courier</label>
+  </div>
+        <br><br>
+
+        <div class=" form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">
+                    <h5>ENVIO A OFICINA COURIER:</h5>
+                </label>
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">empresa de envio:</label>
+            </div>
+            <div class="ml-3">
+                <select id="id_type" name="id_type" class="form-control">
+                    <option selected value="">seleccione</option>
+                    <option value="MRW">MRW</option>
+                    <option value="TEALCA">TEALCA</option>
+                    <option value="DOMESA">DOMESA</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">oficina Courier:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">Direccion oficina:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">Ciudad:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+            <div class="ml-5">
+                <label class="" for="nombre">estado:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+            <div class="ml-5">
+                <label class="" for="nombre">Codigo postal:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+        </div>
+
+        <br>
+        <div class=" form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">
+                    <h5>ENVIO DIRECCION COMPRADOR:</h5>
+                </label>
+            </div>
+        </div>
+        <label for="" class="ml-3">desea el envio a</label>
+<div class="form-check form-check-inline ml-3">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+    <label class="form-check-label" for="inlineRadio1">direccion registrada</label>
+  </div>
+  <div class="form-check form-check-inline ml-3">
+    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+    <label class="form-check-label" for="inlineRadio2">nueva direccion</label>
+  </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">empresa de envio:</label>
+            </div>
+            <div class="ml-3">
+                <select id="id_type" name="id_type" class="form-control">
+                    <option selected value="">seleccione</option>
+                    <option value="MRW">MRW</option>
+                    <option value="TEALCA">TEALCA</option>
+                    <option value="DOMESA">DOMESA</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">Direccion de envio:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+        </div>
+        <div class="form-row ">
+            <div class="ml-3">
+                <label class="" for="nombre">Ciudad:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+            <div class="ml-5">
+                <label class="" for="nombre">estado:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+            <div class="ml-5">
+                <label class="" for="nombre">Codigo postal:</label>
+            </div>
+            <div class="ml-3 ">
+                <input type="text" maxlength="50" pattern="[A-Za-z]" class="form-control" id="name" name="name"
+                    value="{{$user->name}}">
+            </div>
+        </div>
+
+
+    </div>
+
+    <br>
+
+
+
+
+
+
+    <br><br>
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+</body>

@@ -8,6 +8,7 @@ use App\Http\Requests\CategoryRequest;
 use App\Department;
 use App\Section;
 use App\Category;
+use App\AsideAdvertising;
 
 class CategoryController extends Controller
 {
@@ -24,12 +25,15 @@ class CategoryController extends Controller
         $departments=Department::all();
         $categories=Category::join('sections','sections.id','=','categories.section_id')
         ->join('departments','departments.id','=','sections.department_id')
-        ->select('categories.id','categories.name', 'departments.name as name_department', 'sections.name as name_section',
-          'categories.is_active')
+        ->select('categories.id','categories.name', 'categories.is_active',
+         'departments.name as name_department',
+          'sections.name as name_section')
         ->orderBy('name_department')->orderby('name_section')
-        ->get();
+        ->paginate(20);
+        $aside_advertisings=AsideAdvertising::all();
+        $query='%';
 
-        return view("admin.category.index", compact("categories", "departments"));
+        return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "query"));
     }
 
     public function search(Request $request)
@@ -44,9 +48,10 @@ class CategoryController extends Controller
               'categories.is_active')
             ->orderBy('name_department')->orderby('name_section')
             ->where('departments.name', 'LIKE', '%'.$query.'%')
-            ->get();
+            ->paginate(20);
+            $aside_advertisings=AsideAdvertising::all();
 
-            return view("admin.category.index", compact("categories", "departments"));
+            return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "query"));
     }
 
     /**
@@ -57,11 +62,11 @@ class CategoryController extends Controller
     public function create($id)
     {
         $department=Department::find($id);
-
+        $aside_advertisings=AsideAdvertising::all();
 
         $sections=$department->sections;
 
-        return view("admin.category.create", compact("department", "sections"));
+        return view("admin.category.create", compact("department", "sections", "aside_advertisings"));
 
     }
 
@@ -95,8 +100,9 @@ class CategoryController extends Controller
         $department=$section->department;
         $category->created_at->toFormattedDateString();
         $category->updated_at->toFormattedDateString();
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.category.show", compact("section", "department", "category"));
+        return view("admin.category.show", compact("section", "department", "category", "aside_advertisings"));
 
     }
 
@@ -111,8 +117,9 @@ class CategoryController extends Controller
         //
 
         $category=Category::find($id);
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.category.edit", compact("category"));
+        return view("admin.category.edit", compact("category", "aside_advertisings"));
     }
 
     /**
@@ -149,6 +156,8 @@ class CategoryController extends Controller
     public function selectDepartment ()
     {
         $departments=Department::all();
-        return view("admin.category.selectDepartment", compact("departments"));
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("admin.category.selectDepartment", compact("departments", "aside_advertisings"));
     }
 }

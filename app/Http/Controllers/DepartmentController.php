@@ -5,6 +5,7 @@ use App\Http\Requests\DepartmentRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Department;
+use App\AsideAdvertising;
 
 class DepartmentController extends Controller
 {
@@ -14,17 +15,13 @@ class DepartmentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function main() {
-
-
-        return view("admin.main");
-    }
 
     public function index()
     {
         $departments=Department::all();
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.index", compact("departments"));
+        return view("admin.department.index", compact("departments", "aside_advertisings"));
     }
 
     /**
@@ -34,7 +31,8 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view("admin.department.create");
+        $aside_advertisings=AsideAdvertising::all();
+        return view("admin.department.create", compact("aside_advertisings"));
     }
 
     /**
@@ -66,8 +64,9 @@ class DepartmentController extends Controller
         $department=Department::findOrfail($id);
         $department->created_at->toFormattedDateString();
         $department->updated_at->toFormattedDateString();
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.show", compact("department"));
+        return view("admin.department.show", compact("department", "aside_advertisings"));
     }
 
     /**
@@ -79,8 +78,9 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department=Department::findOrfail($id);
+        $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.edit", compact("department"));
+        return view("admin.department.edit", compact("department", "aside_advertisings"));
     }
 
     /**
@@ -115,15 +115,5 @@ class DepartmentController extends Controller
         return redirect()->route('department.index')->with('info', 'el departamento junto con sus secciones y productos asociados fueron eliminados');
     }
 
-    public function is_active($entradas)
-    {
 
-        foreach($entradas as $entrada){
-            if($entrada->is_active){
-                $is_active="activo";}
-                else{$is_active="inactivo";}
-        }
-       return $is_active;
-
-    }
 }

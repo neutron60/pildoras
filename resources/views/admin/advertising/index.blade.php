@@ -27,7 +27,7 @@
                 <div class="row">
                     @foreach($article_bargainsRow as $article_bargain)
                     <div class="col-md-3">
-                        <a href="" class="">
+                        <a href="/admin/article-detail/{{$article_bargain->id}}" class="">
                             <img src="{{$article_bargain->image1}}" class="d-block image1" alt="...">
                         </a>
                     </div>
@@ -65,7 +65,7 @@
                     <div class="row">
                         @foreach($article_new_collectionsRow as $article_new_collection)
                         <div class="col-md-3">
-                            <a href="">
+                            <a href="/admin/article-detail/{{$article_new_collection->id}}">
                                 <img src="{{$article_new_collection->image1}}" class="d-block image1" alt="...">
                             </a>
                         </div>
@@ -103,7 +103,7 @@
                     <div class="card-body ml-3">
                         <h5 class="card-title">{{$department->title}}</h5>
                         <p class="card-text">{{$department->description}}</p>
-                        <a href="/admin/article-list/{{$department->id}}" class="">descubre mas ....</a>
+                        <a href="/admin/article-list-department/{{$department->id}}" class="">descubre mas ....</a>
                     </div>
                 </div>
 
@@ -118,7 +118,7 @@
         @endsection
 
         @section('right_side')
-        @include('admin.store.aside_right')
+        @include('admin.right_aside')
         @endsection
 
         @section('left_side')
