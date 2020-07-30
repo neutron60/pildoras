@@ -22,12 +22,10 @@ class AddUsersTable extends Migration
             $table->string('mobil_phone')->after('mobil_phone_code')->nullable();
             $table->string('area_code')->after('mobil_phone')->nullable();
             $table->string('phone_number')->after('area_code')->nullable();
-            $table->string('address1')->after('phone_number')->nullable();
-            $table->string('address2')->after('address1')->nullable();
-            $table->string('city')->after('address2')->nullable();
+            $table->string('address')->after('phone_number')->nullable();
+            $table->string('city')->after('address')->nullable();
             $table->string('state')->after('city')->nullable();
             $table->string('zip_code')->after('state')->nullable();
-            $table->softDeletes();
 
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });

@@ -18,7 +18,6 @@ class CreateCategoriesTable extends Migration
             $table->string('name')->nullable();
             $table->tinyInteger('is_active')->nullable()->unsigned();
             $table->bigInteger('section_id')->nullable()->unsigned();
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');

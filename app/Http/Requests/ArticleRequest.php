@@ -27,7 +27,7 @@ class ArticleRequest extends FormRequest
             'category_id' => 'sometimes|required',
             'code' => 'sometimes|required|unique:articles|min:2|max:20',
             'name' => 'required|min:2|max:100',
-            'stock' => 'required',
+            'stock' => 'required|integer',
             'price' => 'required',
             'description' => 'required|min:2|max:2000',
             'image1' => 'filled|image|max:1000|min:10',

@@ -97,15 +97,15 @@
         <tr>
             <td class="text-center" scope="row" width="50px">1</td>
 
-            <td class="text-center" scope="row" width="100px">{{$article_code}}</td>
+            <td class="text-center" scope="row" width="80px">{{$article->code}}</td>
 
-            <td class="text-center" scope="row" width="200px">{{$purchase_detail->article_name}}</td>
+            <td class="text-center" scope="row" width="200px">{{$article->name}}</td>
 
-            <td class="text-center" scope="row" width="100px">{{$purchase_detail->purchased_amount}}</td>
+            <td class="text-center" scope="row" width="100px">{{$purchased_amount}}</td>
 
-            <td class="text-center" scope="row" width="100px">{{$unit_price}}</td>
+            <td class="text-center" scope="row" width="120px">{{$order_calculation['unit_price']}}</td>
 
-            <td class="text-center" scope="row" width="100px">{{$total_price}}</td>
+            <td class="text-center" scope="row" width="120px">{{$order_calculation['total_price']}}</td>
         </tr>
 
 
@@ -116,41 +116,41 @@
         <tr>
             <td class="text-center" scope="row" width="50px"></td>
 
-            <td class="text-center" scope="row" width="100px"></td>
+            <td class="text-center" scope="row" width="80px"></td>
 
             <td class="text-center" scope="row" width="200px"></td>
 
             <td class="text-center" scope="row" width="100px"></td>
 
-            <td class="text-center" scope="row" width="100px">subtotal</td>
+            <td class="text-center" scope="row" width="120px">subtotal</td>
 
-            <td class="text-center" scope="row" width="100px">{{$sub_total}}</td>
+            <td class="text-center" scope="row" width="120px">{{$order_calculation['sub_total']}}</td>
         </tr>
         <tr>
             <td class="text-center" scope="row" width="50px"></td>
 
-            <td class="text-center" scope="row" width="100px"></td>
+            <td class="text-center" scope="row" width="80px"></td>
 
             <td class="text-center" scope="row" width="200px"></td>
 
             <td class="text-center" scope="row" width="100px"></td>
 
-            <td class="text-center" scope="row" width="100px">iva</td>
+            <td class="text-center" scope="row" width="120px">iva</td>
 
-            <td class="text-center" scope="row" width="100px">{{$iva}}</td>
+            <td class="text-center" scope="row" width="120px">{{$order_calculation['iva']}}</td>
         </tr>
         <tr>
             <td class="text-center" scope="row" width="50px"></td>
 
-            <td class="text-center" scope="row" width="100px"></td>
+            <td class="text-center" scope="row" width="80px"></td>
 
             <td class="text-center" scope="row" width="200px"></td>
 
             <td class="text-center" scope="row" width="100px"></td>
 
-            <td class="text-center" scope="row" width="100px">total</td>
+            <td class="text-center" scope="row" width="120px">total</td>
 
-            <td class="text-center" scope="row" width="100px">{{$total}}</td>
+            <td class="text-center" scope="row" width="120px">{{$order_calculation['total']}}</td>
         </tr>
     </tbody>
 </table>

@@ -46,7 +46,7 @@
         <label class="" for="nombre">fecha de la transaccion::</label>
     </div>
     <div class="ml-3">
-        <label for="">{{$purchase->payment_day}}</label>
+        <label for="">{{$payment_day}}</label>
     </div>
 
     <div class="ml-5">

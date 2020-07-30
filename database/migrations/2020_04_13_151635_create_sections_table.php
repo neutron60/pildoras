@@ -18,7 +18,6 @@ class CreateSectionsTable extends Migration
             $table->string('name')->nullable();
             $table->bigInteger('department_id')->nullable()->unsigned();
             $table->tinyInteger('is_active')->nullable()->unsigned();
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');

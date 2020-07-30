@@ -160,13 +160,13 @@
                     <label class="" for="nombre">IMAGEN:</label>
                 </div>
                 <div class="col-md-2 ml-2">
-                    <img class="image" src="{{$article->image1}}" height="100rem" alt="imagen" >
+                    <img class="image centrar" src="{{asset($article->image1)}}" height="100rem" alt="imagen" >
                 </div>
                 <div class="col-md-2 ml-2 ">
-                    <img class="image" src="{{$article->image2}}" height="100rem" alt="imagen" >
+                    <img class="image centrar" src="{{asset($article->image2)}}" height="100rem" alt="imagen" >
                 </div>
                 <div class="col-md-2 ml-2">
-                    <img class="image" src="{{$article->image3}}" height="100rem" alt="imagen" >
+                    <img class="image centrar" src="{{asset($article->image3)}}" height="100rem" alt="imagen" >
                 </div>
             </div>
             <br><br>

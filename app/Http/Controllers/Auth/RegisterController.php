@@ -8,6 +8,10 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Advertising;
+
+
+
 
 class RegisterController extends Controller
 {
@@ -73,5 +77,13 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
             'role_id' => $data['role_id'],
         ]);
+    }
+
+    public function neutron_register(){
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+
+        return view("auth.register", compact("advertising"));
     }
 }

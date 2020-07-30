@@ -27,7 +27,6 @@ class CreatePurchasesTable extends Migration
             $table->tinyInteger('verified_payment')->default(0);
             $table->tinyinteger('requires_shipping')->unsigned();
             $table->string('courier_name')->nullable();
-            $table->string('courier_office')->nullable();
             $table->string('shipping_address')->nullable();
             $table->string('shipping_city')->nullable();
             $table->string('shipping_state')->nullable();

@@ -13,6 +13,16 @@
 
         <div class="form-row">
             <div class="">
+                <label class="" for="nombre">LOGO:</label>
+            </div>
+            <div class="ml-3">
+                <input type="file" maxlength="100" pattern="" class=" " id="logo" name="logo">
+                @include('admin.advertising.fragment.error_logo')
+            </div>
+        </div>
+<br>
+        <div class="form-row">
+            <div class="">
                     <label>ENCABEZADO PRINCIPAL:</label>
             </div>
             <div class="ml-3">
@@ -49,6 +59,28 @@
             <div class="ml-3">
                 <input type="file" maxlength="100" pattern="" class=" " id="image_header" name="image_header">
                 @include('admin.advertising.fragment.error_image_header')
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="">
+                <label class="" for="nombre">QUIENES SOMOS:</label>
+            </div>
+            <div class="ml-3 col-md-3">
+                <textarea maxlength="2000" rows="10" cols="10" pattern="" class="form-control" id="who_are"
+                    name="who_are">{{old('who_are')}} </textarea>
+                @include('admin.advertising.fragment.error_who_are')
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="">
+                <label class="" for="nombre">CONTACTANOS:</label>
+            </div>
+            <div class="ml-3 col-md-3">
+                <textarea maxlength="2000" rows="10" cols="10" pattern="" class="form-control" id="contact"
+                    name="contact">{{old('contact')}} </textarea>
+                @include('admin.advertising.fragment.error_contact')
             </div>
         </div>
         <br><br>

@@ -20,7 +20,7 @@
             <tr>
                 <td class="text-center" scope="row" width="300px" padding-top="10%" >{{$aside_advertising->advertising_text}}</td>
 
-                <td class="text-center" width="100px"><img src="{{$aside_advertising->advertising_image}}" alt="imagen" height="150 rem"></td>
+                <td class="" width="150px"><img src="{{asset($aside_advertising->advertising_image)}}" class="centrar image" alt="imagen" height="140 rem"></td>
 
                 <td class="text-center" width="100px">{{$aside_advertising->advertising_url}}</td>
 

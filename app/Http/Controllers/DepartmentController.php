@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\Department;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class DepartmentController extends Controller
 {
@@ -19,9 +20,11 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments=Department::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.index", compact("departments", "aside_advertisings"));
+        return view("admin.department.index", compact("departments", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -31,8 +34,10 @@ class DepartmentController extends Controller
      */
     public function create()
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
-        return view("admin.department.create", compact("aside_advertisings"));
+        return view("admin.department.create", compact("aside_advertisings", "advertising"));
     }
 
     /**
@@ -43,12 +48,12 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
-        $entrada=$request->only('name','title','description','image','is_active');
+        $entrada=$request->only('name','title','description','is_active');
         $archivo=Department::create($entrada);
 
         if($request->file('image')){        // verifica si hay un archivo
             $path=Storage::disk('public')->put('images', $request->file('image'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['image'=>asset($path)])->save();   //guardar en base de datos la ruta
+            $archivo->fill(['image'=>$path])->save();   //guardar en base de datos la ruta
         }
         return redirect()->route('department.index')->with('info', 'el departamento fue creado');
     }
@@ -64,9 +69,11 @@ class DepartmentController extends Controller
         $department=Department::findOrfail($id);
         $department->created_at->toFormattedDateString();
         $department->updated_at->toFormattedDateString();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.show", compact("department", "aside_advertisings"));
+        return view("admin.department.show", compact("department", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -78,9 +85,11 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         $department=Department::findOrfail($id);
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.department.edit", compact("department", "aside_advertisings"));
+        return view("admin.department.edit", compact("department", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -94,12 +103,21 @@ class DepartmentController extends Controller
     {
 
         $entrada=Department::findOrfail($id);
-        $entrada->update($request->only('title','description','image','is_active'));
+
+        $entrada->update($request->only('title','description','is_active'));
+
         if($request->file('image')){        // verifica si hay un archivo
-            $path=Storage::disk('public')->put('images', $request->file('image'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['image'=>asset($path)])->update();   //guardar en base de datos la ruta
+
+           $path1=$entrada->image;
+           Storage::disk('public')->delete($path1);
+
+           $path=Storage::disk('public')->put('images', $request->file('image'));  //almacenar en el disco publico, carpeta images, el archivo file
+
+           /* $entrada->fill(['image'=>asset($path)])->update();   //guardar en base de datos la ruta*/
+            $entrada->fill(['image'=>$path])->update();
         }
         return redirect()->route('department.show', $entrada->id)->with('info', 'el departamento fue actualizado');
+
     }
 
     /**
@@ -111,9 +129,12 @@ class DepartmentController extends Controller
     public function destroy($id)
     {
         $department=Department::findOrfail($id);
+        $path=$department->image;
+        Storage::disk('public')->delete($path);
         $department->delete();
         return redirect()->route('department.index')->with('info', 'el departamento junto con sus secciones y productos asociados fueron eliminados');
     }
 
 
 }
+

@@ -14,6 +14,8 @@
 <div class="container-fluid">
     <!-- DEPARTAMENTO -->
 
+    @include('admin.department.fragment.info')
+    <br>
     <div class="form-row">
         <div class="">
             <label class=" " for="name">
@@ -72,7 +74,7 @@
             <label class="" for="nombre">IMAGEN:</label>
         </div>
         <div class="col-md-3 ">
-            <img class="image" src="{{$department->image}}" alt="imagen" height=150px/>
+            <img class="image" src="{{asset($department->image)}}" alt="imagen" height=150px/>
         </div>
     </div>
     <br><br>

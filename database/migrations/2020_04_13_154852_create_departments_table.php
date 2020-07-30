@@ -21,7 +21,6 @@ class CreateDepartmentsTable extends Migration
             $table->string('image')->nullable();
             $table->tinyInteger('is_active')->nullable()->unsigned();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

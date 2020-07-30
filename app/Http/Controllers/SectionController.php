@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Department;
 use App\Section;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class SectionController extends Controller
 {
@@ -26,10 +27,12 @@ class SectionController extends Controller
             'departments.name as name_department')
             ->orderBy('name_department')->orderby('name')
             ->paginate(20);
+            $advertisings=Advertising::all();
+            $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
             $query='%';
 
-        return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "query"));
+        return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query"));
     }
 
     public function search(Request $request)
@@ -43,9 +46,11 @@ class SectionController extends Controller
             ->orderBy('name_department')->orderby('name')
             ->where('departments.name', 'LIKE', '%'.$query.'%')
             ->paginate(20);
+            $advertisings=Advertising::all();
+            $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
 
-            return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "query"));
+            return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query"));
     }
 
     /**
@@ -56,9 +61,11 @@ class SectionController extends Controller
     public function create()
     {
         $departments=Department::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.section.create", compact("departments", "aside_advertisings"));
+        return view("admin.section.create", compact("departments", "aside_advertisings", "advertising"));
 
     }
 
@@ -90,9 +97,11 @@ class SectionController extends Controller
         $department=$section->department;
         $section->created_at->toFormattedDateString();
         $section->updated_at->toFormattedDateString();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.section.show", compact("section", "department", "aside_advertisings"));
+        return view("admin.section.show", compact("section", "department", "aside_advertisings", "advertising"));
 
     }
 
@@ -107,9 +116,11 @@ class SectionController extends Controller
         //
 
         $section=Section::find($id);
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.section.edit", compact("section", "aside_advertisings"));
+        return view("admin.section.edit", compact("section", "aside_advertisings", "advertising"));
     }
 
     /**

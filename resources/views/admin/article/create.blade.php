@@ -35,7 +35,7 @@
             </div>
             <div class="ml-3">
                 <select name="category_id" id="category_id" class="form-control">
-                    <option selected value="{{old('category_id')}}">seleccione</option>
+                    <option selected value=" "> </option>
                     @foreach($categories as $category)
                     <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
@@ -49,7 +49,7 @@
                 <label for="">ARTICULO:</label>
             </div>
             <div class="ml-3">
-                <input type="text" maxlength="100" pattern="" class="form-control" id="name" name="name"
+                <input type="text" maxlength="100" pattern="" class="form-control" size="60" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.article.fragment.error_name')
             </div>
@@ -113,7 +113,7 @@
                 <label for="">EXISTENCIA:</label>
             </div>
             <div class="ml-3">
-                <input type="number" maxlength="50" pattern="" class="form-control" id="stock" name="stock"
+                <input type="number" maxlength="50"  pattern="" class="form-control" id="stock" name="stock"
                     value="{{old('stock')}}">
                     @include('admin.article.fragment.error_stock')
             </div>

@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\UserRequest;
 use Illuminate\Http\Request;
+use App\Department;
 use App\User;
 use App\Role;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class UserController extends Controller {
 
@@ -22,12 +25,14 @@ class UserController extends Controller {
         ->select('users.id','users.name', 'users.lastname', 'users.id_number','users.id_type', 'users.email', 'roles.role_name')
         ->orderBy('name')
         ->paginate(20);
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
         $query1='%';
         $query2='%';
         $query3='%';
 
-        return view("admin.user.index", compact("users", "roles", "aside_advertisings", "query1", "query2", "query3"));
+        return view("admin.user.index", compact("users", "roles", "aside_advertisings", "advertising", "query1", "query2", "query3"));
     }
 
     public function search(Request $request)
@@ -46,9 +51,11 @@ class UserController extends Controller {
         ->where('users.name', 'LIKE', '%'. $query2. '%')
         ->where('users.lastname', 'LIKE', '%'. $query3. '%')
         ->paginate(20);
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.user.index", compact("users","roles", "aside_advertisings", "query1", "query2", "query3"));
+        return view("admin.user.index", compact("users","roles", "aside_advertisings", "advertising", "query1", "query2", "query3"));
     }
 
     /**
@@ -81,9 +88,24 @@ class UserController extends Controller {
         $roles=Role::all();
         $user->created_at->toFormattedDateString();
         $user->updated_at->toFormattedDateString();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.user.show", compact("user", "roles", "aside_advertisings"));
+        return view("admin.user.show", compact("user", "roles", "aside_advertisings", "advertising"));
+    }
+
+    public function show_user() {
+        $id = Auth::id();
+        $user=User::find($id);
+
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("client.user.show_user", compact("user", "departments", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -95,9 +117,51 @@ class UserController extends Controller {
     public function edit($id) {
         $user=User::find($id);
         $roles=Role::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.user.edit", compact("user", "roles", "aside_advertisings"));
+        return view("admin.user.edit", compact("user", "roles", "aside_advertisings", "advertising"));
+    }
+
+    public function edit_user_id_number() {
+        $id = Auth::id();
+        $user=User::find($id);
+
+        $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        if(empty($user->id_type) || empty($user->id_number)){
+            return view("client.user.edit_user_id_number", compact("user", "departments", "aside_advertisings", "advertising"));
+        }else{
+            return view("client.user.show_user", compact("user", "departments", "aside_advertisings", "advertising"));
+        }
+    }
+
+    public function edit_user_phone() {
+        $id = Auth::id();
+        $user=User::find($id);
+
+        $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("client.user.edit_user_phone", compact("user", "departments", "aside_advertisings", "advertising"));
+    }
+
+    public function edit_user_address() {
+        $id = Auth::id();
+        $user=User::find($id);
+
+        $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("client.user.edit_user_address", compact("user", "departments", "aside_advertisings", "advertising"));
     }
     /**
      * Update the specified resource in storage.
@@ -112,6 +176,27 @@ class UserController extends Controller {
         $entrada->update($request->only('name','lastname','role_id','id_type','id_number','mobil_phone_code','mobil_phone','area_code','phone_number','address','city','state','zip_code'));
 
         return redirect()->route('user.show', $entrada->id)->with('info', 'la informacion del usuario fue actualizada');
+    }
+
+    public function update_user_id_number(UserRequest $request, $id) {
+        $entrada=user::findOrfail($id);
+        $entrada->update($request->only('id_type','id_number'));
+
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
+    }
+
+    public function update_user_phone(UserRequest $request, $id) {
+        $entrada=user::findOrfail($id);
+        $entrada->update($request->only('mobil_phone_code','mobil_phone','area_code','phone_number'));
+
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
+    }
+
+    public function update_user_address(UserRequest $request, $id) {
+        $entrada=user::findOrfail($id);
+        $entrada->update($request->only('address','city','state','zip_code'));
+
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
     }
 
     /**

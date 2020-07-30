@@ -5,6 +5,7 @@ use App\Http\Requests\RoleRequest;
 use Illuminate\Http\Request;
 use App\Role;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class RolController extends Controller
 {
@@ -16,9 +17,11 @@ class RolController extends Controller
     public function index()
     {
         $roles=Role::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.role.index", compact("roles", "aside_advertisings"));
+        return view("admin.role.index", compact("roles", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -28,9 +31,11 @@ class RolController extends Controller
      */
     public function create()
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.role.create", compact("aside_advertisings"));
+        return view("admin.role.create", compact("aside_advertisings", "advertising"));
     }
 
     /**
@@ -67,9 +72,11 @@ class RolController extends Controller
     public function edit($id)
     {
         $role=Role::findOrfail($id);
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.role.edit", compact("role", "aside_advertisings"));
+        return view("admin.role.edit", compact("role", "aside_advertisings", "advertising"));
     }
 
     /**

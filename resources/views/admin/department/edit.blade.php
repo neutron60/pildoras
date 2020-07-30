@@ -82,7 +82,7 @@
                 <div class="col-md-3">
                     <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
                     <br><br>
-                    <img class="imagen" src="{{$department->image}}" alt="imagen" />
+                    <img class="imagen" src="{{asset($department->image)}}" alt="imagen" />
                     @include('admin.department.fragment.error_image')
                 </div>
             </div>

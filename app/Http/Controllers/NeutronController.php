@@ -7,6 +7,7 @@ use App\Department;
 use App\Article;
 use App\Advertising;
 use App\AsideAdvertising;
+use Illuminate\Support\Facades\Auth;
 
 class NeutronController extends Controller
 {
@@ -23,8 +24,34 @@ class NeutronController extends Controller
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("neutron.advertising.index", compact("article_bargains", "article_new_collections", "departments",
+
+        if(empty($advertising)){
+            return view('neutron.pagina_en_construccion');}
+
+            $user = Auth::user();
+
+            if(empty($user)){
+                return view("neutron.index", compact("article_bargains", "article_new_collections", "departments",
          "flag", "flag1", "advertising", "aside_advertisings"));
+            }
+
+            $role_type=$user->role;
+
+        if($role_type->role_name == "administrador"){
+        return view("admin.neutron.index", compact("article_bargains", "article_new_collections", "departments",
+        "flag", "flag1", "advertising", "aside_advertisings"));}
+
+        if($role_type->role_name == "vendedor"){
+        return view("seller.neutron.index", compact("article_bargains", "article_new_collections", "departments",
+        "flag", "flag1", "advertising", "aside_advertisings"));}
+
+        if($role_type->role_name == "cliente"){
+        return view("client.neutron.index", compact("article_bargains", "article_new_collections", "departments",
+         "flag", "flag1", "advertising", "aside_advertisings"));}
+
+         if($role_type->role_name == "inactivo"){
+         return view("neutron.index", compact("article_bargains", "article_new_collections", "departments",
+         "flag", "flag1", "advertising", "aside_advertisings"));}
 
     }
 
@@ -32,25 +59,70 @@ class NeutronController extends Controller
     {
 
         $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
         $query=$id;
         $articles=$this->article_list_basic()->where('department_id', $query)->paginate(20);
 
 
-    return view("neutron.advertising.article_list", compact("articles", "departments", "aside_advertisings"));
+
+            $user = Auth::user();
+
+            if(empty($user)){
+                return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));
+            }
+
+            $role_type=$user->role;
+
+        if($role_type->role_name == "administrador"){
+        return view("admin.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "vendedor"){
+        return view("seller.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "cliente"){
+        return view("client.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertiisng"));}
+
+
+         if($role_type->role_name == "inactivo"){
+         return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
     }
 
     public function article_list_section($id)
     {
         $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
         $query=$id;
         $articles=$this->article_list_basic()->where('section_id', $query)->paginate(20);
 
+        $user = Auth::user();
 
-    return view("neutron.advertising.article_list", compact("articles", "departments", "aside_advertisings"));
+            if(empty($user)){
+                return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));
+            }
+
+            $role_type=$user->role;
+
+        if($role_type->role_name == "administrador"){
+        return view("admin.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "vendedor"){
+        return view("seller.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "cliente"){
+        return view("client.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+
+         if($role_type->role_name == "inactivo"){
+         return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+    /*return view("neutron.article_list", compact("articles", "departments", "aside_advertisings"));*/
     }
 
 
@@ -58,13 +130,34 @@ class NeutronController extends Controller
     public function article_list_category($id)
     {
         $departments=Department::where('is_active', 1)->get();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
         $query=$id;
         $articles=$this->article_list_basic()->where('category_id', $query)->paginate(20);
 
+        $user = Auth::user();
 
-    return view("neutron.advertising.article_list", compact("articles", "departments", "aside_advertisings"));
+        if(empty($user)){
+            return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));
+        }
+
+        $role_type=$user->role;
+
+    if($role_type->role_name == "administrador"){
+    return view("admin.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+    if($role_type->role_name == "vendedor"){
+    return view("seller.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+    if($role_type->role_name == "cliente"){
+    return view("client.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+     if($role_type->role_name == "inactivo"){
+     return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+    /*return view("neutron.article_list", compact("articles", "departments", "aside_advertisings"));*/
     }
 
     public function article_detail($id)
@@ -84,13 +177,100 @@ class NeutronController extends Controller
         }else{$article_stock=6;}
 
         $price=number_format($article->price,2,",",".");
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("neutron.advertising.article_detail", compact("article", "stock_flag", "article_stock", "price",
-        "article_category", "article_section", "article_department", "departments", "aside_advertisings"));
+
+        $user = Auth::user();
+
+        if(empty($user)){
+            return view("neutron.article_detail", compact("article", "stock_flag", "article_stock", "price",
+        "article_category", "article_section", "article_department", "departments", "aside_advertisings", "advertising"));
+        }
+
+        $role_type=$user->role;
+
+    if($role_type->role_name == "administrador"){
+    return view("admin.neutron.article_detail",  compact("article", "stock_flag", "article_stock", "price",
+    "article_category", "article_section", "article_department", "departments", "aside_advertisings", "advertising"));}
+
+    if($role_type->role_name == "vendedor"){
+    return view("seller.neutron.article_detail",  compact("article", "stock_flag", "article_stock", "price",
+    "article_category", "article_section", "article_department", "departments", "aside_advertisings", "advertising"));}
+
+    if($role_type->role_name == "cliente"){
+    return view("client.neutron.article_detail",  compact("article", "stock_flag", "article_stock", "price",
+    "article_category", "article_section", "article_department", "departments", "aside_advertisings", "advertising"));}
+
+     if($role_type->role_name == "inactivo"){
+     return view("neutron.article_detail",  compact("article", "stock_flag", "article_stock", "price",
+     "article_category", "article_section", "article_department", "departments", "aside_advertisings", "advertising"));}
+
         }
         else { echo 'favor contactar al administrador de la pagina';}
     }
+
+    public function search(Request $request)
+    {
+        $departments=Department::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+            $query=trim($request->get('search'));
+
+            if (!$query) {return back();}
+
+
+            $articles=$this->article_list_basic()
+            ->where('articles.name', 'LIKE', '%'. $query. '%')
+            ->paginate(20);
+
+            $user = Auth::user();
+
+            if(empty($user)){
+                return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));
+            }
+
+            $role_type=$user->role;
+
+        if($role_type->role_name == "administrador"){
+        return view("admin.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "vendedor"){
+        return view("seller.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+        if($role_type->role_name == "cliente"){
+        return view("client.neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising"));}
+
+
+         if($role_type->role_name == "inactivo"){
+         return view("neutron.article_list", compact("articles", "departments", "aside_advertisings", "advertising", "query"));}
+
+
+    }
+
+    public function who_are()
+    {
+        $departments=Department::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+
+
+
+
+
+        return view("neutron.who_are", compact("articles", "departments", "aside_advertisings", "advertising"));
+
+
+
+
+    }
+
+/************************************************************************************************************** */
 
     public function article_list_basic()
     {
@@ -114,4 +294,3 @@ class NeutronController extends Controller
 
 
 }
-

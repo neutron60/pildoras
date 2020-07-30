@@ -45,7 +45,7 @@
         <div class="ml-3">
             <label for="">{{$section->created_at->toFormattedDateString()}}</label>
         </div>
-        <div class="">
+        <div class="ml-5">
             <label for="">ACTUALIZADO:</label>
         </div>
         <div class="ml-3">

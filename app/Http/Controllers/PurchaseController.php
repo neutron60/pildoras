@@ -3,123 +3,359 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests\PurchaseAddressRequest;
-use App\Http\Requests\PurchaseCourierRequest;
-use App\Http\Requests\PurchasePaymentRequest;
-use App\Http\Requests\PurchasePaymentVerifiedRequest;
-use App\Http\Requests\PurchaseStoreRequest;
+use App\Http\Requests\PurchaseRequest;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Department;
 use App\Article;
 use App\Purchase;
 use App\PurchaseDetail;
 use App\AsideAdvertising;
+use App\Advertising;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 
 class PurchaseController extends Controller
 {
-    var $iva=16;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+
+/*----------------------------------------------------------------------*/
+/*  CLIENT FUNCTION */
+
+    public function index_my_purchases()
+    {
+        $id = Auth::id();
+        $user=User::find($id);
+        $departments=Department::where('is_active', 1)->get();
+
+        $purchases=$this->index_order_basic()
+        ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
+        ->where('purchases.verified_payment', '=', 1)->whereNotNull('purchases.invoice_number')
+        ->where('purchases.user_id', '=', $id)
+        ->paginate(20);
+
+        foreach($purchases as $purchase){
+            $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+            $purchase->price=number_format($purchase->price,2,",",".");
+        }
+
+      $query1='%';
+      $query2='%';
+
+      $advertisings=Advertising::all();
+      $advertising=$advertisings->first();
+      $aside_advertisings=AsideAdvertising::all();
+
+        return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", 'query2'));
+    }
+
+    public function index_search_my_purchases(Request $request)
+    {
+    $id = Auth::id();
+    $user=User::find($id);
+    $departments=Department::where('is_active', 1)->get();
+
+    $query1=trim($request->get('search_order'));
+    $query2=trim($request->get('search_article'));
+    if (!$query1) {$query1='%';}
+    if (!$query2) {$query2='%';}
+
+    $purchases=$this->index_order_basic()
+    ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
+    ->where('purchases.verified_payment', '=', 1)->whereNotNull('purchases.invoice_number')
+    ->where('purchases.user_id', '=', $id)
+    ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
+    ->where('purchase_details.article_name', 'LIKE', '%'. $query2. '%')
+    ->paginate(20);
+
+    foreach($purchases as $purchase){
+        $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $purchase->price=number_format($purchase->price,2,",",".");
+    }
+
+    $advertisings=Advertising::all();
+    $advertising=$advertisings->first();
+    $aside_advertisings=AsideAdvertising::all();
+    return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", 'query2'));
+    }
+
+    public function show_my_purchase($id)
     {
 
-        $purchases=Purchase::join('users','users.id','=','purchases.user_id')
-        ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
-        ->join('articles','articles.id','=','purchase_details.article_id')
-        ->select('purchases.id','purchases.order_number', 'purchases.verified_payment',
-        'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number',
-        'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva',
-        'articles.code')
-        ->orderBy('order_number')->orderBy('user_name')
+        $purchase=Purchase::find($id);
+        if($purchase->verified_payment <> 1){
+            return redirect()->action('PurchaseController@index_my_purchases');
+        }
+        $departments=Department::where('is_active', 1)->get();
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+
+        $identification = Auth::id();
+        $userId=User::find($identification);
+        if($userId->id <> $user->id){
+            return redirect()->action('PurchaseController@index_my_purchases');
+        }
+
+
+        $article=$purchase_detail->article;
+
+        $article_code=$article->code;
+
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $user->id_number=number_format($user->id_number,0,",",".");
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+        if($purchase->requires_shipping == 0){ $message='retiro en tienda';}
+        if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
+        if($purchase->requires_shipping == 2){ $message='envio a direccion';}
+
+        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "article_code", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
+
+    }
+
+    public function index_my_orders()
+    {
+        $id = Auth::id();
+        $user=User::find($id);
+        $departments=Department::where('is_active', 1)->get();
+
+        $purchases=$this->index_order_basic()
+        /*->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')*/
+        ->where('purchases.verified_payment', '=', 0)
+        /*->whereNotNull('purchases.invoice_number')*/
+        ->where('purchases.user_id', '=', $id)
+        ->paginate(20);
+
+        foreach($purchases as $purchase){
+            $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+            $purchase->price=number_format($purchase->price,2,",",".");
+        }
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("client.purchase.index_my_orders", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising"));
+    }
+
+    public function show_my_orders($id)
+    {
+
+        $purchase=Purchase::find($id);
+        if($purchase->verified_payment <> 0){
+            return redirect()->action('PurchaseController@index_my_orders');
+        }
+        $departments=Department::where('is_active', 1)->get();
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+
+        $identification = Auth::id();
+        $userId=User::find($identification);
+        if($userId->id <> $user->id){
+            return redirect()->action('PurchaseController@index_my_orders');
+        }
+
+        $article=$purchase_detail->article;
+        $article_code=$article->code;
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $user->id_number=number_format($user->id_number,0,",",".");
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+        if($purchase->requires_shipping == 0){ $message='retiro en tienda';}
+        if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
+        if($purchase->requires_shipping == 2){ $message='envio a direccion';}
+
+        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "article_code", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
+
+    }
+
+/*----------------------------------------------------------------------*/
+/*  SELLER FUNCTION */
+
+public function index_search_order_requested(Request $request)
+    {
+    $query1=trim($request->get('search_order'));
+    $query2=trim($request->get('search_name'));
+    $query3=trim($request->get('search_id_number'));
+
+    if (!$query1) {$query1='%';}
+    if (!$query2) {$query2='%';}
+    if (!$query3) {$query3='%';}
+
+    $purchases=$this->index_order_basic()
+        ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
+        ->where('purchases.verified_payment', 0)
+        ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
+        ->where('users.name', 'LIKE', '%'. $query2. '%')
+        ->where('users.id_number', 'LIKE', '%'. $query3. '%')
+        ->paginate(20);
+
+    foreach($purchases as $purchase){
+        $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $purchase->price=number_format($purchase->price,2,",",".");
+        $purchase->id_number=number_format($purchase->id_number,0,",",".");
+    }
+    $flag=1;
+
+    $advertisings=Advertising::all();
+    $advertising=$advertisings->first();
+    $aside_advertisings=AsideAdvertising::all();
+
+    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
+    }
+
+public function index_order_requested()
+    {
+    $purchases=$this->index_order_basic()
+        ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
         ->where('purchases.verified_payment', 0)
         ->paginate(20);
-        foreach($purchases as $purchase)
-        $purchase->price=number_format($purchase->price,2,",",".");
 
+    foreach($purchases as $purchase){
+        $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $purchase->price=number_format($purchase->price,2,",",".");
+        $purchase->id_number=number_format($purchase->id_number,0,",",".");
+    }
+    $flag=1;
+
+    $query1='%';
+    $query2='%';
+    $query3='%';
+    $advertisings=Advertising::all();
+    $advertising=$advertisings->first();
+    $aside_advertisings=AsideAdvertising::all();
+
+    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", 'query2', "query3","route"));
+    }
+
+    public function index_order_verified_payment()
+    {
+
+        $purchases=$this->index_order_basic()
+        ->whereNotNull('purchases.payment_type')->where('purchases.amount_paid', '>', 0)
+        ->where('purchases.verified_payment', 0)
+        ->paginate(20);
+
+        foreach($purchases as $purchase){
+            $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+            $purchase->price=number_format($purchase->price,2,",",".");
+            $purchase->id_number=number_format($purchase->id_number,0,",",".");
+        }
+        $flag=2;
         $query1='%';
         $query2='%';
         $query3='%';
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("seller.purchase.index", compact("purchases", "aside_advertisings", "query1", 'query2', "query3"));
+        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
+}
+
+    public function index_order_assign_invoice()
+    {
+
+        $purchases=$this->index_order_basic()
+        ->whereNotNull('purchases.payment_type')->where('purchases.amount_paid', '>', 0)
+        ->where('purchases.verified_payment', 1)->whereNull('purchases.invoice_number')
+        ->paginate(20);
+
+        foreach($purchases as $purchase){
+            $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+            $purchase->price=number_format($purchase->price,2,",",".");
+            $purchase->id_number=number_format($purchase->id_number,0,",",".");
+        }
+        $flag=3;
+        $query1='%';
+        $query2='%';
+        $query3='%';
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
     }
 
-    public function search_order(Request $request)
+    public function index_search_sales(Request $request)
     {
             $query1=trim($request->get('search_order'));
             $query2=trim($request->get('search_name'));
             $query3=trim($request->get('search_id_number'));
+
             if (!$query1) {$query1='%';}
             if (!$query2) {$query2='%';}
             if (!$query3) {$query3='%';}
 
-            $purchases=Purchase::join('users','users.id','=','purchases.user_id')
-            ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
-            ->join('articles','articles.id','=','purchase_details.article_id')
-            ->select('purchases.id','purchases.order_number', 'purchases.verified_payment',
-            'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number',
-            'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price',
-            'articles.code')
-                ->orderBy('order_number')->orderBy('user_name')
-                ->where('purchases.verified_payment', 0)
-                ->where('purchases.order_number', 'LIKE', '%'.$query1.'%')
+            $purchases=$this->index_order_basic()
+            ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
+            ->where('purchases.verified_payment', 1)->whereNotNull('purchases.invoice_number')
+                ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
                 ->where('users.name', 'LIKE', '%'. $query2. '%')
                 ->where('users.id_number', 'LIKE', '%'. $query3. '%')
                 ->paginate(20);
 
+                foreach($purchases as $purchase){
+                    $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+                    $purchase->price=number_format($purchase->price,2,",",".");
+                    $purchase->id_number=number_format($purchase->id_number,0,",",".");
+                }
 
-                $aside_advertisings=AsideAdvertising::all();
+            $advertisings=Advertising::all();
+            $advertising=$advertisings->first();
+            $aside_advertisings=AsideAdvertising::all();
 
-        return view("seller.purchase.index", compact("purchases", "aside_advertisings", "query1", "query2", "query3"));
+                return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3"));
     }
+
+    public function index_sales()
+    {
+
+        $purchases=$this->index_order_basic()
+        ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
+        ->where('purchases.verified_payment', 1)->whereNotNull('purchases.invoice_number')
+        ->paginate(20);
+
+        foreach($purchases as $purchase){
+        $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $purchase->price=number_format($purchase->price,2,",",".");
+        $purchase->id_number=number_format($purchase->id_number,0,",",".");
+    }
+
+      $query1='%';
+      $query2='%';
+      $query3='%';
+      $advertisings=Advertising::all();
+      $advertising=$advertisings->first();
+      $aside_advertisings=AsideAdvertising::all();
+
+
+        return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3"));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function create_order(Request $request)
-    {
-
-        $purchased_amount=$request->get('purchased_amount');
-        $id = Auth::id();
-        $user=User::find($id);
-
-        $article=Article::find($request->get('article_id'));
-
-        $unit_price= ($article->price*100)/(100+$this->iva);
-        $total_price=$purchased_amount * $unit_price ;
-        $sub_total=$total_price;
-        $iva=$sub_total * ($this->iva/100);
-        $total=$sub_total+$iva;
-
-        $total_price=number_format($total_price,2,",",".");
-        $sub_total=number_format($sub_total,2,",",".");
-        $iva=number_format($iva,2,",",".");
-        $total=number_format($total,2,",",".");
-        $unit_price=number_format($unit_price,2,",",".");
-
-        $aside_advertisings=AsideAdvertising::all();
-        return view("client.purchase.create_order", compact("user", "article", "purchased_amount", "total_price", "sub_total", "iva", "total", "aside_advertisings", "unit_price"));
-    }
-
-    public function order_shipped()
-    {
-
-
-
-        return view("client.purchase.create_order", compact("user", "article", "purchased_amount", "total_price", "sub_total", "iva", "total", "aside_advertisings"));
-    }
-
-    public function create()
-    {
-       //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -127,106 +363,7 @@ class PurchaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_order_withdrawal(PurchaseStoreRequest $request)
-    {
-        $entrada=$request->only('requires_shipping');
 
-        $id = Auth::id();
-        $entrada['user_id'] = $id;
-
-        $order=Purchase::all()->last();
-        if($order){$order_number=$order->order_number + 1;}
-        else{$order_number=1;}
-        $entrada['order_number'] =$order_number;
-        $archivo=Purchase::create($entrada);
-
-        $entrada1=$request->only('article_id', 'purchased_amount');
-
-        $article=Article::find($request->get('article_id'));
-        $entrada1['article_id'] = $article->id;
-        $entrada1['price'] = $article->price;
-        $entrada1['article_name'] = $article->name;
-        $purchase=Purchase::all()->last();
-        $entrada1['purchase_id'] = $purchase->id;
-        $entrada1['iva'] = $this->iva;
-        $archivo1=PurchaseDetail::create($entrada1);
-        $article['stock']=$article->stock - $request->get('purchased_amount');
-        $article->update($request->only('stock'));
-
-        $aside_advertisings=AsideAdvertising::all();
-        return view("client.purchase.order_shipped", compact("order_number", "aside_advertisings"));
-
-    }
-
-    public function store_order_courier(PurchaseCourierRequest $request)
-    {
-        $entrada=$request->only('requires_shipping', 'courier_name',
-    'shipping_address', 'shipping_city', 'shipping_state', 'shipping_zip_code');
-
-        $id = Auth::id();
-        $entrada['user_id'] = $id;
-
-        $order=Purchase::all()->last();
-        if($order){$order_number=$order->order_number + 1;}
-        else{$order_number=1;}
-        $entrada['order_number'] =$order_number;
-        $archivo=Purchase::create($entrada);
-
-        $entrada1=$request->only('article_id', 'purchased_amount');
-
-        $article=Article::find($request->get('article_id'));
-        $entrada1['article_id'] = $article->id;
-        $entrada1['price'] = $article->price;
-        $entrada1['article_name'] = $article->name;
-        $purchase=Purchase::all()->last();
-        $entrada1['purchase_id'] = $purchase->id;
-        $entrada1['iva'] = $this->iva;
-        $archivo1=PurchaseDetail::create($entrada1);
-        $article['stock']=$article->stock - $request->get('purchased_amount');
-        $article->update($request->only('stock'));
-
-        $aside_advertisings=AsideAdvertising::all();
-        return view("client.purchase.order_shipped", compact("order_number", "aside_advertisings"));
-
-    }
-
-    public function store_order_address(PurchaseAddressRequest $request)
-    {
-        $entrada=$request->only('requires_shipping', 'courier_name');
-
-        $id = Auth::id();
-        $entrada['user_id'] = $id;
-
-        $user=User::find($id);
-        $entrada['shipping_address']=$user->address;
-        $entrada['shipping_city']=$user->city;
-        $entrada['shipping_state']=$user->state;
-        $entrada['shipping_zip_code']=$user->zip_code;
-
-
-        $order=Purchase::all()->last();
-        if($order){$order_number=$order->order_number + 1;}
-        else{$order_number=1;}
-        $entrada['order_number'] =$order_number;
-        $archivo=Purchase::create($entrada);
-
-        $entrada1=$request->only('article_id', 'purchased_amount');
-
-        $article=Article::find($request->get('article_id'));
-        $entrada1['article_id'] = $article->id;
-        $entrada1['price'] = $article->price;
-        $entrada1['article_name'] = $article->name;
-        $purchase=Purchase::all()->last();
-        $entrada1['purchase_id'] = $purchase->id;
-        $entrada1['iva'] = $this->iva;
-        $archivo1=PurchaseDetail::create($entrada1);
-        $article['stock']=$article->stock - $request->get('purchased_amount');
-        $article->update($request->only('stock'));
-
-        $aside_advertisings=AsideAdvertising::all();
-        return view("client.purchase.order_shipped", compact("order_number", "aside_advertisings"));
-
-    }
 
     /**
      * Display the specified resource.
@@ -234,7 +371,7 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show_order_requested($id)
     {
 
         $purchase=Purchase::find($id);
@@ -246,32 +383,58 @@ class PurchaseController extends Controller
 
         $article_code=$article->code;
 
-        $unit_price= ($purchase_detail->price*100)/(100+$purchase_detail->iva);
-        $total_price=$purchase_detail->purchased_amount * $unit_price ;
-        $sub_total=$total_price;
-        $iva=$sub_total * ($purchase_detail->iva/100);
-        $total=$sub_total+$iva;
-
-        $total_price=number_format($total_price,2,",",".");
-        $sub_total=number_format($sub_total,2,",",".");
-        $iva=number_format($iva,2,",",".");
-        $total=number_format($total,2,",",".");
-        $unit_price=number_format($unit_price,2,",",".");
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
+        else{$payment_day=Carbon::parse($purchase->payment_day)->format('d-m-Y');}
 
-        $price=number_format($article->price,2,",",".");
+
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        if($purchase->requires_shipping == 0){
-            return view("seller.purchase.show_order_withdrawal_store", compact("purchase", "user", "article_code", "purchase_detail","unit_price", "total_price", "sub_total", "iva", "total", "aside_advertisings", "created_at"));
+        if($purchase->requires_shipping == 0){ $message='retiro en tienda';}
+        if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
+        if($purchase->requires_shipping == 2){ $message='envio a direccion';}
+
+      return view("seller.purchase.show_order_requested", compact("purchase", "user", "article_code", "purchase_detail","order_calculation", "aside_advertisings", "advertising", "created_at", "message", "payment_day"));
+    }
+
+    public function show_sales_detail($id)
+    {
+
+        $purchase=Purchase::find($id);
+        if($purchase->verified_payment == 0 || empty($purchase->invoice_number)){
+            return redirect()->action('PurchaseController@index_sales');
         }
-        elseif($purchase->requires_shipping == 1){
-        return view("seller.purchase.show_order_sent_courier_office", compact("purchase", "user", "article_code", "purchase_detail","unit_price", "total_price", "sub_total", "iva", "total", "aside_advertisings", "created_at"));
-       }
-        elseif($purchase->requires_shipping == 2){
-        return view("seller.purchase.show_order_sent_address", compact("purchase", "user", "article_code", "purchase_detail","unit_price", "total_price", "sub_total", "iva", "total", "aside_advertisings", "created_at"));
-      }
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+        $article=$purchase_detail->article;
+
+        $article_code=$article->code;
+
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
+        else{$payment_day=Carbon::parse($purchase->payment_day)->format('d-m-Y');}
+
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
+
+        $price=number_format($article->price,2,",",".");
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        return view("seller.purchase.show_sales_detail", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "payment_day"));
+
     }
 
     /**
@@ -280,10 +443,13 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit_order_requested($id)
     {
 
         $purchase=Purchase::find($id);
+        if($purchase->verified_payment == 1 || $purchase->amount_paid > 0){
+            return redirect()->action('PurchaseController@index_order_requested');
+        }
 
         $purchase_detail=$purchase->purchase_details->first();
 
@@ -292,21 +458,116 @@ class PurchaseController extends Controller
 
         $article_code=$article->code;
 
-        $unit_price= ($purchase_detail->price*100)/(100+$purchase_detail->iva);
-        $total_price=$purchase_detail->purchased_amount * $unit_price ;
-        $sub_total=$total_price;
-        $iva=$sub_total * ($purchase_detail->iva/100);
-        $total=$sub_total+$iva;
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
 
-        $total_price=number_format($total_price,2,",",".");
-        $sub_total=number_format($sub_total,2,",",".");
-        $iva=number_format($iva,2,",",".");
-        $total=number_format($total,2,",",".");
-        $unit_price=number_format($unit_price,2,",",".");
+        if($purchase->requires_shipping == 0){ $message='retiro en tienda';}
+        if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
+        if($purchase->requires_shipping == 2){ $message='envio a direccion';}
 
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("seller.purchase.edit", compact("purchase", "user", "article_code", "purchase_detail","unit_price", "total_price", "sub_total", "iva", "total", "aside_advertisings"));
+        return view("seller.purchase.edit_order_requested", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "message", "aside_advertisings", "advertising", "created_at"));
+    }
+
+
+    public function edit_order_payment_details($id)
+    {
+        $purchase=Purchase::find($id);
+
+        if($purchase->verified_payment == 1 || $purchase->amount_paid > 0){
+            return redirect()->action('PurchaseController@index_order_requested');
+        }
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+        $article=$purchase_detail->article;
+
+        $article_code=$article->code;
+
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $user->id_number=number_format($user->id_number,0,",",".");
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        if($purchase->require_shipping == 0){$require_shipping='retiro en tienda';}
+        if($purchase->require_shipping == 1){$require_shipping='envio a oficina de correo';}
+        if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
+
+        return view("seller.purchase.edit_order_payment_details", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
+    }
+
+    public function edit_order_verified_payment($id)
+    {
+        $purchase=Purchase::find($id);
+
+        if($purchase->verified_payment == 1 || $purchase->amount_paid == 0){
+            return redirect()->action('PurchaseController@index_order_verified_payment');
+        }
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+        $article=$purchase_detail->article;
+
+        $article_code=$article->code;
+
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
+        else{$payment_day=Carbon::parse($purchase->payment_day)->format('d-m-Y');}
+
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        if($purchase->require_shipping == 0){$require_shipping='retiro en tienda';}
+        if($purchase->require_shipping == 1){$require_shipping='envio a oficina courier';}
+        if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
+
+        return view("seller.purchase.edit_order_verified_payment", compact("purchase", "user", "article_code", "purchase_detail","order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping", "payment_day"));
+    }
+
+    public function edit_order_assign_invoice($id)
+    {
+        $purchase=Purchase::find($id);
+        if($purchase->verified_payment == 0 || !empty($purchase->invoice_number)){
+            return redirect()->action('PurchaseController@index_order_assign_invoice');
+        }
+
+        $purchase_detail=$purchase->purchase_details->first();
+
+        $user=$purchase->user;
+        $article=$purchase_detail->article;
+
+        $article_code=$article->code;
+
+        $order_calculation=$this->order_calculation($article, $purchase_detail);
+
+        $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
+        $user->id_number=number_format($user->id_number,0,",",".");
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+        if($purchase->require_shipping == 0){$require_shipping='retiro en tienda';}
+        if($purchase->require_shipping == 1){$require_shipping='envio a oficina courier';}
+        if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
+
+        return view("seller.purchase.edit_order_assign_invoice", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
     }
 
     /**
@@ -316,79 +577,43 @@ class PurchaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update_withdrawal_store(PurchaseStoreRequest $request, $id)
-    {
-        $entrada=Purchase::findOrfail($id);
-
-        $entrada->update($request->only('requires_shipping'));
-
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'el articulo fue actualizado');
-    }
-
-    public function update_sent_courier(PurchaseCourierRequest $request, $id)
+    public function update_order_requested(PurchaseRequest $request, $id)
     {
         $entrada=Purchase::findOrfail($id);
 
         $entrada->update($request->only('requires_shipping', 'courier_name', 'shipping_address',
         'shipping_city', 'shipping_state', 'shipping_zip_code'));
 
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'el articulo fue actualizado');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden fue actualizada');
     }
 
-    public function update_sent_address(PurchaseCourierRequest $request, $id)
+
+    public function update_order_payment_details(PurchaseRequest $request, $id)
     {
         $entrada=Purchase::findOrfail($id);
-
-        $entrada->update($request->only('requires_shipping', 'courier_name', 'shipping_address',
-        'shipping_city', 'shipping_state', 'shipping_zip_code'));
-
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'el articulo fue actualizado');
-    }
-
-    public function update_sent_address_new(PurchaseAddressRequest $request, $id)
-    {
-        $entrada=Purchase::findOrfail($id);
-
-            $user=User::find($id);
-            $entrada['shipping_address']=$user->address;
-            $entrada['shipping_city']=$user->city;
-            $entrada['shipping_state']=$user->state;
-            $entrada['shipping_zip_code']=$user->zip_code;
-
-        $entrada->update($request->only('requires_shipping', 'courier_name', 'courier_office', 'shipping_address',
-        'shipping_city', 'shipping_state', 'shipping_zip_code'));
-
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'el articulo fue actualizado');
-    }
-
-    public function update_payment(PurchasePaymentRequest $request, $id)
-    {
-        $entrada=Purchase::findOrfail($id);
-
+        $purchase_detail=PurchaseDetail::findOrfail($id);
+        $payment=$request->get('amount_paid');
+        if($payment < $purchase_detail->price){
+        return redirect()->action('PurchaseController@edit_order_payment_details',compact("id"));
+        }
+        dd($payment);
 
         $entrada->update($request->only('payment_type', 'amount_paid', 'issuing_bank',
         'receiving_bank', 'payment_day','operation_number'));
 
-
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'los datos del pago fueron actualizados');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago fueron actualizados');
     }
 
-    public function update_verified_payment(PurchasePaymentVerifiedRequest $request, $id)
+    public function update_order_verified_payment(PurchaseRequest $request, $id)
     {
         $entrada=Purchase::findOrfail($id);
 
-
-       /* if(!$purchase->payment_type){
-            return redirect()->route('seller.purchase', $purchase->id)->with('info', 'los datos del pago estan incompletos');
-            }*/
-
         $entrada->update($request->only('verified_payment'));
 
-
-      /*  return redirect()->route('purchase.index', $entrada->id)->with('info', 'el pago fue verificado');*/
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago fueron verificados');
     }
 
-    public function update_invoice(PurchasePaymentVerifiedRequest $request, $id)
+    public function update_order_assign_invoice(PurchaseRequest $request, $id)
     {
         $entrada=Purchase::findOrfail($id);
         $purchase=Purchase::findOrfail($id);
@@ -399,7 +624,7 @@ class PurchaseController extends Controller
 
         $entrada->update($request->only('invoice_number'));
 
-        return redirect()->route('purchase.index', $entrada->id)->with('info', 'la orden ha sido completada');
+        return redirect()->action('PurchaseController@index_sales')->with('info', 'la orden ha sido completada');
     }
 
     /**
@@ -412,6 +637,49 @@ class PurchaseController extends Controller
     {
         $purchase=Purchase::findOrfail($id);
         $purchase->delete();
-        return redirect()->route('purchase.index')->with('info', 'el articulo fue eliminado');
+
+        $purchase_detail=PurchaseDetail::findOrfail($id);
+        $purchase_detail->delete();
+
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden fue eliminada');
     }
+
+
+/*----------------------------------------------------------------------*/
+/*  INTERN FUNCTION */
+
+    public function index_order_basic()
+    {
+        $purchases_basic=Purchase::join('users','users.id','=','purchases.user_id')
+        ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
+        ->join('articles','articles.id','=','purchase_details.article_id')
+        ->select('purchases.id','purchases.order_number', 'purchases.verified_payment', 'purchases.requires_shipping', 'purchases.invoice_number',
+        'purchases.created_at',  'purchases.amount_paid',
+        'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number', 'users.id as id_list',
+        'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva',
+        'purchase_details.created_at as purchase_details_created_at',
+        'articles.code')
+        ->orderBy('purchase_details_created_at','desc');
+        return $purchases_basic;
+   }
+
+public function order_calculation($article, $purchase_detail)
+    {
+    $order_calculation['unit_price']= ($article->price*100)/(100+$purchase_detail->iva);
+    $order_calculation['total_price']=$purchase_detail->purchased_amount * $order_calculation['unit_price'] ;
+    $order_calculation['sub_total']=$order_calculation['total_price'];
+    $order_calculation['iva']=$order_calculation['sub_total'] * ($purchase_detail->iva/100);
+    $order_calculation['total']=$order_calculation['sub_total']+$order_calculation['iva'];
+
+    $order_calculation['total_price']=number_format($order_calculation['total_price'],2,",",".");
+    $order_calculation['sub_total']=number_format($order_calculation['sub_total'],2,",",".");
+    $order_calculation['iva']=number_format($order_calculation['iva'],2,",",".");
+    $order_calculation['total']=number_format($order_calculation['total'],2,",",".");
+    $order_calculation['unit_price']=number_format($order_calculation['unit_price'],2,",",".");
+
+    return $order_calculation;
+    }
+
+
+
 }

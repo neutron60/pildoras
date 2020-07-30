@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,24 +20,51 @@ use Illuminate\Support\Facades\Route;
 /********************************************************************* */
 /*        LIBRES    */
 /* rutas de neutron */
-Route::get('/neutron', 'NeutronController@index');
+Route::get('/neutron/index', 'NeutronController@index');
 Route::get('/neutron/article-detail/{id}', 'NeutronController@article_detail');
 Route::get('/neutron/article-list-department/{id}', 'NeutronController@article_list_department');
 Route::get('/neutron/article-list-section/{id}', 'NeutronController@article_list_section');
 Route::get('/neutron/article-list-category/{id}', 'NeutronController@article_list_category');
+Route::get('/neutron/search', 'NeutronController@search');
+
+Route::get('/neutron-who-are', 'NeutronController@who_are');
+Route::get('/neutron-contact', 'NeutronController@contact');
 
 
 
 /********************************************************************* */
 /*        CLIENTE    */
 /* rutas de purchase */
-Route::post('/client/purchase/create-order', 'PurchaseController@create_order');
+Route::get('/neutron/inactive', 'PurchaseClientController@neutron_inactive');
 
-Route::post('/client/purchase/store-order-withdrawal', 'PurchaseController@store_order_withdrawal');
-Route::post('/client/purchase/store-order-courier', 'PurchaseController@store_order_courier');
-Route::post('/client/purchase/store-order-address', 'PurchaseController@store_order_address');
+Route::middleware('auth')->middleware('is_admin_seller_client')->middleware('is_inactive')->group(function(){
 
-Route::get('/client/purchase/order-shipped', 'PurchaseController@order_shipped');
+Route::post('/client/purchase/create-purchase', 'PurchaseClientController@create_purchase');
+Route::get('/client/purchase/create-order/{purchased_amount}/{purchased_item}', 'PurchaseClientController@create_order');
+
+
+Route::post('/client/purchase/store-order', 'PurchaseClientController@store_order');
+
+/*Route::get('/client/purchase/order-shipped', 'PurchaseClientController@order_shipped');*/
+
+Route::get('/client/purchase/show-my-purchase/{id}', 'PurchaseController@show_my_purchase');
+Route::get('/client/purchase/index-my-purchases', 'PurchaseController@index_my_purchases');
+Route::get('/client/purchase/index-search-my-purchases', 'PurchaseController@index_search_my_purchases');
+Route::get('/client/purchase/show-my-orders/{id}', 'PurchaseController@show_my_orders');
+Route::get('/client/purchase/index-my-orders', 'PurchaseController@index_my_orders');
+
+
+Route::get('/client/user/edit-user-id-number', 'UserController@edit_user_id_number');
+Route::get('/client/user/edit-user-phone', 'UserController@edit_user_phone');
+Route::get('/client/user/edit-user-address', 'UserController@edit_user_address');
+
+Route::put('/client/user/update-user-id-number/{id}', 'UserController@update_user_id_number');
+Route::put('/client/user/update-user-phone/{id}', 'UserController@update_user_phone');
+Route::put('/client/user/update-user-address/{id}', 'UserController@update_user_address');
+
+Route::get('/client/user/show-user', 'UserController@show_user');
+});
+
 
 
 
@@ -44,21 +73,38 @@ Route::get('/client/purchase/order-shipped', 'PurchaseController@order_shipped')
 /*        VENDEDOR    */
 /* rutas de purchase */
 
-Route::get('/seller/purchase/search-order', 'PurchaseController@search_order');
+Route::middleware('auth')->middleware('is_admin_seller')->group(function(){
 
-Route::put('/seller/purchase/update-withdrawal-store/{id}', 'PurchaseController@update_withdrawal_store');
-Route::put('/seller/purchase/update-sent-courier/{id}', 'PurchaseController@update_sent_courier');
-Route::put('/seller/purchase/update-sent-address/{id}', 'PurchaseController@update_sent_address');
-Route::put('/seller/purchase/update-sent-address-new/{id}', 'PurchaseController@update_sent_address_new');
-Route::put('/seller/purchase/update-payment/{id}', 'PurchaseController@update_payment');
-Route::put('/seller/purchase/update-verified-payment/{id}', 'PurchaseController@update_verified_payment');
-Route::put('/seller/purchase/update-invoice/{id}', 'PurchaseController@update_invoice');
+Route::get('/seller/purchase/index-search-order-requested', 'PurchaseController@index_search_order_requested');
+Route::get('/seller/purchase/index-search-sales', 'PurchaseController@index_search_sales');
+
+Route::put('/seller/purchase/update-order-requested/{id}', 'PurchaseController@update_order_requested');
+Route::put('/seller/purchase/update-order-payment-details/{id}', 'PurchaseController@update_order_payment_details');
+Route::put('/seller/purchase/update-order-verified-payment/{id}', 'PurchaseController@update_order_verified_payment');
+Route::put('/seller/purchase/update-order-assign-invoice/{id}', 'PurchaseController@update_order_assign_invoice');
+
+Route::get('/seller/purchase/index-order-requested', 'PurchaseController@index_order_requested')->name('index_order_requested');
+Route::get('/seller/purchase/index-order-verified-payment', 'PurchaseController@index_order_verified_payment');
+Route::get('/seller/purchase/index-order-assign-invoice', 'PurchaseController@index_order_assign_invoice');
+Route::get('/seller/purchase/index-sales', 'PurchaseController@index_sales');
+
+Route::get('/seller/purchase/edit-order-requested/{id}', 'PurchaseController@edit_order_requested');
+Route::get('/seller/purchase/edit-order-payment-details/{id}', 'PurchaseController@edit_order_payment_details');
+Route::get('/seller/purchase/edit-order-verified-payment/{id}', 'PurchaseController@edit_order_verified_payment');
+Route::get('/seller/purchase/edit-order-assign-invoice/{id}', 'PurchaseController@edit_order_assign_invoice');
+
+Route::get('/seller/purchase/show-order-requested/{id}', 'PurchaseController@show_order_requested');
+Route::get('/seller/purchase/show-sales-detail/{id}', 'PurchaseController@show_sales_detail');
+
 
 Route::resource('/seller/purchase', 'PurchaseController');
+});
 
+/********************************************************************* */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->action('NeutronController@index');
+    /*return view('welcome');*/
 });
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -68,12 +114,14 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 /********************************************************************* */
 /*        ADMINISTRADOR    */
+
+Route::middleware('auth')->middleware('is_admin')->group(function(){
+
+
 /* rutas del crud de advertising */
-Route::get('/admin/article-detail/{id}', 'AdvertisingController@article_detail');
-Route::get('/admin/article-list-department/{id}', 'AdvertisingController@article_list_department');
-Route::get('/admin/article-list-section/{id}', 'AdvertisingController@article_list_section');
-Route::get('/admin/article-list-category/{id}', 'AdvertisingController@article_list_category');
+
 Route::resource('/admin/advertising', 'AdvertisingController');
+
 
 /* rutas del crud de aside advertising */
 Route::resource('/admin/aside-advertising', 'AsideAdvertisingController');
@@ -104,14 +152,14 @@ Route::get('/admin/article/select-department', 'ArticleController@selectDepartme
 Route::get('/admin/article/select-section/{id}', 'ArticleController@selectSection');
 Route::get('/admin/article/create1/{id}', 'ArticleController@create');
 Route::resource('/admin/article', 'ArticleController');
-
-
-
-/*            */
-
-
-Route::get('/role/2/prueba', function(){
-    dd (Role::find(1)->user);
 });
+
+/*-------------------------*/
+
+
+
+
+Route::get('/neutron-login', 'Auth\LoginController@neutron_login');
+Route::get('/neutron-register', 'Auth\RegisterController@neutron_register');
 
 Auth::routes();

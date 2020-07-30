@@ -94,21 +94,7 @@
             margin-right:
         }
 
-        .borde {
-            border: 2px solid blue
-        }
 
-        .borde1 {
-            border: 2px solid orangered
-        }
-
-        .borde2 {
-            border: 2px solid green
-        }
-
-        .borde3 {
-            border: 2px solid yellow
-        }
         .contenedor{
             overflow-x: scroll;
         }
@@ -120,23 +106,25 @@
 </head>
 
 <body>
-    @include('neutron.plantillaencabezado')
+
+    @include('neutron.header')
+    @include('neutron.navigation_bar')
 
     <div class="row ">
 
-        <div class="col-md-2 borde back">
+        <div class="col-md-2  back">
             @include('neutron.left_aside')
 
         </div>
 
-        <div class='col-md-8 borde1'>
+        <div class='col-md-8'>
 
 
             @yield('content')
 
         </div>
 
-        <div class="col-md-2 borde2">
+        <div class="col-md-2">
 
             @include('neutron.right_aside')
 

@@ -32,13 +32,13 @@
                     <option value="V">V</option>
                     <option value="E">E</option>
                 </select>
+                @include('client.user.fragment.error_id_type')
             </div>
-            @include('admin.user.fragment.error_id_type')
             <div class="form-group">
                 <label for="id_number"> . </label>
                 <input type="number" min="9999" max="999999999" class="form-control ml-2" id="id_number"
                     name="id_number" value="{{$user->id_number}}" placeholder="numero">
-                @include('admin.user.fragment.error_id_number')
+                @include('client.user.fragment.error_id_number')
             </div>
         </div>
 </div>
@@ -53,46 +53,48 @@
             <option value="0414">0414</option>
             <option value="0424">0424</option>
         </select>
+        @include('client.user.fragment.error_mobil_phone_code')
     </div>
     <div class="form-group ">
         <label for="mobile_phone">Movil </label>
         <input type="tel" maxlength="7" class="form-control ml-2" id="mobile_phone" name="mobile_phone"
             value="{{$user->mobil_phone}}" placeholder="numero">
+            @include('client.user.fragment.error_mobil_phone')
     </div>
 
     <div class="form-group ml-5">
         <label for="area_code">Telefono</label>
         <input type="text" maxlength="4" class="form-control" id="area_code" name="area_code"
             value="{{$user->area_code}}" placeholder="codigo area">
+            @include('client.user.fragment.error_area_code')
     </div>
     <div class="form-group">
         <label for="phone_number">fijo</label>
         <input type="tel" maxlength="7" class="form-control ml-2" id="phone_number" name="phone_number"
             value="{{$user->phone_number}}" placeholder="numero">
+            @include('client.user.fragment.error_phone_number')
     </div>
 </div>
 
 <div class="form-group">
     <label for="address1">Direccion</label>
-    <input type="text" class="form-control" id="address1" name="address1" maxlength="150" value="{{$user->address1}}"
+    <input type="text" class="form-control" id="address1" name="address" maxlength="150" value="{{$user->address1}}"
         placeholder="casa apto piso edif calle manzana vereda" size="10">
+        @include('client.user.fragment.error_address')
 </div>
-<div class="form-group">
-    <label for="address2">Direccion</label>
-    <input type="text" class="form-control" id="address2" maxlength="150" name="address2" value="{{$user->address2}}"
-        placeholder="urbanizacion sector">
-</div>
+
 
 <div class="form-row">
     <div class="form-group">
         <label for="city">Ciudad</label>
         <input type="text" maxlength="30" class="form-control" pattern="[A-Za-z]" id="city" name="city"
             value="{{$user->city}}">
+            @include('client.user.fragment.error_city')
     </div>
     <div class="form-group ml-3">
         <label for="state">Estado</label>
-        <select id="state" class="form-control" name="state" value="{{$user->state}}">
-            <option> </option>
+        <select id="state" class="form-control" name="state">
+            <option selected value="{{$purchase->shipping_state}}">{{$purchase->shipping_state}}</option>
             <option value="amazonas">amazonas</option>
             <option value="anzoategui">anzoategui</option>
             <option value="apure">apure</option>
@@ -117,10 +119,12 @@
             <option value="yaracuy">yaracuy</option>
             <option value="zulia">zulia</option>
         </select>
+        @include('client.user.fragment.error_state')
     </div>
     <div class="form-group ml-3">
         <label for="zip_code">Codigo postal</label>
         <input type="text" class="form-control" maxlength="4" id="zip_code" name="zip_code" value="{{$user->zip_code}}">
+
     </div>
 </div>
 <br><br>

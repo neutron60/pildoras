@@ -24,10 +24,18 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|min:2|max:50',
-            'lastname' => 'required|min:2|max:50',
-            'id_type' => 'required',
-            'id_number' => 'required|min:6|max:10',
+            'name' => 'sometimes|required|min:2|max:50',
+            'lastname' => 'sometimes|required|min:2|max:50',
+            'id_type' => 'sometimes|required',
+            'id_number' => 'sometimes|required|min:6|max:10',
+            'mobil_phone_code' => 'sometimes|required|min:2|max:10',
+            'mobil_phone' => 'sometimes|required|min:2|max:10',
+            'area_code' => 'sometimes|required|min:2|max:10',
+            'phone_number' => 'sometimes|required|min:2|max:10',
+            'address' => 'sometimes|required|min:2|max:100',
+            'city' => 'sometimes|required|min:2|max:100',
+            'state' => 'sometimes|required|min:2|max:100',
+            'zip_code' => 'sometimes|required|min:2|max:100'
         ];
     }
 }

@@ -14,10 +14,10 @@
             <input type="hidden" name="_method" value="PUT">
 
             <div class="media ">
-                <img src="{{$aside_advertising->advertising_image}}" class="mr-3 col-md-2 image" alt="imagen" height="150 rem">
+                <img src="{{asset($aside_advertising->advertising_image)}}" class="mr-3 col-md-2 image" alt="imagen" height="150 rem">
                 <div>
                     <input type="file" maxlength="100" pattern="" class="mt-3 " id="advertising_image" name="advertising_image"
-                        value="{{$aside_advertising->advertising_image}}">
+                        value="{{asset($aside_advertising->advertising_image)}}">
 
                     <div class="media-body mt-3">
                         <label for="">Texto:</label>
@@ -29,6 +29,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <div class="centrar1">
                 <input class=" btn btn-secondary" type="submit" name="actualizar" value="actualizar" id="">
                 <a class="btn btn-secondary centrar2" href="{{route('aside-advertising.index')}}">ver publicidades </a>

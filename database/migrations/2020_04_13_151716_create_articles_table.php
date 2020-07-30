@@ -31,7 +31,6 @@ class CreateArticlesTable extends Migration
             $table->tinyInteger('is_new_collection')->default(0)->unsigned();
             $table->bigInteger('category_id')->nullable()->unsigned();
             $table->tinyInteger('is_active')->nullable()->unsigned();
-            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

@@ -6,6 +6,8 @@
 <div class="container-fluid">
     <h1 class="text-center mb-5"> ARTICULOS</h1>
 
+    @include('admin.article.fragment.info')
+
     <form action="/admin/article/search" class="form-inline mt-n3">
         <div class="input-group input-group-sm">
             <input type="search" class="form-control form-control-navbar col-md-2" name="search_article"
@@ -20,7 +22,7 @@
             </div>
             <div class="ml-2">
                 <select name="search_is_bargain" id="search_is_bargain" class="form-control">
-                    <option selected value="%" >en oferta</option>
+                    <option selected value="%" >oferta</option>
                     <option value="1">si</option>
                     <option value="0">no</option>
                 </select>
@@ -32,9 +34,9 @@
                     <option value="0">no</option>
                 </select>
             </div>
-            <div class="input-group-append ">
+            <div class="input-group-append ml-2">
                 <button class="btn btn-navbar" type="submit">
-                    <i class="fas fa-search"> </i>
+                    <i class="fas fa-search"></i>
                 </button>
             </div>
         </div>
@@ -66,10 +68,10 @@
             <tr>
                 <th class="text-center" scope="col">Departamento</th>
                 <th class="text-center" scope="col">Seccion</th>
-                <th class="text-center" scope="col">Categoria</th>
                 <th class="text-center" scope="col">Articulo</th>
                 <th class="text-center" scope="col">Codigo</th>
                 <th class="text-center" scope="col">Estado</th>
+                <th class="text-center" scope="col">stock</th>
                 <th class="text-center" scope="col">Oferta</th>
                 <th class="text-center" scope="col">Nueva coleccion</th>
                 <th class="text-center" colspan="2">&nbsp;</th>
@@ -79,11 +81,9 @@
 
             @foreach ($articles as $article)
             <tr>
-                <td class="text-center" scope="row" width="120px">{{$article->name_department}}</td>
+                <td class="text-center" scope="row" width="100px">{{$article->name_department}}</td>
 
-                <td class="text-center" scope="row" width="120px">{{$article->name_section}}</td>
-
-                <td class="text-center" scope="row" width="120px">{{$article->name_category}}</td>
+                <td class="text-center" scope="row" width="100px">{{$article->name_section}}</td>
 
                 <td class="text-center" scope="row" width="200px">{{$article->name}}</td>
 
@@ -91,14 +91,16 @@
 
                 <td class="text-center" width="80px">{{$article->is_active?'activo':'inactivo'}} </td>
 
-                <td class="text-center" width="70px">{{$article->is_bargain?'si':'no'}}</td>
+                <td class="text-center" scope="row" width="60px">{{$article->stock}}</td>
+
+                <td class="text-center" width="60px">{{$article->is_bargain?'si':'no'}}</td>
 
                 <td class="text-center" width="70px">{{$article->is_new_collection?'si':'no'}}</td>
 
 
                 <td class="text-center" width="100px"><button type="button" class="btn btn-default"><a href="{{route('article.show', $article->id)}}"> ver
                         datos articulo</a> </button></td>
-                <td class="text-center" width="70px"><button type="button" class="btn btn-default"><a href="{{route('article.edit', $article->id)}}">
+                <td class="text-center" width="60px"><button type="button" class="btn btn-default"><a href="{{route('article.edit', $article->id)}}">
                         editar</a> </button></td>
             </tr>
 

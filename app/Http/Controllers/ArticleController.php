@@ -9,6 +9,7 @@ use App\Section;
 use App\Category;
 use App\Article;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class ArticleController extends Controller
 {
@@ -21,25 +22,18 @@ class ArticleController extends Controller
     {
         $departments=Department::all();
 
-        $articles=Article::join('categories','categories.id','=','articles.category_id')
-        ->join('sections','sections.id','=','categories.section_id')
-        ->join('departments','departments.id','=','sections.department_id')
-        ->select('articles.id','articles.code', 'articles.name', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
-        'categories.name as name_category',
-        'sections.name as name_section',
-        'departments.name as name_department')
-        ->orderBy('name_department')->orderby('name_section')->orderBy('code')
-        ->paginate(20);
+        $articles=$this->index_base()->paginate(20);
 
         $query1='%';
         $query2='%';
         $query3='%';
         $query4='%';
 
-
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.index", compact("articles", "departments", "aside_advertisings","query1", "query2", "query3", "query4"));
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4"));
     }
 
     public function search(Request $request)
@@ -53,23 +47,18 @@ class ArticleController extends Controller
 
             if (!$query2) {$query2='%';}
 
-                $articles=Article::join('categories','categories.id','=','articles.category_id')
-                ->join('sections','sections.id','=','categories.section_id')
-                ->join('departments','departments.id','=','sections.department_id')
-                ->select('articles.id','articles.code', 'articles.name', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
-                 'categories.name as name_category',
-                  'sections.name as name_section',
-                  'departments.name as name_department' )
-                ->orderBy('name_department')->orderby('name_section')->orderBy('code')
+            $articles=$this->index_base()
                 ->where('departments.name', 'LIKE', '%'.$query1.'%')
                 ->where('articles.name', 'LIKE', '%'. $query2. '%')
                 ->where('articles.is_bargain', 'LIKE', '%'. $query3. '%')
                 ->where('articles.is_new_collection', 'LIKE', '%'. $query4. '%')
                 ->paginate(20);
 
+                $advertisings=Advertising::all();
+                $advertising=$advertisings->first();
                 $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "query1", "query2", "query3", "query4"));
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4"));
     }
 
 
@@ -84,9 +73,11 @@ class ArticleController extends Controller
         $section=Section::find($id);
         $department=$section->department;
         $categories=$section->categories;
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.create", compact("department","section", "categories", "aside_advertisings"));
+        return view("admin.article.create", compact("department","section", "categories", "aside_advertisings", "advertising"));
     }
     /**
      * Store a newly created resource in storage.
@@ -98,22 +89,22 @@ class ArticleController extends Controller
     {
 
         $entrada=$request->only('category_id','name','brand','model','size','use','price','stock',
-        'description','image1', 'image2', 'image3', 'is_active', 'is_bargain', 'is_new_collection', 'code');
+        'description','image1', 'is_active', 'is_bargain', 'is_new_collection', 'code');
         $archivo=Article::create($entrada);
 
         if($request->file('image1')){        // verifica si hay un archivo
             $path=Storage::disk('public')->put('images', $request->file('image1'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['image1'=>asset($path)])->save();   //guardar en base de datos la ruta
+            $archivo->fill(['image1'=>$path])->save();   //guardar en base de datos la ruta
         }
 
         if($request->file('image2')){        // verifica si hay un archivo
             $path=Storage::disk('public')->put('images', $request->file('image2'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['image2'=>asset($path)])->save();   //guardar en base de datos la ruta
+            $archivo->fill(['image2'=>$path])->save();   //guardar en base de datos la ruta
         }
 
         if($request->file('image3')){        // verifica si hay un archivo
             $path=Storage::disk('public')->put('images', $request->file('image3'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['image3'=>asset($path)])->save();   //guardar en base de datos la ruta
+            $archivo->fill(['image3'=>$path])->save();   //guardar en base de datos la ruta
         }
         return redirect()->route('article.index')->with('info', 'el articulo fue creado');
     }
@@ -133,10 +124,12 @@ class ArticleController extends Controller
         $article->created_at->toFormattedDateString();
         $article->updated_at->toFormattedDateString();
         $price=number_format($article->price,2,",",".");
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
 
-        return view("admin.article.show", compact("article", "department", "section", "category","price", "aside_advertisings"));
+        return view("admin.article.show", compact("article", "department", "section", "category","price", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -151,9 +144,11 @@ class ArticleController extends Controller
         $category=$article->category;
         $section=$category->section;
         $department=$section->department;
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.edit", compact("article", "category", "section", "department", "aside_advertisings"));
+        return view("admin.article.edit", compact("article", "category", "section", "department", "aside_advertisings", "advertising"));
     }
 
 
@@ -169,20 +164,27 @@ class ArticleController extends Controller
     {
         $entrada=Article::findOrfail($id);
         $entrada->update($request->only('name','brand','model','size','use','price','stock',
-        'description','image1','image2','image3','is_active','is_bargain','is_new_collection'));
+        'description','is_active','is_bargain','is_new_collection'));
+
         if($request->file('image1')){        // verifica si hay un archivo
+            $path1=$entrada->image1;
+            Storage::disk('public')->delete($path1);
             $path=Storage::disk('public')->put('images', $request->file('image1'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['image1'=>asset($path)])->update();   //guardar en base de datos la ruta
+            $entrada->fill(['image1'=>$path])->update();   //guardar en base de datos la ruta
         }
 
         if($request->file('image2')){        // verifica si hay un archivo
+            $path2=$entrada->image2;
+            Storage::disk('public')->delete($path2);
             $path=Storage::disk('public')->put('images', $request->file('image2'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['image2'=>asset($path)])->update();   //guardar en base de datos la ruta
+            $entrada->fill(['image2'=>$path])->update();   //guardar en base de datos la ruta
         }
 
         if($request->file('image3')){        // verifica si hay un archivo
+            $path3=$entrada->image3;
+            Storage::disk('public')->delete($path3);
             $path=Storage::disk('public')->put('images', $request->file('image3'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['image3'=>asset($path)])->update();   //guardar en base de datos la ruta
+            $entrada->fill(['image3'=>$path])->update();   //guardar en base de datos la ruta
         }
 
         return redirect()->route('article.show', $entrada->id)->with('info', 'el articulo fue actualizado');
@@ -197,6 +199,12 @@ class ArticleController extends Controller
     public function destroy ($id)
     {
         $article=Article::findOrfail($id);
+        $path1=$article->image1;
+        Storage::disk('public')->delete($path1);
+        $path2=$article->image2;
+        Storage::disk('public')->delete($path2);
+        $path3=$article->image3;
+        Storage::disk('public')->delete($path3);
         $article->delete();
         return redirect()->route('article.index')->with('info', 'el articulo fue eliminado');
     }
@@ -205,9 +213,11 @@ class ArticleController extends Controller
     public function selectDepartment ()
     {
         $departments=Department::all();
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.selectDepartment", compact("departments", "aside_advertisings"));
+        return view("admin.article.selectDepartment", compact("departments", "aside_advertisings", "advertising"));
     }
 
     public function selectSection ($id)
@@ -215,9 +225,27 @@ class ArticleController extends Controller
 
         $department=Department::find($id);
         $sections=$department->sections;
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.article.selectSection", compact("department", "sections", "aside_advertisings"));
+        return view("admin.article.selectSection", compact("department", "sections", "aside_advertisings", "advertising"));
+    }
+
+    public function index_base ()
+    {
+
+        $articles_base=Article::join('categories','categories.id','=','articles.category_id')
+                ->join('sections','sections.id','=','categories.section_id')
+                ->join('departments','departments.id','=','sections.department_id')
+                ->select('articles.id','articles.code', 'articles.name', 'articles.is_active','articles.is_bargain', 'articles.is_new_collection',
+                 'articles.stock',
+                 'categories.name as name_category',
+                  'sections.name as name_section',
+                  'departments.name as name_department' )
+                ->orderBy('name_department')->orderby('name_section')->orderBy('code');
+
+        return $articles_base;
     }
 
 

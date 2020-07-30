@@ -10,7 +10,7 @@
 
 
     <div class="media">
-        <img src="{{$aside_advertising->advertising_image}}" class="image mr-3 col-md-2" alt="imagen" height="150 rem">
+        <img src="{{asset($aside_advertising->advertising_image)}}" class="image mr-3 col-md-2" alt="imagen" height="150 rem">
         <div class="media-body mt-5">
             <div>
                 <label for="">Texto:</label>

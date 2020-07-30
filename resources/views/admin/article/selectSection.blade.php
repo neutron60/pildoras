@@ -6,7 +6,7 @@
         <h3 class="text-center">CREACION DE UN NUEVO ARTICULO</h3>
         <br><br>
         <h4 class="text-center">SELECIONE LA SECCION</h4>
-        <ul class="list-group centrar">
+        <ul class="list-group w-25">
 
             @foreach ($sections as $section)
 

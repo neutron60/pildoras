@@ -6,6 +6,8 @@
 <div class="container-fluid">
     <h1 class="text-center"> CATEGORIAS</h1>
 
+    @include('admin.category.fragment.info')
+
     <form action="/admin/category/search" class="form-inline">
         <div class="input-group input-group-sm ">
             <div class="">

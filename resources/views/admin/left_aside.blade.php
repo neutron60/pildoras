@@ -74,7 +74,4 @@
     <p class="mt-n3">
         <a href="{{route('advertising.edit', 1)}}" type="" class="text-dark">editar publicidad</a>
     </p>
-    <p class="mt-n3">
-        <a href="/admin/advertising" type="" class="text-dark">ver publicidad</a>
-    </p>
 </div>

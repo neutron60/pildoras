@@ -12,72 +12,27 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="">
 
-    <script src="https://kit.fontawesome.com/40d555d624.js" crossorigin="anonymous"></script>
-
 
     <style>
-        .icono {
-            color: blue;
-        }
 
-        .icono1 {
-            color: aquamarine;
-        }
-
-        .icono2 {
-            color: deeppink;
-        }
-
-        .icono3 {
-            color: red;
-        }
-
-        .image2 {
+        .image {
+            /* se esta usando en edit y show de article*/
             max-width: 100%;
-            width: 100%;
-            height: 250px;
-            padding-left: %;
-            padding-right: %;
-            margin-left: %;
-            margin-right: %;
-            max-height:
+            width: auto;
         }
 
         .image1 {
+            /* se esta usando en index*/
             max-width: 100%;
-            width: ;
+            height: 280px;
+        }
+
+        .image2 {
+            /* se esta usando en index, article list*/
+            max-width: 100%;
+            width: 100%;
             height: 250px;
-            padding-left: %;
-            padding-right: %;
-            margin-left: %;
-            margin-right: %;
-            max-height:
         }
-
-        .image {
-            max-width: 100%;
-            width: auto;
-            height: ;
-            padding-left: %;
-            padding-right: %;
-            margin-left: %;
-            margin-right: %;
-            max-height:
-        }
-
-        .image3 {
-            max-width: 100%;
-            max-height: ;
-            width: auto;
-            height: 250px ;
-            padding-left: %;
-            padding-right: %;
-            margin-left: %;
-            margin-right: %;
-            max-height:
-        }
-
-
 
         .centrar {
             margin-left: auto;
@@ -94,76 +49,61 @@
             margin-right:
         }
 
-        .borde {
-            border: 2px solid blue
-        }
-
-        .borde1 {
-            border: 2px solid orangered
-        }
-
-        .borde2 {
-            border: 2px solid green
-        }
-
-        .borde3 {
-            border: 2px solid yellow
-        }
-        .contenedor{
+        .contenedor {
             overflow-x: scroll;
         }
-        .back {
+
+        .gray{
             background: #EDEFEF;
         }
 
     </style>
 </head>
 
+
+
 <body>
-    @include('neutron.plantillaencabezado')
+    @include('neutron.header')
+    @include('seller.navigation_bar')
+    <div class="container-fluid">
 
-    <div class="row ">
+        <div class="row ">
 
-        <div class="col-md-2 borde back">
+            <div class="col-md-2 gray">
 
+                @include('seller.left_aside')
 
-        </div>
+            </div>
 
-        <div class='col-md-8 borde1'>
+            <div class='col-md-8'>
 
+                @yield('content')
 
-            @yield('content')
+            </div>
 
-        </div>
+            <div class="col-md-2">
 
-        <div class="col-md-2 borde2">
+                @include('neutron.right_aside')
 
-            @include('neutron.right_aside')
-
-
+            </div>
         </div>
     </div>
-
-
     <br>
-
-    @include('neutron.plantillapie')
-
-
-
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
-
-
-
-
 </body>
+
+
+<footer>
+    @include('neutron.plantillapie')
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+</script>
 
 </html>

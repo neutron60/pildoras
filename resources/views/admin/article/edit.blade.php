@@ -167,21 +167,21 @@
             <div class="col-md-2">
                 <input type="file" maxlength="50" pattern="" class=" " id="image1" name="image1">
                 <br><br>
-                <img class="image" src="{{$article->image1}}" alt="imagen" height="100rem">
+                <img class="image centrar" src="{{asset($article->image1)}}" alt="imagen" height="100rem">
                 @include('admin.article.fragment.error_image1')
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 ml-5">
                 <input type="file" maxlength="50" pattern="" class=" " id="image2" name="image2">
                 <br><br>
-                <img class="image" src="{{$article->image2}}" alt="imagen" height="100rem">
+                <img class="image centrar" src="{{asset($article->image2)}}" alt="imagen" height="100rem">
                 @include('admin.article.fragment.error_image2')
             </div>
 
-            <div class="col-md-2">
+            <div class="col-md-2 ml-5">
                 <input type="file" maxlength="50" pattern="" class=" " id="image3" name="image3">
                 <br><br>
-                <img class="image" src="{{$article->image3}}" alt="imagen" height="100rem">
+                <img class="image centrar" src="{{asset($article->image3)}}" alt="imagen" height="100rem">
                 @include('admin.article.fragment.error_image3')
             </div>
 </div>

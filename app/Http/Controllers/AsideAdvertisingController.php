@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use App\AsideAdvertising;
+use App\Advertising;
 
 class AsideAdvertisingController extends Controller
 {
@@ -14,9 +15,11 @@ class AsideAdvertisingController extends Controller
      */
     public function index()
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.aside-advertising.index", compact("aside_advertisings"));
+        return view("admin.aside-advertising.index", compact("aside_advertisings", "advertising"));
     }
 
     /**
@@ -26,8 +29,10 @@ class AsideAdvertisingController extends Controller
      */
     public function create()
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
-        return view("admin.aside-advertising.create", compact("aside_advertisings"));
+        return view("admin.aside-advertising.create", compact("aside_advertisings", "advertising"));
     }
 
     /**
@@ -39,13 +44,13 @@ class AsideAdvertisingController extends Controller
     public function store(Request $request)
     {
 
-        $entrada=$request->only('advertising_text','advertising_image','advertising_url');
+        $entrada=$request->only('advertising_text','advertising_url');
 
         $archivo=AsideAdvertising::create($entrada);
 
         if($request->file('advertising_image')){        // verifica si hay un archivo
             $path=Storage::disk('public')->put('images', $request->file('advertising_image'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $archivo->fill(['advertising_image'=>asset($path)])->save();   //guardar en base de datos la ruta
+            $archivo->fill(['advertising_image'=>$path])->save();   //guardar en base de datos la ruta
         }
 
         return redirect()->route('aside-advertising.index')->with('info', 'la publicidad fue creada');
@@ -59,13 +64,15 @@ class AsideAdvertisingController extends Controller
      */
     public function show($id)
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertising=AsideAdvertising::findOrfail($id);
         $aside_advertisings=AsideAdvertising::all();
         $aside_advertising->created_at->toFormattedDateString();
         $aside_advertising->updated_at->toFormattedDateString();
 
 
-        return view("admin.aside-advertising.show", compact("aside_advertising", "aside_advertisings"));
+        return view("admin.aside-advertising.show", compact("aside_advertising", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -76,10 +83,12 @@ class AsideAdvertisingController extends Controller
      */
     public function edit($id)
     {
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
         $aside_advertising=AsideAdvertising::findOrfail($id);
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("admin.aside-advertising.edit", compact("aside_advertising", "aside_advertisings"));
+        return view("admin.aside-advertising.edit", compact("aside_advertising", "aside_advertisings", "advertising"));
     }
 
     /**
@@ -92,12 +101,14 @@ class AsideAdvertisingController extends Controller
     public function update(Request $request, $id)
     {
         $entrada=AsideAdvertising::findOrfail($id);
-        echo "hola";
 
-        $entrada->update($request->only('advertising_text','advertising_image','advertising_url'));
+        $entrada->update($request->only('advertising_text','advertising_url'));
         if($request->file('advertising_image')){        // verifica si hay un archivo
+            $path1=$entrada->image;
+            Storage::disk('public')->delete($path1);
+
             $path=Storage::disk('public')->put('images', $request->file('advertising_image'));  //alamacenar en el disco publico, carpeta images, el archivo file
-            $entrada->fill(['advertising_image'=>asset($path)])->update();   //guardar en base de datos la ruta
+            $entrada->fill(['advertising_image'=>$path])->update();   //guardar en base de datos la ruta
         }
 
         return redirect()->route('aside-advertising.show', $entrada->id)->with('info', 'la publicida fue actualizada');
@@ -112,6 +123,8 @@ class AsideAdvertisingController extends Controller
     public function destroy($id)
     {
         $aside_advertising=AsideAdvertising::findOrfail($id);
+        $path=$aside_advertising->image;
+        Storage::disk('public')->delete($path);
         $aside_advertising->delete();
         return redirect()->route('aside-advertising.index')->with('info', 'La publicidad fue eliminada');
     }
