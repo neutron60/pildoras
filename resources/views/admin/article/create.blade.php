@@ -7,7 +7,7 @@
         <h2 class="text-center">REGISTRAR UN NUEVO ARTICULO</h2>
     </div>
     <br>
-    <form action="/admin/article" method="POST" enctype="multipart/form-data" novalidate="" novalidate="novalidate">
+    <form action="/admin/article" method="POST" enctype="multipart/form-data" novalidate="" novalidate="novalidate" id="validar_forma3">
         @csrf
 
         <!-- ARTICULO -->
@@ -24,16 +24,16 @@
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">SECCION:</label>
             </div>
-            <div class="ml-3">
+            <div class="form-group ml-3">
                 <label for="">{{$section->name}}</label>
             </div>
-            <div class="ml-5">
+            <div class="form-group ml-5">
                 <label for="">CATEGORIA:</label>
             </div>
-            <div class="ml-3">
+            <div class="form-group ml-3">
                 <select name="category_id" id="category_id" class="form-control">
                     <option selected value=" "> </option>
                     @foreach($categories as $category)
@@ -45,21 +45,21 @@
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">ARTICULO:</label>
             </div>
-            <div class="ml-3">
-                <input type="text" maxlength="100" pattern="" class="form-control" size="60" id="name" name="name"
+            <div class="form-group ml-3">
+                <input type="text" maxlength="100" pattern="" class="form-control" size="50" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.article.fragment.error_name')
             </div>
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">CODIGO:</label>
             </div>
-            <div class="ml-3">
+            <div class="form-group ml-3">
                 <input type="text" maxlength="50" pattern="" class="form-control" id="code" name="code"
                     value="{{old('code')}}">
                 @include('admin.article.fragment.error_code')
@@ -67,72 +67,72 @@
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">MARCA:</label>
             </div>
-            <div class="ml-3">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="brand" name="brand"
+            <div class="form-group ml-3">
+                <input type="text" maxlength="50" pattern="" class="form-control" id="brand" name="brand" size="11"
                     value="{{old('brand')}}">
             </div>
-            <div class="ml-5">
+            <div class="form-group ml-5">
                 <label for="">MODELO:</label>
             </div>
-            <div class="ml-3">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="model" name="model"
+            <div class="form-group ml-3">
+                <input type="text" maxlength="50" pattern="" class="form-control" id="model" name="model" size="11"
                     value="{{old('model')}}">
             </div>
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">TALLA:</label>
             </div>
-            <div class="ml-3">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="size" name="size"
+            <div class="form-group ml-3">
+                <input type="text" maxlength="50" pattern="" class="form-control" id="size" name="size" size="7"
                     value="{{old('size')}}">
             </div>
-            <div class="ml-5">
+            <div class="form-group ml-5">
                 <label for="">USO:</label>
             </div>
-            <div class="ml-3">
-                <input type="text" maxlength="50" pattern="" class="form-control" id="use" name="use"
+            <div class="form-group ml-3">
+                <input type="text" maxlength="50" pattern="" class="form-control" id="use" name="use" size="15"
                     value="{{old('use')}}">
             </div>
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="">PRECIO:</label>
             </div>
-            <div class="ml-3">
-                <input type="number" maxlength="50" pattern="" class="form-control" id="price" name="price"
+            <div class="form-group ml-3">
+                <input type="number" maxlength="50" pattern="" class="form-control" id="price" name="price" min="0" max="100000000"
                     value="{{old('price')}}">
                     @include('admin.article.fragment.error_price')
             </div>
-            <div class="ml-5">
+            <div class="form-group ml-5">
                 <label for="">EXISTENCIA:</label>
             </div>
-            <div class="ml-3">
-                <input type="number" maxlength="50"  pattern="" class="form-control" id="stock" name="stock"
+            <div class="form-group ml-3">
+                <input type="number" maxlength="50"  pattern="" class="form-control" id="stock" name="stock" min="0" max="100"
                     value="{{old('stock')}}">
                     @include('admin.article.fragment.error_stock')
             </div>
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label for="is_bargain">OFERTA:</label>
             </div>
-            <div class="ml-3">
+            <div class="form-group ml-3">
                 <select name="is_bargain" id="is_bargain" class="form-control">
                     <option selected value="0">no</option>
                     <option value="1">si</option>
                 </select>
             </div>
-            <div class="ml-5">
+            <div class="form-group ml-5">
                 <label for="is_new_collection">NUEVA COLECCION:</label>
             </div>
-            <div class="ml-3">
+            <div class="form-group ml-3">
                 <select name="is_new_collection" id="is_new_collection" class="form-control">
                     <option selected value="0">no</option>
                     <option value="1">si</option>
@@ -141,11 +141,11 @@
         </div>
         <br>
         <div class="form-row">
-            <div class="">
+            <div class="form-group">
                 <label class="" for="nombre">DESCRIPCION:</label>
             </div>
-            <div class="ml-3 col-md-3">
-                <textarea maxlength="2000" rows="10" cols="10" pattern="" class="form-control" id="description"
+            <div class="form-group ml-3 ">
+                <textarea maxlength="2000" rows="10" cols="40" pattern="" class="form-control" id="description"
                     name="description">{{old('description')}} </textarea>
                 @include('admin.article.fragment.error_description')
             </div>

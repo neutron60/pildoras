@@ -64,24 +64,24 @@
         <div class="card">
             <div class="card-header" id="headingOne">
                 <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                    <button class="btn btn-link btn-block text-left " type="button" data-toggle="collapse"
                         data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                         efectivo
                     </button>
                 </h2>
             </div>
         </div>
-        <div class="card ml-3">
+        <div class="card ml-1">
             <div class="card-header" id="headingTwo">
                 <h2 class="mb-0">
-                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
+                    <button class="btn btn-link btn-block text-left collapsed " type="button" data-toggle="collapse"
                         data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
                         deposito
                     </button>
                 </h2>
             </div>
         </div>
-        <div class="card ml-3">
+        <div class="card ml-1">
             <div class="card-header" id="headingThree">
                 <h2 class="mb-0">
                     <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
@@ -91,7 +91,7 @@
                 </h2>
             </div>
         </div>
-        <div class="card ml-3">
+        <div class="card ml-1">
             <div class="card-header" id="headingFour">
                 <h2 class="mb-0">
                     <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse"
@@ -108,7 +108,7 @@
     <!------------------------------------------------------------------------------------------------>
 
     <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-        <div class=" form-row ">
+        <div class=" form-row " >
             <div class="">
                 <label class="ml-3 " for="nombre">
                     <h5>PAGO EN EFECTIVO: </h5>
@@ -116,8 +116,8 @@
             </div>
         </div>
         <br>
-        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="post"
-            enctype="multipart/form-data" novalidate="novalidate">
+        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST"
+            enctype="multipart/form-data" novalidate="novalidate" id="validar_forma7">
             @csrf
             <input type="hidden" name="_method" value="PUT">
 
@@ -127,10 +127,9 @@
                     <label class="" for="nombre">monto pagado:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="number" maxlength="" pattern="" class="form-control" id="amount_paid"
-                        name="amount_paid" value="{{old('amount_paid')}}">
-                        <p>mayor o igual que el total</p>
-
+                    <input type="number"  pattern="" class="form-control" id="amount_paid"
+                        name="amount_paid" value="{{old('amount_paid')}}" placeholder="mayor o igual que el total"
+                        min="1" max="100000000"  >
                 </div>
             </div>
             <br>
@@ -140,12 +139,12 @@
                     <label class="" for="nombre">fecha de la transaccion::</label>
                 </div>
                 <div class="ml-3">
-                    <input type="date" maxlength="" pattern="" class="form-control" id="payment_day" name="payment_day"
-                        value="{{old('payment_day')}}">
+                    <input type="date"  class="form-control" name="payment_day"
+                        value="{{old('payment_day')}}" id="payment_day">
                 </div>
             </div>
-            <br>
-            <button type="submit" class="ml-5">GUARDAR</button>
+            <br><br>
+            <button type="submit" class="ml-5" >GUARDAR</button>
         </form>
 
         <br>
@@ -161,7 +160,8 @@
                 </label>
             </div>
         </div>
-        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST" novalidate="novalidate">
+        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST"
+            novalidate="novalidate" id="validar_forma8">
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <input type="hidden" name='payment_type' value="deposito">
@@ -170,9 +170,9 @@
                     <label class="" for="nombre">monto pagado:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="number" maxlength="" pattern="" class="form-control" id="amount_paid"
-                        name="amount_paid" value="{{old('amount_paid')}}">
-                    <p>mayor o igual que el total</p>
+                    <input type="number" class="form-control" id="amount_paid"
+                        name="amount_paid" value="{{old('amount_paid')}}" placeholder="mayor o igual que el total"
+                        min="1" max="100000000">
                 </div>
             </div>
             <br>
@@ -181,7 +181,7 @@
                     <label class="" for="nombre">banco emisor:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="text" maxlength="" pattern="" class="form-control" id="issuing_bank"
+                    <input type="text"  class="form-control" id="issuing_bank"
                         name="issuing_bank" value="{{old('issuing_bank')}}">
                 </div>
             </div>
@@ -191,10 +191,23 @@
                     <label class="" for="nombre">fecha de la transaccion::</label>
                 </div>
                 <div class="ml-3">
-                    <input type="date" maxlength="" pattern="" class="form-control" id="payment_day" name="payment_day"
+                    <input type="date"  class="form-control" id="payment_day" name="payment_day"
                         value="{{old('payment_day')}}">
                 </div>
             </div>
+            <br>
+            <div class="form-row ">
+                <div class="">
+                    <label class="ml-3" for="nombre">numero de operacion:</label>
+                </div>
+                <div class="ml-3">
+                    <div class="ml-3">
+                        <input type="text"  class="form-control required" id="operation_number"
+                            size="10"   name="operation_number" value="{{old('operation_number')}}">
+                    </div>
+                </div>
+            </div>
+            <br><br>
             <button type="submit" class="ml-5">GUARDAR</button>
         </form>
         <br>
@@ -210,7 +223,8 @@
                 </label>
             </div>
         </div>
-        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST" novalidate="novalidate">
+        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST"
+            novalidate="novalidate" id="validar_forma9">
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <div class="form-row ">
@@ -220,9 +234,9 @@
                     <label class="" for="nombre">monto pagado:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="number" maxlength="" pattern="" class="form-control" id="amount_paid"
-                        name="amount_paid" value="{{('amount_paid')}}">
-                        <p>mayor o igual que el total</p>
+                    <input type="number" class="form-control" id="amount_paid"
+                        name="amount_paid" value="{{old('amount_paid')}}" placeholder="mayor o igual que el total"
+                        min="1" max="100000000">
                 </div>
             </div>
             <br>
@@ -231,14 +245,17 @@
                     <label class="" for="nombre">banco emisor:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="text" maxlength="" pattern="" class="form-control" id="issuing_bank"
+                    <input type="text"  class="form-control" id="issuing_bank"
                         name="issuing_bank" value="{{old('issuing_bank')}}">
                 </div>
-                <div class="ml-5">
+            </div>
+            <br>
+            <div class="form-row ">
+                <div class="ml-3">
                     <label class="" for="nombre">banco receptor:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="text" maxlength="" pattern="" class="form-control" id="receiving_bank"
+                    <input type="text"  class="form-control" id="receiving_bank"
                         name="receiving_bank" value="{{old('receiving_bank')}}">
                 </div>
             </div>
@@ -248,20 +265,23 @@
                     <label class="" for="nombre">fecha de la transaccion::</label>
                 </div>
                 <div class="ml-3">
-                    <input type="date" maxlength="" pattern="" class="form-control" id="payment_day" name="payment_day"
+                    <input type="date"  class="form-control" id="payment_day" name="payment_day"
                         value="{{old('payment_day')}}">
                 </div>
-
-                <div class="ml-5">
-                    <label class="" for="nombre">numero de operacion:</label>
+            </div>
+            <br>
+            <div class="form-row ">
+                <div class="">
+                    <label class="ml-3" for="nombre">numero de operacion:</label>
                 </div>
                 <div class="ml-3">
                     <div class="ml-3">
-                        <input type="text" maxlength="" pattern="" class="form-control" id="operation_number"
-                            name="operation_number" value="{{old('operation_number')}}">
+                        <input type="text"  class="form-control required" id="operation_number"
+                            size="10"   name="operation_number" value="{{old('operation_number')}}">
                     </div>
                 </div>
             </div>
+            <br><br>
             <button type="submit" class="ml-5">GUARDAR</button>
         </form>
 
@@ -277,7 +297,8 @@
                 </label>
             </div>
         </div>
-        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST" novalidate="novalidate">
+        <form action="/seller/purchase/update-order-payment-details/{{$purchase->id}}" method="POST" novalidate="novalidate"
+            id="validar_forma10" >
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <div class="form-row ">
@@ -287,9 +308,9 @@
                     <label class="" for="nombre">monto pagado:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="number" maxlength="" pattern="" class="form-control" id="amount_paid"
-                        name="amount_paid" value="{{old('amount_paid')}}">
-                        <p>mayor o igual que el total</p>
+                    <input type="number"  class="form-control" id="amount_paid"
+                        name="amount_paid" value="{{old('amount_paid')}}" placeholder="mayor o igual que el total"
+                        min="1" max="100000000" >
                 </div>
             </div>
             <br>
@@ -298,14 +319,17 @@
                     <label class="" for="nombre">banco emisor:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="text" maxlength="" pattern="" class="form-control" id="issuing_bank"
+                    <input type="text" class="form-control" id="issuing_bank"
                         name="issuing_bank" value="{{old('issuing_bank')}}">
                 </div>
-                <div class="ml-5">
+            </div>
+            <br>
+            <div class="form-row ">
+                <div class="ml-3">
                     <label class="" for="nombre">banco receptor:</label>
                 </div>
                 <div class="ml-3">
-                    <input type="text" maxlength="" pattern="" class="form-control" id="receiving_bank"
+                    <input type="text"  class="form-control" id="receiving_bank"
                         name="receiving_bank" value="{{old('receiving_bank')}}">
                 </div>
             </div>
@@ -315,19 +339,23 @@
                     <label class="" for="nombre">fecha de la transaccion::</label>
                 </div>
                 <div class="ml-3">
-                    <input type="date" maxlength="" pattern="" class="form-control" id="payment_day" name="payment_day"
+                    <input type="date"  class="form-control" id="payment_day" name="payment_day"
                         value="{{old('payment_day')}}">
                 </div>
-                <div class="ml-5">
+            </div>
+            <br>
+            <div class="form-row ">
+                <div class="ml-3">
                     <label class="" for="nombre">numero de operacion:</label>
                 </div>
                 <div class="ml-3">
                     <div class="ml-3">
-                        <input type="text" maxlength="" pattern="" class="form-control" id="operation_number"
-                            name="operation_number" value="{{old('operation_number')}}">
+                        <input type="text"  class="form-control required" id="operation_number"
+                            name="operation_number" value="{{old('operation_number')}}" size="10">
                     </div>
                 </div>
             </div>
+            <br><br>
             <button type="submit" class="ml-5">GUARDAR</button>
         </form>
 
@@ -335,6 +363,7 @@
     </div>
 
 </div>
+@include('seller.purchase.fragment.info')
 @include('seller.purchase.fragment.error_amount_paid')
 @include('seller.purchase.fragment.error_issuing_bank')
 @include('seller.purchase.fragment.error_receiving_bank')
@@ -352,7 +381,7 @@
             novalidate="novalidate">
             @csrf
             <input type="hidden" name="_method" value="DELETE">
-            <input type="submit" name="eliminar orden" value="eliminar orden" id="" class="btn btn-secondary ml-5">
+            <input type="submit" name="eliminar orden" value="eliminar orden" id="confirmar_borrar" class="btn btn-secondary ml-5">
             <!--el metodo es exigido por destroy-->
         </form>
     </div>

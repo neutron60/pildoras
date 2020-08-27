@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Department;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class DepartmentController extends Controller
 {
@@ -23,8 +24,9 @@ class DepartmentController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.department.index", compact("departments", "aside_advertisings", "advertising"));
+        return view("admin.department.index", compact("departments", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -37,7 +39,9 @@ class DepartmentController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
-        return view("admin.department.create", compact("aside_advertisings", "advertising"));
+        $user = Auth::user();
+
+        return view("admin.department.create", compact("aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -55,7 +59,7 @@ class DepartmentController extends Controller
             $path=Storage::disk('public')->put('images', $request->file('image'));  //alamacenar en el disco publico, carpeta images, el archivo file
             $archivo->fill(['image'=>$path])->save();   //guardar en base de datos la ruta
         }
-        return redirect()->route('department.index')->with('info', 'el departamento fue creado');
+        return redirect()->route('department.index')->with('info', 'el departamento ' . $archivo->name . ' fue creado');
     }
 
     /**
@@ -72,8 +76,9 @@ class DepartmentController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.department.show", compact("department", "aside_advertisings", "advertising"));
+        return view("admin.department.show", compact("department", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -88,8 +93,9 @@ class DepartmentController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.department.edit", compact("department", "aside_advertisings", "advertising"));
+        return view("admin.department.edit", compact("department", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -116,7 +122,7 @@ class DepartmentController extends Controller
            /* $entrada->fill(['image'=>asset($path)])->update();   //guardar en base de datos la ruta*/
             $entrada->fill(['image'=>$path])->update();
         }
-        return redirect()->route('department.show', $entrada->id)->with('info', 'el departamento fue actualizado');
+        return redirect()->route('department.show', $entrada->id)->with('info', 'el departamento ' . $entrada->name . ' fue actualizado');
 
     }
 
@@ -128,11 +134,12 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
+
         $department=Department::findOrfail($id);
         $path=$department->image;
         Storage::disk('public')->delete($path);
         $department->delete();
-        return redirect()->route('department.index')->with('info', 'el departamento junto con sus secciones y productos asociados fueron eliminados');
+        return redirect()->route('department.index')->with('info', 'el departamento  junto con sus secciones y productos asociados fueron eliminados');
     }
 
 

@@ -8,6 +8,7 @@ use App\Department;
 use App\Section;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class SectionController extends Controller
 {
@@ -30,9 +31,10 @@ class SectionController extends Controller
             $advertisings=Advertising::all();
             $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
+            $user = Auth::user();
             $query='%';
 
-        return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query"));
+        return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query", "user"));
     }
 
     public function search(Request $request)
@@ -49,8 +51,9 @@ class SectionController extends Controller
             $advertisings=Advertising::all();
             $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
+            $user = Auth::user();
 
-            return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query"));
+            return view("admin.section.index", compact("sections", "departments", "aside_advertisings", "advertising", "query", "user"));
     }
 
     /**
@@ -64,8 +67,9 @@ class SectionController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.section.create", compact("departments", "aside_advertisings", "advertising"));
+        return view("admin.section.create", compact("departments", "aside_advertisings", "advertising", "user"));
 
     }
 
@@ -80,7 +84,7 @@ class SectionController extends Controller
         $entrada=$request->only('name','department_id','is_active');
         $archivo=Section::create($entrada);
 
-        return redirect()->route('section.index')->with('info', 'la seccion fue creada');
+        return redirect()->route('section.index')->with('info', 'la seccion ' . $archivo->name .' fue creada');
     }
 
 
@@ -100,8 +104,9 @@ class SectionController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.section.show", compact("section", "department", "aside_advertisings", "advertising"));
+        return view("admin.section.show", compact("section", "department", "aside_advertisings", "advertising", "user"));
 
     }
 
@@ -119,8 +124,9 @@ class SectionController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.section.edit", compact("section", "aside_advertisings", "advertising"));
+        return view("admin.section.edit", compact("section", "aside_advertisings", "advertising","user"));
     }
 
     /**
@@ -137,7 +143,7 @@ class SectionController extends Controller
         $entrada=Section::findOrfail($id);
         $entrada->update($request->only('name','is_active'));
 
-        return redirect()->route('section.show', $entrada->id)->with('info', 'la seccion fue actualizada');
+        return redirect()->route('section.show', $entrada->id)->with('info', 'la seccion ' . $entrada->name . ' fue actualizada');
 
     }
 

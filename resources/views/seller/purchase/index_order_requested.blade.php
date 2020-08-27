@@ -14,7 +14,7 @@
                 placeholder="nombre" aria-label="Search" size="50px" value="">
             <input type="search" class="form-control form-control-navbar col-md-2 ml-2" name="search_id_number"
                 placeholder="# cedula" aria-label="Search" size="50px" value="">
-            <div class="input-group-append ">
+            <div class="input-group-append col-md-2">
                 <button class="btn btn-navbar" type="submit">
                     <i class="fas fa-search"> </i>
                 </button>

@@ -97,7 +97,7 @@
         <tr>
             <td class="text-center" scope="row" width="50px">1</td>
 
-            <td class="text-center" scope="row" width="80px">{{$article_code}}</td>
+            <td class="text-center" scope="row" width="80px">{{$purchase_detail->article_code}}</td>
 
             <td class="text-center" scope="row" width="200px">{{$purchase_detail->article_name}}</td>
 

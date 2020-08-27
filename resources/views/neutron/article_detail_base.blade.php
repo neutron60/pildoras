@@ -1,23 +1,25 @@
+
+
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-5">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
             </ol>
-            <div class="carousel-inner">
+            <div class="carousel-inner ">
                 <div class=" carousel-item active">
-                    <img src="{{asset($article->image1)}}" class="d-block img-responsive centrar" height="400rem" alt="...">
+                    <img src="{{asset($article->image1)}}" class="d-block img-responsive centrar image6" alt="imagen1">
                 </div>
                 @empty(!$article->image2)
                 <div class="carousel-item">
-                    <img src="{{asset($article->image2)}}" class="d-block img-responsive centrar" height="400rem" alt="...">
+                    <img src="{{asset($article->image2)}}" class="d-block img-responsive centrar image6" alt="imagen2">
                 </div>
                 @endempty
                 @empty(!$article->image3)
                 <div class="carousel-item">
-                    <img src="{{asset($article->image3)}}" class="d-block img-responsive centrar" height="400rem" alt="...">
+                    <img src="{{asset($article->image3)}}" class="d-block img-responsive centrar image6" alt="imagen3">
                 </div>
                 @endempty
             </div>
@@ -35,7 +37,7 @@
 
 
 
-    <div class="col-md-6">
+    <div class="col-md-7">
         <h2 class="text-center text-capitalize ml-4 mr-4">{{$article->name}}</h2>
         <br><br><br>
 
@@ -54,7 +56,7 @@
                     <label for="id_type">Cantidad:</label>
                 </div>
                 <div class="ml-3">
-                    <select id="" name="purchased_amount" class="form-control">
+                    <select  name="purchased_amount" class="form-control">
                         <option selected value="1">1</option>
 
                         @while($stock_flag++ < $article_stock) <option value="{{$stock_flag}}">{{$stock_flag}}</option>
@@ -79,7 +81,7 @@
             <br>
             <input type="hidden" name="article_id" value="{{$article->id}}">
             <div class="ml-5">
-                <input class="btn btn-primary btn-lg" type="submit" name="registrar" value="comprar" id="">
+                <input class="btn btn-primary btn-lg" type="submit" name="registrar" value="comprar" >
 
             </div>
             @include('neutron.fragment.info')
@@ -93,8 +95,8 @@
 <div class="col-md-6 ml-5">
     <h5>DESCRIPCION</h5>
     <br>
-    <textarea class="" rows="50" cols="80" style="border: none;"> {{$article->description}}</textarea>
+    <textarea class="" rows="30" cols="70" style="border: none;" disabled> {{$article->description}}</textarea>
 </div>
 
 <!-------------------------------------------------------------------------------------->
-<br><br>
+

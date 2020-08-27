@@ -151,7 +151,8 @@
                     <label class="" for="nombre">DESCRIPCION:</label>
                 </div>
                 <div class="ml-3">
-                    <label class="" for="nombre">{{$article->description}}</label>
+                    <textarea maxlength="2000" rows="10" cols="40" pattern="" class="form-control" id="description"
+                    name="description" disabled> {{$article->description}} </textarea>
                 </div>
             </div>
             <br><br>
@@ -160,13 +161,13 @@
                     <label class="" for="nombre">IMAGEN:</label>
                 </div>
                 <div class="col-md-2 ml-2">
-                    <img class="image centrar" src="{{asset($article->image1)}}" height="100rem" alt="imagen" >
+                    <img class="image5 centrar" src="{{asset($article->image1)}}" height="100rem" alt="imagen" >
                 </div>
                 <div class="col-md-2 ml-2 ">
-                    <img class="image centrar" src="{{asset($article->image2)}}" height="100rem" alt="imagen" >
+                    <img class="image5 centrar" src="{{asset($article->image2)}}" height="100rem" alt="imagen" >
                 </div>
                 <div class="col-md-2 ml-2">
-                    <img class="image centrar" src="{{asset($article->image3)}}" height="100rem" alt="imagen" >
+                    <img class="image5 centrar" src="{{asset($article->image3)}}" height="100rem" alt="imagen" >
                 </div>
             </div>
             <br><br>

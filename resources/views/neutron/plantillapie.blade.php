@@ -1,7 +1,7 @@
 
 
 
-<footer>
+
 
     <div class="card text-center  bg-dark text-white ">
 
@@ -12,7 +12,7 @@
         </div>
     </div>
 
-</footer>
+
 
 
 

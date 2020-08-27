@@ -1,6 +1,3 @@
-
-
-
 @extends('admin.layout')
 @section('content')
 
@@ -83,7 +80,10 @@
         <div class="ml-3">
             <label for="">{{$user->state}}</label>
         </div>
-        <div class="ml-5">
+    </div>
+    <br>
+    <div class="form-row">
+        <div class="">
             <label for="">Codigo postal:</label>
         </div>
         <div class="ml-3">
@@ -98,7 +98,7 @@
         <div class="ml-3">
             <label for="">{{$user->created_at->toFormattedDateString()}}</label>
         </div>
-        <div class="ml-5">
+        <div class="ml-4">
             <label for="">ACTUALIZADO:</label>
         </div>
         <div class="ml-3">

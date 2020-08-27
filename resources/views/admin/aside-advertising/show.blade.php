@@ -9,17 +9,17 @@
 
 
 
-    <div class="media">
-        <img src="{{asset($aside_advertising->advertising_image)}}" class="image mr-3 col-md-2" alt="imagen" height="150 rem">
-        <div class="media-body mt-5">
+    <div class="media ">
+        <img src="{{asset($aside_advertising->advertising_image)}}" class="img-responsive image5 mr-3 col-4 col-md-3 col-lg-4 col-xl-3" alt="imagen" >
+        <div class="media-body mt-5 col-8 col-md-9 col-lg-8 col-xl-9">
             <div>
                 <label for="">Texto:</label>
                 <label for="">{{$aside_advertising->advertising_text}}</label>
             </div>
             <br>
             <div>
-                <label for="">Direccion URL:</label>
-                <label for="">{{$aside_advertising->advertising_url}}</label>
+                <label for="" >Direccion URL:</label>
+                <label for="" >{{$aside_advertising->advertising_url}}</label>
             </div>
         </div>
         </div>

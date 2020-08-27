@@ -1,4 +1,3 @@
-
 @extends('admin.layout')
 @section('content')
 
@@ -8,8 +7,7 @@
         <h2 class="text-center">EDITAR UN ROL</h2>
     </div>
     <br>
-    <form action="/admin/role/{{$role->id}}" method="POST" enctype="multipart/form-data"
-        novalidate="novalidate">
+    <form action="/admin/role/{{$role->id}}" method="POST" enctype="multipart/form-data" novalidate="novalidate">
         @csrf
         <input type="hidden" name="_method" value="PUT">
         <!--el metodo es exigido por update-->
@@ -34,10 +32,10 @@
             <input class=" btn btn-secondary" type="submit" name="actualizar" value="actualizar" id="">
             <a class="btn btn-secondary centrar2" href="{{route('role.index')}}">ver roles </a>
         </div>
+        <br><br>
     </form>
     <div class="centrar1">
-        <form action="/admin/role/{{$role->id}}" method="POST" enctype="multipart/form-data"
-            novalidate="">
+        <form action="/admin/role/{{$role->id}}" method="POST" enctype="multipart/form-data" novalidate="">
             @csrf
             <input type="hidden" name="_method" value="DELETE">
             <input type="submit" name="eliminar registro" value="eliminar rol" id="" class="btn btn-secondary">

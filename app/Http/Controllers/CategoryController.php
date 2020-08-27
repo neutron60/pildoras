@@ -10,6 +10,7 @@ use App\Section;
 use App\Category;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -35,9 +36,10 @@ class CategoryController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
         $query='%';
 
-        return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "advertising", "query"));
+        return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "advertising", "query", "user"));
     }
 
     public function search(Request $request)
@@ -57,8 +59,9 @@ class CategoryController extends Controller
             $advertisings=Advertising::all();
             $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
+            $user = Auth::user();
 
-            return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "advertising", "query"));
+            return view("admin.category.index", compact("categories", "departments", "aside_advertisings", "advertising", "query", "user"));
     }
 
     /**
@@ -73,10 +76,11 @@ class CategoryController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
         $sections=$department->sections;
 
-        return view("admin.category.create", compact("department", "sections", "aside_advertisings", "advertising"));
+        return view("admin.category.create", compact("department", "sections", "aside_advertisings", "advertising", "user"));
 
     }
 
@@ -91,7 +95,7 @@ class CategoryController extends Controller
         $entrada=$request->only('name', 'section_id','is_active');
         $archivo=Category::create($entrada);
 
-        return redirect()->route('category.index')->with('info', 'la categoria fue creada');
+        return redirect()->route('category.index')->with('info', 'la categoria ' . $archivo->name . ' fue creada');
     }
 
 
@@ -114,8 +118,9 @@ class CategoryController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.category.show", compact("section", "department", "category", "aside_advertisings", "advertising"));
+        return view("admin.category.show", compact("section", "department", "category", "aside_advertisings", "advertising", "user"));
 
     }
 
@@ -134,8 +139,9 @@ class CategoryController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.category.edit", compact("category", "aside_advertisings", "advertising"));
+        return view("admin.category.edit", compact("category", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -151,7 +157,7 @@ class CategoryController extends Controller
         $entrada=Category::findOrfail($id);
         $entrada->update($request->only('name','is_active'));
 
-        return redirect()->route('category.show', $entrada->id)->with('info', 'la categoria fue actualizada');
+        return redirect()->route('category.show', $entrada->id)->with('info', 'la categoria ' . $entrada->name . ' fue actualizada');
 
     }
 
@@ -164,6 +170,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+
         $section=Category::findOrfail($id);
         $section->delete();
         return redirect()->route('category.index')->with('info', 'la categoria junto con sus productos asociados fueron eliminados');
@@ -176,7 +183,8 @@ class CategoryController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.category.selectDepartment", compact("departments", "aside_advertisings", "advertising"));
+        return view("admin.category.selectDepartment", compact("departments", "aside_advertisings", "advertising", "user"));
     }
 }

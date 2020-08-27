@@ -18,7 +18,7 @@
                     @endforeach
                 </select>
             </div>
-            <div class="input-group-append col-md-1">
+            <div class="input-group-append col-1">
                 <button class="btn btn-navbar" type="submit">
                     <i class="fas fa-search"> </i>
                 </button>

@@ -8,7 +8,7 @@
         <h2 class="text-center">REGISTRAR UNA NUEVA CATEGORIA</h2>
     </div>
     <br>
-    <form action="/admin/category" method="POST" enctype="multipart/form-data" novalidate="">
+    <form action="/admin/category" method="POST" enctype="multipart/form-data" novalidate="" id="validar_forma">
         @csrf
 
         <!-- SECCION -->
@@ -23,12 +23,13 @@
                 <label for=""> {{$department->name}} </label>
             </div>
         </div>
+        <br>
         <div class="form-row">
             <div class="">
                 <h5 class=""> SECCION:</h5>
             </div>
             <div class="ml-3">
-                <select name="section_id" id="section_id" class="form-control">
+                <select name="section_id" id="section_id" class="form-control required">
                     <option selected value="">seleccione</option>
                     @foreach($sections as $section)
                     <option value="{{$section->id}}">{{$section->name}}</option>
@@ -45,7 +46,7 @@
                 </label>
             </div>
             <div class="ml-3">
-                <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
+                <input type="text" maxlength="40" pattern="" class="form-control required" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.category.fragment.error_name')
             </div>

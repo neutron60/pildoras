@@ -8,7 +8,7 @@
         <h2 class="text-center">REGISTRAR UN NUEVO DEPARTAMENTO</h2>
     </div>
     <br>
-    <form action="/admin/department" method="POST" enctype="multipart/form-data" novalidate="">
+    <form action="/admin/department" method="POST" enctype="multipart/form-data" novalidate="" id="validar_forma2">
         @csrf
 
         <!-- DEPARTAMENTO -->
@@ -43,7 +43,7 @@
                 <label class="" for="nombre">DESCRIPCION:</label>
             </div>
             <div class="col-md-3 ml-3">
-                <textarea maxlength="50" rows="8" cols="8" pattern="" class="form-control" id="description"
+                <textarea maxlength="200" rows="8" cols="8" pattern="" class="form-control" id="description"
                     name="description">{{old('description')}} </textarea>
                 @include('admin.department.fragment.error_description')
             </div>

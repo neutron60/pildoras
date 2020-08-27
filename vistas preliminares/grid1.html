@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="web de neutron">
+    <meta name="keywords" content="neutron vender comprar">
+    <title> neutron </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+
+    <style>
+        .contenedor {
+
+            border: 5px solid rgb(80, 226, 43);
+            text-align: center;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: repeat(4, auto);
+
+            grid-gap:20px;
+            grid-template-areas: "header header header"
+            "aside1 contenido aside2"
+            "aside1 widgets aside2"
+            "footer footer footer";
+
+        }
+
+
+
+        .header{
+            background-color: lightseagreen;
+            grid-column-start: header;
+            grid-column-end: header;
+        }
+
+        .footer{
+            background-color: lightseagreen;
+            grid-column-start: footer;
+            grid-column-end: footer;
+        }
+
+        .aside1{
+            background-color: lightseagreen;
+            grid-column-start: aside1;
+            grid-column-end: aside1;
+
+            grid-row-start: aside1;
+            grid-row-end: aside1;
+        }
+
+        .aside2{
+            background-color: lightseagreen;
+            grid-area: aside2;
+
+        }
+
+        .contenido{
+            background-color: lightseagreen;
+            grid-area: contenido;
+
+        }
+
+        .widgets{
+            background-color: lightseagreen;
+            grid-area: widgets;
+
+        }
+
+        .borde {
+            border: 1px solid rgb(80, 226, 43);
+            grid-column-start: 1;
+            grid-column-end: 4;
+
+
+        }
+
+        .div1 {
+            background-color: lightcoral;
+            border: rgb(84, 18, 190);
+
+        }
+
+
+
+    </style>
+
+</head>
+
+<body>
+
+
+
+<div class="">
+    <p>grid areas </p>
+
+</div>
+
+    <div class="contenedor">
+
+        <div class="div1 header"> header </div>
+        <div class="div1 aside1"> aside1 </div>
+        <div class="div1 contenido"> contenido </div>
+        <div class="div1 aside2"> aside2 </div>
+        <div class="div1 widgets"> widgets </div>
+        <div class="div1 footer"> footer </div>
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!----------------------------------------------------------------------------------------------------------->
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

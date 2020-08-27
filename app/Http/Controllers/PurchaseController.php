@@ -53,7 +53,7 @@ class PurchaseController extends Controller
       $advertising=$advertisings->first();
       $aside_advertisings=AsideAdvertising::all();
 
-        return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", 'query2'));
+        return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", "query2","user"));
     }
 
     public function index_search_my_purchases(Request $request)
@@ -83,7 +83,7 @@ class PurchaseController extends Controller
     $advertisings=Advertising::all();
     $advertising=$advertisings->first();
     $aside_advertisings=AsideAdvertising::all();
-    return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", 'query2'));
+    return view("client.purchase.index_my_purchases", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "query1", 'query2','user'));
     }
 
     public function show_my_purchase($id)
@@ -97,6 +97,7 @@ class PurchaseController extends Controller
 
         $purchase_detail=$purchase->purchase_details->first();
 
+
         $user=$purchase->user;
 
         $identification = Auth::id();
@@ -106,11 +107,11 @@ class PurchaseController extends Controller
         }
 
 
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
@@ -122,7 +123,7 @@ class PurchaseController extends Controller
         if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
         if($purchase->requires_shipping == 2){ $message='envio a direccion';}
 
-        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "article_code", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
+        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
 
     }
 
@@ -148,7 +149,7 @@ class PurchaseController extends Controller
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("client.purchase.index_my_orders", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising"));
+        return view("client.purchase.index_my_orders", compact("purchases", "departments", "created_at", "aside_advertisings", "advertising", "user"));
     }
 
     public function show_my_orders($id)
@@ -170,9 +171,9 @@ class PurchaseController extends Controller
             return redirect()->action('PurchaseController@index_my_orders');
         }
 
-        $article=$purchase_detail->article;
-        $article_code=$article->code;
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        /*$article=$purchase_detail->article;*/
+        /*$article_code=$article->code;*/
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
@@ -184,7 +185,7 @@ class PurchaseController extends Controller
         if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
         if($purchase->requires_shipping == 2){ $message='envio a direccion';}
 
-        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "article_code", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
+        return view("client.purchase.show_my_purchase", compact("purchase", "departments", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message"));
 
     }
 
@@ -219,8 +220,9 @@ public function index_search_order_requested(Request $request)
     $advertisings=Advertising::all();
     $advertising=$advertisings->first();
     $aside_advertisings=AsideAdvertising::all();
+    $user = Auth::user();
 
-    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
+    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3", "user"));
     }
 
 public function index_order_requested()
@@ -228,7 +230,15 @@ public function index_order_requested()
     $purchases=$this->index_order_basic()
         ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
         ->where('purchases.verified_payment', 0)
-        ->paginate(20);
+        ->paginate(50);
+
+/*foreach ($purchases as $purchase){
+           echo $purchase->id . ' , ' ;
+
+        }*
+
+        $a='hola';
+        dd($a);*/
 
     foreach($purchases as $purchase){
         $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
@@ -243,8 +253,9 @@ public function index_order_requested()
     $advertisings=Advertising::all();
     $advertising=$advertisings->first();
     $aside_advertisings=AsideAdvertising::all();
+    $user = Auth::user();
 
-    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", 'query2', "query3","route"));
+    return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", 'query2', "query3","route", "user"));
     }
 
     public function index_order_verified_payment()
@@ -267,8 +278,9 @@ public function index_order_requested()
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
+        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3", "user"));
 }
 
     public function index_order_assign_invoice()
@@ -291,8 +303,9 @@ public function index_order_requested()
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3"));
+        return view("seller.purchase.index_order_requested", compact("purchases", "aside_advertisings", "advertising", "created_at", "flag", "query1", "query2", "query3", "user"));
     }
 
     public function index_search_sales(Request $request)
@@ -322,8 +335,9 @@ public function index_order_requested()
             $advertisings=Advertising::all();
             $advertising=$advertisings->first();
             $aside_advertisings=AsideAdvertising::all();
+            $user = Auth::user();
 
-                return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3"));
+                return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3", "user"));
     }
 
     public function index_sales()
@@ -346,9 +360,10 @@ public function index_order_requested()
       $advertisings=Advertising::all();
       $advertising=$advertisings->first();
       $aside_advertisings=AsideAdvertising::all();
+      $user = Auth::user();
 
 
-        return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3"));
+        return view("seller.purchase.index_sales", compact("purchases", "created_at", "aside_advertisings", "advertising", "query1", 'query2', "query3", "user"));
     }
 
     /**
@@ -379,11 +394,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
@@ -401,7 +416,7 @@ public function index_order_requested()
         if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
         if($purchase->requires_shipping == 2){ $message='envio a direccion';}
 
-      return view("seller.purchase.show_order_requested", compact("purchase", "user", "article_code", "purchase_detail","order_calculation", "aside_advertisings", "advertising", "created_at", "message", "payment_day"));
+      return view("seller.purchase.show_order_requested", compact("purchase", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "message", "payment_day"));
     }
 
     public function show_sales_detail($id)
@@ -415,11 +430,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
@@ -428,12 +443,12 @@ public function index_order_requested()
         $user->id_number=number_format($user->id_number,0,",",".");
         $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
 
-        $price=number_format($article->price,2,",",".");
+        /*$price=number_format($purchase_detail->price,2,",",".");*/
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("seller.purchase.show_sales_detail", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "payment_day"));
+        return view("seller.purchase.show_sales_detail", compact("purchase", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "payment_day"));
 
     }
 
@@ -454,11 +469,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         if($purchase->requires_shipping == 0){ $message='retiro en tienda';}
         if($purchase->requires_shipping == 1){ $message='envio a oficina de correo';}
@@ -470,7 +485,7 @@ public function index_order_requested()
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
-        return view("seller.purchase.edit_order_requested", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "message", "aside_advertisings", "advertising", "created_at"));
+        return view("seller.purchase.edit_order_requested", compact("purchase", "user", "purchase_detail", "order_calculation", "message", "aside_advertisings", "advertising", "created_at"));
     }
 
 
@@ -485,11 +500,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
@@ -502,7 +517,7 @@ public function index_order_requested()
         if($purchase->require_shipping == 1){$require_shipping='envio a oficina de correo';}
         if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
 
-        return view("seller.purchase.edit_order_payment_details", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
+        return view("seller.purchase.edit_order_payment_details", compact("purchase", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
     }
 
     public function edit_order_verified_payment($id)
@@ -516,11 +531,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+        /*$article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+        /*$article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
@@ -538,7 +553,7 @@ public function index_order_requested()
         if($purchase->require_shipping == 1){$require_shipping='envio a oficina courier';}
         if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
 
-        return view("seller.purchase.edit_order_verified_payment", compact("purchase", "user", "article_code", "purchase_detail","order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping", "payment_day"));
+        return view("seller.purchase.edit_order_verified_payment", compact("purchase", "user", "purchase_detail","order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping", "payment_day"));
     }
 
     public function edit_order_assign_invoice($id)
@@ -551,11 +566,11 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        $article=$purchase_detail->article;
+       /* $article=$purchase_detail->article;*/
 
-        $article_code=$article->code;
+       /* $article_code=$article->code;*/
 
-        $order_calculation=$this->order_calculation($article, $purchase_detail);
+        $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
@@ -567,7 +582,7 @@ public function index_order_requested()
         if($purchase->require_shipping == 1){$require_shipping='envio a oficina courier';}
         if($purchase->require_shipping == 2){$require_shipping='envio a direccion';}
 
-        return view("seller.purchase.edit_order_assign_invoice", compact("purchase", "user", "article_code", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
+        return view("seller.purchase.edit_order_assign_invoice", compact("purchase", "user", "purchase_detail", "order_calculation", "aside_advertisings", "advertising", "created_at", "require_shipping"));
     }
 
     /**
@@ -584,47 +599,55 @@ public function index_order_requested()
         $entrada->update($request->only('requires_shipping', 'courier_name', 'shipping_address',
         'shipping_city', 'shipping_state', 'shipping_zip_code'));
 
-        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden fue actualizada');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden'. ' '."$entrada->id" .' '.'fue actualizada');
     }
 
 
     public function update_order_payment_details(PurchaseRequest $request, $id)
     {
-        $entrada=Purchase::findOrfail($id);
-        $purchase_detail=PurchaseDetail::findOrfail($id);
-        $payment=$request->get('amount_paid');
-        if($payment < $purchase_detail->price){
-        return redirect()->action('PurchaseController@edit_order_payment_details',compact("id"));
-        }
-        dd($payment);
 
-        $entrada->update($request->only('payment_type', 'amount_paid', 'issuing_bank',
+        $purchase=Purchase::findOrfail($id);
+        $purchase_detail=$purchase->purchase_details->first();
+
+
+        $payment=$request->get('amount_paid');
+
+
+        if($payment < $purchase_detail->price){
+        return redirect()->action('PurchaseController@edit_order_payment_details',compact("id"))->with('info', 'No se registro el pago porque el monto pagado es menor al monto de la compra');
+        }
+
+        $purchase->update($request->only('payment_type', 'amount_paid', 'issuing_bank',
         'receiving_bank', 'payment_day','operation_number'));
 
-        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago fueron actualizados');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago de la orden ' . $purchase-> order_number . ' fueron actualizados');
     }
 
     public function update_order_verified_payment(PurchaseRequest $request, $id)
     {
+
         $entrada=Purchase::findOrfail($id);
+
+        if($request->get('verified_payment') == 0){
+            return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago de la orden ' . $entrada-> order_number . ' NO fueron verificados');
+        }
 
         $entrada->update($request->only('verified_payment'));
 
-        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago fueron verificados');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago de la orden ' . $entrada-> order_number . ' fueron verificados');
     }
 
     public function update_order_assign_invoice(PurchaseRequest $request, $id)
     {
-        $entrada=Purchase::findOrfail($id);
         $purchase=Purchase::findOrfail($id);
 
         if(!$purchase->verified_payment){
-            return redirect()->route('seller.purchase', $purchase->id)->with('info', 'el pago no ha sido confirmado');
+            return redirect()->route('seller.purchase', $purchase->id)->with('info', 'el pago de la orden ' . $purchase-> order_number . ' no ha sido confirmado');
             }
 
-        $entrada->update($request->only('invoice_number'));
+        $purchase->update($request->only('invoice_number'));
 
-        return redirect()->action('PurchaseController@index_sales')->with('info', 'la orden ha sido completada');
+        return redirect()->action('PurchaseController@index_sales')->with('info', 'la orden ' . $purchase-> order_number . ' ha sido completada');
     }
 
     /**
@@ -635,13 +658,16 @@ public function index_order_requested()
      */
     public function destroy($id)
     {
+
         $purchase=Purchase::findOrfail($id);
         $purchase->delete();
 
-        $purchase_detail=PurchaseDetail::findOrfail($id);
+        $purchase_detail=$purchase->purchase_details->first();
+
+       /* $purchase_detail=PurchaseDetail::findOrfail($id);*/
         $purchase_detail->delete();
 
-        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden fue eliminada');
+        return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden ' . $purchase-> order_number . ' fue eliminada');
     }
 
 
@@ -652,20 +678,20 @@ public function index_order_requested()
     {
         $purchases_basic=Purchase::join('users','users.id','=','purchases.user_id')
         ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
-        ->join('articles','articles.id','=','purchase_details.article_id')
+        /*->leftjoin('articles','articles.id','=','purchase_details.article_id')*/
         ->select('purchases.id','purchases.order_number', 'purchases.verified_payment', 'purchases.requires_shipping', 'purchases.invoice_number',
         'purchases.created_at',  'purchases.amount_paid',
         'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number', 'users.id as id_list',
-        'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva',
-        'purchase_details.created_at as purchase_details_created_at',
-        'articles.code')
+        'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva', 'purchase_details.article_code',
+        'purchase_details.created_at as purchase_details_created_at')
         ->orderBy('purchase_details_created_at','desc');
-        return $purchases_basic;
+
+       return $purchases_basic;
    }
 
-public function order_calculation($article, $purchase_detail)
+public function order_calculation($purchase_detail)
     {
-    $order_calculation['unit_price']= ($article->price*100)/(100+$purchase_detail->iva);
+    $order_calculation['unit_price']= ($purchase_detail->price*100)/(100+$purchase_detail->iva);
     $order_calculation['total_price']=$purchase_detail->purchased_amount * $order_calculation['unit_price'] ;
     $order_calculation['sub_total']=$order_calculation['total_price'];
     $order_calculation['iva']=$order_calculation['sub_total'] * ($purchase_detail->iva/100);

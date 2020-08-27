@@ -23,7 +23,7 @@
 
         <br>
         <form action="/admin/department/{{$department->id}}" method="POST" enctype="multipart/form-data"
-            novalidate="novalidate">
+            novalidate="novalidate" id="validar_forma2">
             @csrf
             <input type="hidden" name="_method" value="PUT">
             <!--el metodo es exigido por update-->
@@ -56,7 +56,7 @@
                     <label class="" for="nombre">DESCRIPCION:</label>
                 </div>
                 <div class="ml-3">
-                    <textarea maxlength="50" rows="5" cols="50" pattern="" class="form-control" id="description"
+                    <textarea maxlength="200" rows="5" cols="50" pattern="" class="form-control" id="description"
                         name="description">{{$department->description}} </textarea>
                     @include('admin.department.fragment.error_description')
                 </div>
@@ -79,10 +79,10 @@
                 <div class="">
                     <label class="" for="nombre">IMAGEN:</label>
                 </div>
-                <div class="col-md-3">
+                <div class="col-5  col-lg-4 col-xl-3">
                     <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
                     <br><br>
-                    <img class="imagen" src="{{asset($department->image)}}" alt="imagen" />
+                    <img class="imagen5" src="{{asset($department->image)}}" alt="imagen" />
                     @include('admin.department.fragment.error_image')
                 </div>
             </div>
@@ -98,7 +98,7 @@
                 novalidate="novalidate">
                 @csrf
                 <input type="hidden" name="_method" value="DELETE">
-                <input type="submit" name="eliminar departamento" value="eliminar departamento" id="" class="btn btn-secondary">
+                <input type="submit" name="eliminar departamento" value="eliminar departamento" id="confirmar_borrar" class="btn btn-secondary">
                 <!--el metodo es exigido por destroy-->
             </form>
         </div>

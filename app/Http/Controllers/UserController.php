@@ -128,6 +128,7 @@ class UserController extends Controller {
         $id = Auth::id();
         $user=User::find($id);
 
+        $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -144,6 +145,7 @@ class UserController extends Controller {
         $id = Auth::id();
         $user=User::find($id);
 
+        $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -156,6 +158,7 @@ class UserController extends Controller {
         $id = Auth::id();
         $user=User::find($id);
 
+        $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -175,28 +178,28 @@ class UserController extends Controller {
         $entrada=user::findOrfail($id);
         $entrada->update($request->only('name','lastname','role_id','id_type','id_number','mobil_phone_code','mobil_phone','area_code','phone_number','address','city','state','zip_code'));
 
-        return redirect()->route('user.show', $entrada->id)->with('info', 'la informacion del usuario fue actualizada');
+        return redirect()->route('user.show', $entrada->id)->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_id_number(UserRequest $request, $id) {
         $entrada=user::findOrfail($id);
         $entrada->update($request->only('id_type','id_number'));
 
-        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_phone(UserRequest $request, $id) {
         $entrada=user::findOrfail($id);
         $entrada->update($request->only('mobil_phone_code','mobil_phone','area_code','phone_number'));
 
-        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_address(UserRequest $request, $id) {
         $entrada=user::findOrfail($id);
         $entrada->update($request->only('address','city','state','zip_code'));
 
-        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion del usuario fue actualizada');
+        return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     /**

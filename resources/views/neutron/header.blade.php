@@ -19,19 +19,47 @@
         text-align: center
     }
 
+   .image4{
+height: 100px;
+
+   }
+
+
+   @media screen and (max-width: 1200px) {
+            .image4 {
+                /* usado en neutron/index  */
+                height: 80px;
+            }
+   }
+
+   @media screen and (max-width: 992px) {
+            .image4 {
+                /* usado en neutron/index  */
+                height: 120px;
+            }
+   }
+
+
+   @media screen and (max-width: 768px) {
+            .image4 {
+                /* usado en neutron/index  */
+                height: 80px;
+            }
+   }
+
 </style>
 
 
 <div class="form-row ml-3 back1">
 
-    <div class="col-md-1">
+    <div class="col-sm-1 col-md-2 col-lg-1">
         <div class="my-2">
-            <img class="" src="{{asset($advertising->logo)}}" alt="imagen" height=100px />
+            <img class="image4" src="{{asset($advertising->logo)}}" alt="logo"  />
         </div>
 
     </div>
 
-    <div class="col-md-8 mp-2 ml-5">
+    <div class="col-sm-6 col-md-7 col-lg-8 mp-2 ml-5">
         <div class="mt-3 ml-5">
             <form action="/neutron/search" class="form-inline">
                 <div class="form-group  ">
@@ -51,7 +79,7 @@
 
     </div>
 
-    <div class="col-md-2">
+    <div class="col-sm-3 col-md-2 col-lg-2">
         <div class="mt-2">
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ml-auto">

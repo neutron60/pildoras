@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
+use App\Http\Requests\AdvertisingRequest;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class AsideAdvertisingController extends Controller
 {
@@ -18,8 +20,9 @@ class AsideAdvertisingController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.aside-advertising.index", compact("aside_advertisings", "advertising"));
+        return view("admin.aside-advertising.index", compact("aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -32,7 +35,9 @@ class AsideAdvertisingController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
-        return view("admin.aside-advertising.create", compact("aside_advertisings", "advertising"));
+        $user = Auth::user();
+
+        return view("admin.aside-advertising.create", compact("aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -41,7 +46,7 @@ class AsideAdvertisingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AdvertisingRequest $request)
     {
 
         $entrada=$request->only('advertising_text','advertising_url');
@@ -70,9 +75,9 @@ class AsideAdvertisingController extends Controller
         $aside_advertisings=AsideAdvertising::all();
         $aside_advertising->created_at->toFormattedDateString();
         $aside_advertising->updated_at->toFormattedDateString();
+        $user = Auth::user();
 
-
-        return view("admin.aside-advertising.show", compact("aside_advertising", "aside_advertisings", "advertising"));
+        return view("admin.aside-advertising.show", compact("aside_advertising", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -87,8 +92,9 @@ class AsideAdvertisingController extends Controller
         $advertising=$advertisings->first();
         $aside_advertising=AsideAdvertising::findOrfail($id);
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.aside-advertising.edit", compact("aside_advertising", "aside_advertisings", "advertising"));
+        return view("admin.aside-advertising.edit", compact("aside_advertising", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -98,7 +104,7 @@ class AsideAdvertisingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AdvertisingRequest $request, $id)
     {
         $entrada=AsideAdvertising::findOrfail($id);
 
@@ -122,6 +128,7 @@ class AsideAdvertisingController extends Controller
      */
     public function destroy($id)
     {
+
         $aside_advertising=AsideAdvertising::findOrfail($id);
         $path=$aside_advertising->image;
         Storage::disk('public')->delete($path);

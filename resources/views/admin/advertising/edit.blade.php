@@ -13,12 +13,13 @@
         <input type="hidden" name="_method" value="PUT">
 
         <div class="form-row">
-            <div class="">
+            <div class="col-2 col-md-1">
                 <label class="" for="nombre">LOGO:</label>
             </div>
-            <div class="ml-3">
-                <input type="file" maxlength="100" pattern="" class=" " id="logo" name="logo">
-                <img class="col-md-2 image" src="{{asset($advertising->logo)}}" alt="imagen" height=150px />
+            <div class="ml-3 col-3 col-md-2">
+                <input type="file" maxlength="100" pattern="" class="" id="logo" name="logo">
+                <br><br>
+                <img class="image5 img-responsive" src="{{asset($advertising->logo)}}" alt="imagen" />
             </div>
         </div>
         <br>
@@ -57,9 +58,10 @@
             <div class="">
                 <label class="" for="nombre">IMAGEN:</label>
             </div>
-            <div class="ml-3">
+            <div class="ml-3 ">
                 <input type="file" maxlength="100" pattern="" class=" " id="image_header" name="image_header">
-                <img class="col-md-2 image" src="{{asset($advertising->image_header)}}" alt="imagen" height=150px />
+                <br><br>
+                <img class=" col-7 image5" src="{{asset($advertising->image_header)}}" alt="imagen" height=150px />
 
             </div>
         </div>

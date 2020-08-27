@@ -1,5 +1,9 @@
+
 @extends('seller.layout')
+
 @section('content')
+
+
 
 <h2 class="text-center">ORDEN DE COMPRA - CAMBIAR DIRECCION</h2>
 <br>
@@ -131,14 +135,15 @@
 
                 <!---------------------------------------------------------------------------------------------------->
                     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                        <div class=" form-row ">
+                        <div class=" form-row">
                             <div class="ml-3">
                                 <label class="" for="nombre">
                                     <h4>ENVIO A OFICINA DE CORREO:</h4>
                                 </label>
                             </div>
                         </div>
-                        <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST"novalidate="novalidate" >
+                        <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST"
+                            novalidate="novalidate" id="validar_forma">
                             @csrf
                             <input type="hidden" name="_method" value="PUT">
 
@@ -147,8 +152,8 @@
                                     <label class="" for="nombre">empresa de envio:</label>
                                 </div>
                                 <div class="ml-3">
-                                    <select id="courier_name" name="courier_name" class="form-control">
-                                        <option selected value="">seleccione</option>
+                                    <select id="courier_name" name="courier_name" class="form-control required">
+                                        <option selected value="{{old('courier_name')}}">{{old('courier_name')}}</option>
                                         <option value="MRW">MRW</option>
                                         <option value="TEALCA">TEALCA</option>
                                         <option value="DOMESA">DOMESA</option>
@@ -161,7 +166,7 @@
                                     <label class="" for="nombre">Direccion oficina:</label>
                                 </div>
                                 <div class="ml-3 ">
-                                    <input type="text" maxlength="500" pattern="" class="form-control" size="60"
+                                    <input type="text" maxlength="500" pattern="" class="form-control required" size="60"
                                         id="shipping_address" size="30" name="shipping_address"
                                         value="{{old('shipping_address')}}">
                                 </div>
@@ -172,15 +177,18 @@
                                     <label class="" for="nombre">Ciudad:</label>
                                 </div>
                                 <div class="ml-3 ">
-                                    <input type="text" maxlength="50" pattern="" class="form-control" id="shipping_city"
+                                    <input type="text" maxlength="50" pattern="" class="form-control required" id="shipping_city"
                                         size="10" name="shipping_city" value="{{old('shipping_city')}}">
                                 </div>
-                                <div class="ml-5">
+                            </div>
+                            <br>
+                            <div class="form-row ">
+                                <div class="ml-3">
                                     <label class="" for="nombre">estado:</label>
                                 </div>
                                 <div class="ml-3 ">
-                                    <select id="shipping_state" class="form-control" name="shipping_state">
-                                        <option selected value="">seleccione</option>
+                                    <select id="shipping_state" class="form-control required" name="shipping_state">
+                                        <option selected value="{{old('shipping_state')}}">{{old('shipping_state')}}</option>
                                         <option value="amazonas">amazonas</option>
                                         <option value="anzoategui">anzoategui</option>
                                         <option value="apure">apure</option>
@@ -206,12 +214,15 @@
                                         <option value="zulia">zulia</option>
                                     </select>
                                 </div>
-                                <div class="ml-5">
+                            </div>
+                            <br>
+                            <div class="form-row ">
+                                <div class="ml-3">
                                     <label class="" for="nombre">Codigo postal:</label>
                                 </div>
                                 <div class="ml-3 ">
-                                    <input type="text" maxlength="50" pattern="" class="form-control"
-                                        id="shipping_zip_code" size="5" name="shipping_zip_code"
+                                    <input type="text" maxlength="50" pattern="" class="form-control required"
+                                        id="shipping_zip_code" size="10" name="shipping_zip_code"
                                         value="{{old('shipping_zip_code')}}">
                                 </div>
                             </div>
@@ -219,6 +230,7 @@
 
                             <input class="" type="hidden" name="requires_shipping" value="1">
                             <button type="submit" class="ml-5">guardar</button>
+                            <button type="reset" class="ml-5">borrar</button>
                         </form>
 
                     </div>
@@ -234,7 +246,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST"novalidate="novalidate" >
+                            <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST"
+                                novalidate="novalidate" id="validar_forma4">
                                 @csrf
                                 <input type="hidden" name="_method" value="PUT">
                                 <div class="form-row ">
@@ -242,8 +255,8 @@
                                         <label class="" for="nombre">empresa de envio:</label>
                                     </div>
                                     <div class="ml-3">
-                                        <select id="courier_name" name="courier_name" class="form-control">
-                                            <option selected value="">seleccione</option>
+                                        <select id="courier_name" name="courier_name" class="form-control required">
+                                            <option selected value="{{old('courier_name')}}">{{old('courier_name')}}</option>
                                             <option value="MRW">MRW</option>
                                             <option value="TEALCA">TEALCA</option>
                                             <option value="DOMESA">DOMESA</option>
@@ -269,14 +282,19 @@
                                         <label for="">{{$user->city}}</label>
                                         <input type="hidden" name="shipping_city" value="{{$user->city}}">
                                     </div>
-                                    <div class="ml-5">
+                                </div>
+                                <div class="form-row ">
+
+                                    <div class="ml-3">
                                         <label class="" for="nombre">estado:</label>
                                     </div>
                                     <div class="ml-3 ">
                                         <label for="">{{$user->state}}</label>
                                         <input type="hidden" name="shipping_state" value="{{$user->state}}">
                                     </div>
-                                    <div class="ml-5">
+                                </div>
+                                <div class="form-row ">
+                                    <div class="ml-3">
                                         <label class="" for="nombre">Codigo postal:</label>
                                     </div>
                                     <div class="ml-3 ">
@@ -288,13 +306,13 @@
                                     <div class="ml-3">
                                         <label class="" for="nombre">
                                             <p>Nota:Si no tiene direccion registrada debe primero registrar su
-                                                direccion o seleccionar la opcion de envio a nueva direccion</p>
+                                                direccion (mis datos/cambiar direccion) o seleccionar la opcion de envio a nueva direccion</p>
                                         </label>
                                     </div>
                                 </div>
                                 <br>
                                 <input class="" type="hidden" name="requires_shipping" value="2">
-                                <button type="submit" class="ml-5">guardar</button>
+                                <button type="submit" class="ml-5" id="registered_address">guardar</button>
                             </form>
                         </div>
 
@@ -308,7 +326,8 @@
                                         </label>
                                     </div>
                                 </div>
-                                <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST" novalidate="novalidate">
+                                <form action="/seller/purchase/update-order-requested/{{$purchase->id}}" method="POST"
+                                    novalidate="novalidate" id="validar_forma1">
                                     @csrf
                                     <input type="hidden" name="_method" value="PUT">
                                     <div class="form-row ">
@@ -316,8 +335,8 @@
                                             <label class="" for="nombre">empresa de envio:</label>
                                         </div>
                                         <div class="ml-3">
-                                            <select id="courier_name" name="courier_name" class="form-control">
-                                                <option selected value="">seleccione</option>
+                                            <select id="courier_name" name="courier_name" class="form-control required">
+                                                <option selected value="{{old('courier_name')}}">{{old('courier_name')}}</option>
                                                 <option value="MRW">MRW</option>
                                                 <option value="TEALCA">TEALCA</option>
                                                 <option value="DOMESA">DOMESA</option>
@@ -330,7 +349,7 @@
                                             <label class="" for="nombre">Direccion:</label>
                                         </div>
                                         <div class="ml-3 ">
-                                            <input type="text" maxlength="500" pattern="" class="form-control" size="60"
+                                            <input type="text" maxlength="500" pattern="" class="form-control required" size="60"
                                                 id="shipping_address" size="50" name="shipping_address"
                                                 value="{{old('shipping_address')}}">
                                         </div>
@@ -341,16 +360,19 @@
                                             <label class="" for="nombre">Ciudad:</label>
                                         </div>
                                         <div class="ml-3 ">
-                                            <input type="text" maxlength="50" pattern="" class="form-control"
+                                            <input type="text" maxlength="50" pattern="" class="form-control required"
                                                 id="shipping_city" size="10" name="shipping_city"
                                                 value="{{old('shipping_city')}}">
                                         </div>
-                                        <div class="ml-5">
+                                    </div>
+                                    <br>
+                                    <div class="form-row ">
+                                        <div class="ml-3">
                                             <label class="" for="nombre">estado:</label>
                                         </div>
                                         <div class="ml-3 ">
-                                            <select id="shipping_state" class="form-control" name="shipping_state">
-                                                <option selected value="">seleccione</option>
+                                            <select id="shipping_state" class="form-control required" name="shipping_state">
+                                                <option selected value="{{old('shipping_state')}}">{{old('shipping_state')}}</option>
                                                 <option value="amazonas">amazonas</option>
                                                 <option value="anzoategui">anzoategui</option>
                                                 <option value="apure">apure</option>
@@ -376,11 +398,14 @@
                                                 <option value="zulia">zulia</option>
                                             </select>
                                         </div>
-                                        <div class="ml-5">
+                                    </div>
+                                    <br>
+                                    <div class="form-row ">
+                                        <div class="ml-3">
                                             <label class="" for="nombre">Codigo postal:</label>
                                         </div>
                                         <div class="ml-3 ">
-                                            <input type="text" maxlength="50" pattern="" class="form-control"
+                                            <input type="text" maxlength="50" pattern="" class="form-control required"
                                                 id="shipping_zip_code" size="8" name="shipping_zip_code"
                                                 value="{{old('shipping_zip_code')}}">
                                         </div>
@@ -388,6 +413,7 @@
                                     <br>
                                     <input class="" type="hidden" name="requires_shipping" value="2">
                                     <button type="submit" class="ml-5">guardar</button>
+                                    <button type="reset" class="ml-5">borrar</button>
                                 </form>
                             </div>
         </div>
@@ -401,14 +427,14 @@
             <br><br>
             <div class="form-row ml-3 mr-5">
                 <div>
-                    <a class="btn btn-primary mr-5" href="{{URL::previous()}}">retornar</a>
+                    <a class="btn btn-primary mr-5" href="{{URL::previous()}}" id="">retornar</a>
                 </div>
                 <div class="ml-5">
                     <form action="/seller/purchase/{{$purchase->id}}" method="POST" enctype="multipart/form-data"
-                        novalidate="novalidate">
+                        novalidate="novalidate" id="eliminar" >
                         @csrf
                         <input type="hidden" name="_method" value="DELETE">
-                        <input type="submit" name="eliminar orden" value="eliminar orden" id="" class="btn btn-secondary ml-5">
+                        <input type="submit" name="eliminar orden" value="eliminar orden"  class="btn btn-secondary ml-5" id="confirmar_borrar">
                         <!--el metodo es exigido por destroy-->
                     </form>
                 </div>
@@ -416,3 +442,6 @@
 
 
             @endsection
+
+
+

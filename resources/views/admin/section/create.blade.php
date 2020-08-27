@@ -8,7 +8,7 @@
         <h2 class="text-center">REGISTRAR UNA NUEVA SECCION</h2>
     </div>
     <br>
-    <form action="/admin/section" method="POST" enctype="multipart/form-data" novalidate="">
+    <form action="/admin/section" method="POST" enctype="multipart/form-data" novalidate="" id="validar_forma">
         @csrf
 
         <!-- SECCION -->
@@ -18,7 +18,7 @@
                 <h5 class=""> DEPARTAMENTO:</h5>
             </div>
             <div class="ml-3">
-                <select name="department_id" id="department_id" class="form-control">
+                <select name="department_id" id="department_id" class="form-control required">
                     <option selected value="">seleccione</option>
                     @foreach($departments as $department)
                     <option value="{{$department->id}}">{{$department->name}}</option>
@@ -35,7 +35,7 @@
                 </label>
             </div>
             <div class="ml-3">
-                <input type="text" maxlength="40" pattern="" class="form-control" id="name" name="name"
+                <input type="text" maxlength="40" pattern="" class="form-control required" id="name" name="name"
                     value="{{old('name')}}">
                 @include('admin.section.fragment.error_name')
             </div>

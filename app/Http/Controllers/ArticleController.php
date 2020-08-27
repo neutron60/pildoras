@@ -10,6 +10,7 @@ use App\Category;
 use App\Article;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -32,8 +33,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4"));
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4", "user"));
     }
 
     public function search(Request $request)
@@ -57,8 +59,9 @@ class ArticleController extends Controller
                 $advertisings=Advertising::all();
                 $advertising=$advertisings->first();
                 $aside_advertisings=AsideAdvertising::all();
+                $user = Auth::user();
 
-        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4"));
+        return view("admin.article.index", compact("articles", "departments", "aside_advertisings", "advertising", "query1", "query2", "query3", "query4", "user"));
     }
 
 
@@ -76,8 +79,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.article.create", compact("department","section", "categories", "aside_advertisings", "advertising"));
+        return view("admin.article.create", compact("department","section", "categories", "aside_advertisings", "advertising", "user"));
     }
     /**
      * Store a newly created resource in storage.
@@ -106,7 +110,7 @@ class ArticleController extends Controller
             $path=Storage::disk('public')->put('images', $request->file('image3'));  //alamacenar en el disco publico, carpeta images, el archivo file
             $archivo->fill(['image3'=>$path])->save();   //guardar en base de datos la ruta
         }
-        return redirect()->route('article.index')->with('info', 'el articulo fue creado');
+        return redirect()->route('article.index')->with('info', 'el articulo con el codigo ' . $archivo->code . ' fue creado');
     }
 
     /**
@@ -127,9 +131,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-
-        return view("admin.article.show", compact("article", "department", "section", "category","price", "aside_advertisings", "advertising"));
+        return view("admin.article.show", compact("article", "department", "section", "category","price", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -147,8 +151,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.article.edit", compact("article", "category", "section", "department", "aside_advertisings", "advertising"));
+        return view("admin.article.edit", compact("article", "category", "section", "department", "aside_advertisings", "advertising", "user"));
     }
 
 
@@ -187,7 +192,7 @@ class ArticleController extends Controller
             $entrada->fill(['image3'=>$path])->update();   //guardar en base de datos la ruta
         }
 
-        return redirect()->route('article.show', $entrada->id)->with('info', 'el articulo fue actualizado');
+        return redirect()->route('article.show', $entrada->id)->with('info', 'el articulo con el codigo ' . $entrada->code . ' fue actualizado');
     }
 
     /**
@@ -198,6 +203,7 @@ class ArticleController extends Controller
      */
     public function destroy ($id)
     {
+
         $article=Article::findOrfail($id);
         $path1=$article->image1;
         Storage::disk('public')->delete($path1);
@@ -206,7 +212,7 @@ class ArticleController extends Controller
         $path3=$article->image3;
         Storage::disk('public')->delete($path3);
         $article->delete();
-        return redirect()->route('article.index')->with('info', 'el articulo fue eliminado');
+        return redirect()->route('article.index')->with('info', 'el articulo con el codigo ' . $article->code . ' fue eliminado');
     }
 
 
@@ -216,8 +222,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.article.selectDepartment", compact("departments", "aside_advertisings", "advertising"));
+        return view("admin.article.selectDepartment", compact("departments", "aside_advertisings", "advertising", "user"));
     }
 
     public function selectSection ($id)
@@ -228,8 +235,9 @@ class ArticleController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.article.selectSection", compact("department", "sections", "aside_advertisings", "advertising"));
+        return view("admin.article.selectSection", compact("department", "sections", "aside_advertisings", "advertising", "user"));
     }
 
     public function index_base ()

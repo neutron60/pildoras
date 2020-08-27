@@ -7,7 +7,8 @@
             <h2 class="text-center">REGISTRAR UN NUEVA PUBLICIDAD LATERAL</h2>
         </div>
         <br>
-        <form action="/admin/aside-advertising" method="POST" enctype="multipart/form-data" novalidate="" novalidate="novalidate">
+        <form action="/admin/aside-advertising" method="POST" enctype="multipart/form-data" novalidate="" novalidate="novalidate"
+         id="validar_forma" >
             @csrf
 
             <div class="form-group">
@@ -15,12 +16,14 @@
             </div>
             <div class="form-group">
                 <label for="advertising_text">Texto:</label>
-                <input type="advertising_text" class="form-control" name="advertising_text" id="text"
+                <input type="advertising_text" class="form-control required" name="advertising_text" id="advertising_text"
                     aria-describedby="emailHelp">
+                    @include('admin.aside-advertising.fragment.error_advertising_text')
             </div>
             <div class="form-group">
                 <label for="advertising_url">Direccion URL:</label>
-                <input type="text" class="form-control" id="url" name="advertising_url">
+                <input type="url" class="form-control required" id="url" name="advertising_url">
+                @include('admin.aside-advertising.fragment.error_advertising_url')
             </div>
             <div class="form-group">
                 <label for="advertising_image">Imagen:</label>

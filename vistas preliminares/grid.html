@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="web de neutron">
+    <meta name="keywords" content="neutron vender comprar">
+    <title> neutron </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="">
+
+    <style>
+        img {
+            width: 100%
+        }
+
+        /* ------header------------------------------------------- */
+        .fondo {
+            background: rgb(231, 175, 101)
+        }
+
+        .imagen {
+            padding-top: 10%
+        }
+
+        .margen {
+            margin-bottom: 0.2rem
+        }
+
+        .lupa {
+            width: 100%
+        }
+
+        .espacio {
+            line-height: 1rem;
+            color: black;
+            padding-top: 30%
+        }
+
+        .carrito {
+            width: 30%;
+            height: 40px;
+            margin-left: 20%
+        }
+
+        .letra {
+            color: black;
+            font-size: 1.1em
+        }
+
+        .ancho {
+            width: 10%
+        }
+
+        .navegar1 {
+            padding-right: 0, 5%;
+            padding-left: 0.5%;
+            margin-left: 28%;
+            width: 2.5%;
+            height: 1.5%
+        }
+
+        .navegar2 {
+            padding-right: 0, 5%;
+            padding-left: 0.5%;
+            margin-left: ;
+            width: 2.5%;
+            height: 1.5%
+        }
+
+        .navegar3 {
+            margin-left: 1%;
+            padding-right: 1.1%;
+            padding-left:
+        }
+
+        .borde {
+            border: 1px solid blueviolet
+        }
+
+        /* ------menu basico------------------------------------------- */
+
+        .fondo1 {
+            background: rgb(206, 236, 241)
+        }
+
+        .imagen1 {
+            height: 90px;
+            width: 100%;
+            align-content: center
+        }
+
+        .reserva {
+            border: 1px solid blueviolet;
+            display: grid;
+            grid-template-columns: 2fr 7fr 2fr;
+            grid-template-rows: 1fr;
+
+        }
+
+        .div1 {
+            border: 1px solid rgb(80, 226, 43);
+
+        }
+
+        .div2 {
+            border: 1px solid rgb(46, 43, 226);
+            margin: auto;
+
+        }
+
+        .div3 {
+            border: 1px solid rgb(226, 43, 83);
+
+        }
+
+        /* ------aside  ------------------------------------------- */
+        .imagen2 {
+            height: 80px;
+            width: 80%;
+            align-content: center
+        }
+
+
+
+        /* ------footer  ------------------------------------------- */
+
+        .fondo2 {
+            background: black
+        }
+
+        alto {
+            height: 800px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!--------header----------------------------------------------------------------------------------------->
+    <header>
+        <div class="container fondo">
+            <div class="row">
+                <div class="col-md-1">
+                    <img src="simbolo neutron1.jpg" alt="simbolo neutron" class="imagen">
+                </div>
+                <div class="col-md-2">
+                    <p class="margen">NEUTRON</p>
+                    <P class="margen">RIF J-401691803</P>
+                    <p class="margen">Puerto Ordaz, Venezuela</p>
+                </div>
+                <div class="col-md-6">
+                    <br>
+                    <form class="form-search">
+                        <div class="input-group mb-3">
+                            <div class="form-inline">
+                                <select class="form-control col-md-12 col-md-offset-2" name="" id="deporte"
+                                    style="width: 120px" size="1" autofocus>
+                                    <option value="todos"> todos</option>
+                                    <option value="ropa"> Ropa </option>
+                                    <option value="zapatos"> Zapatos </option>
+                                    <option value="juguetes"> Juguetes </option>
+                                    <option value="ferreteria"> Ferreteria </option>
+                                    <option value="computacion"> Computacion </option>
+                                    <option value="telefonia"> Telefonia </option>
+                                    <option value="libreria"> Libreria </option>
+                                    <option value="estetica"> Estetica </option>
+                                </select>
+                            </div>
+                            <input class="form-control form-text" maxlength="50" placeholder="Buscar" size="15"
+                                type="text">
+                            <div class="input-group-append ancho ">
+                                <button class="btn" type="button" id=""><img class="lupa" src="lupa.jpg"
+                                        alt="buscar"></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="">
+                                <p class="espacio">nuevos <br> usuarios</p>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="">
+                                <p class="espacio">ingresar</p>
+                            </a>
+                        </div>
+                        <div class="col-md-3">
+                            <a class="" href="">
+                                <div class="row espacio">
+                                    <img class="carrito" src="carrito.jpg" alt="carrito">
+                                    <p class="espacio">0</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav>
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group navegar"> <a href="" class="letra">Inicio</a> </li>
+                    <li class="list-group navegar3"> <a href="" class="letra">Quienes Somos</a> </li>
+                    <li class="dropdown list-group navegar3">
+                        <span class="letra" data-toggle="dropdown" data-hover="dropdown ">Departamentos</span>
+                        <ul class="dropdown-menu">
+                            <li class=""><a href="" class="letra">Ropa</a></li>
+                            <li class=""><a href="" class="letra">Zapatos</a></li>
+                            <li class=""><a href="" class="letra">Juguetes</a></li>
+                            <li class=""><a href="" class="letra">Ferreteria</a></li>
+                            <li class=""><a href="" class="letra">Computacion</a></li>
+                            <li class=""><a href="" class="letra">Telefonia</a></li>
+                            <li class=""><a href="" class="letra">Libreria</a></li>
+                            <li class=""><a href="" class="letra">Estetica</a></li>
+                        </ul>
+                    </li>
+                    <li class="list-group navegar3"> <a href="" class="letra">Ofertas</a> </li>
+                    <li class="list-group navegar3"> <a href="" class="letra">Contactanos</a> </li>
+                    <li class="list-group navegar1"> <a href=""> <img src="./img/facebook.jpg" alt=""> </a> </li>
+                    <li class="list-group navegar2"> <a href=""> <img src="./img/tweeter.jpg" alt=""> </a> </li>
+                    <li class="list-group navegar2"> <a href=""> <img src="./img/instagram.jpg" alt=""> </a> </li>
+                    <li class="list-group navegar2"> <a href=""> <img src="./img/telegram.jpg" alt=""> </a> </li>
+                    <li class="list-group navegar2"> <a href=""></a> <img src="./img/youtube.jpg" alt=""> </a> </li>
+                    <li class="list-group navegar2"> <a href=""> <img src="./img/search.jpg" alt=""> </a> </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <br>
+    <!--------menu basico----------------------------------------------------------------------------------------->
+    <div class="reserva">
+        <div class="div1">
+            <h1>div 1</h1>
+        </div>
+        <div class="div2">
+            <h1>div 222222222222222222222222222222222222222222222222222222222222222</h1>
+        </div>
+        <div class="div3">
+            <h1>div 3</h1>
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+    <footer class="fondo 2">
+
+
+    </footer>
+
+
+
+    <!----------------------------------------------------------------------------------------------------------->
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+</body>
+
+</html>

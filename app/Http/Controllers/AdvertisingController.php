@@ -9,6 +9,7 @@ use App\Article;
 use App\Advertising;
 use App\AsideAdvertising;
 use App\Role;
+use Illuminate\Support\Facades\Auth;
 
 class AdvertisingController extends Controller
 {
@@ -39,8 +40,9 @@ class AdvertisingController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
-        return view("admin.advertising.create", compact("aside_advertisings", "advertising"));
+        $user = Auth::user();
 
+        return view("admin.advertising.create", compact("aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -91,11 +93,12 @@ class AdvertisingController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
         if(empty($advertising)){
             return view('admin.advertising.pagina_en_construccion');}
 
-        return view("admin.advertising.edit", compact("advertising", "aside_advertisings"));
+        return view("admin.advertising.edit", compact("advertising", "aside_advertisings", "user"));
     }
 
     /**

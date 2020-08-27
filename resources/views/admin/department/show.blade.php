@@ -73,8 +73,8 @@
         <div class="">
             <label class="" for="nombre">IMAGEN:</label>
         </div>
-        <div class="col-md-3 ">
-            <img class="image" src="{{asset($department->image)}}" alt="imagen" height=150px/>
+        <div class="col-5  col-lg-4 col-xl-3 ">
+            <img class="image5" src="{{asset($department->image)}}" alt="imagen" height=150px/>
         </div>
     </div>
     <br><br>

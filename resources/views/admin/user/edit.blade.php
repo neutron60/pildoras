@@ -26,6 +26,8 @@
                 value="{{$user->lastname}}">
             @include('admin.user.fragment.error_lastname')
         </div>
+    </div>
+    <div class="form-row">
         <div class="form-group ml-3">
             <label for="role_id">Rol</label>
             <select id="role_id" class="form-control" name="role_id">
@@ -35,9 +37,7 @@
                 @endforeach
             </select>
         </div>
-    </div>
-    <div class="form-row">
-        <div class="form-group ">
+        <div class="form-group ml-5">
             <label for="id_type">Cedula</label>
             <select id="id_type" name="id_type" class="form-control">
                 <option selected value="{{$user->id_type}}">{{$user->id_type}}</option>
@@ -69,18 +69,18 @@
         </div>
         <div class="form-group ">
             <label for="mobil_phone">Movil </label>
-            <input type="tel" maxlength="7" class="form-control ml-2" id="mobil_phone" name="mobil_phone"
+            <input type="tel" maxlength="7" class="form-control ml-2" id="mobil_phone" name="mobil_phone" size="7"
                 value="{{$user->mobil_phone}}" placeholder="numero">
         </div>
 
         <div class="form-group ml-5">
             <label for="area_code">Telefono</label>
-            <input type="text" maxlength="4" class="form-control" id="area_code" name="area_code"
+            <input type="text" maxlength="4" class="form-control" id="area_code" name="area_code" size="4"
                 value="{{$user->area_code}}" placeholder="codigo area">
         </div>
         <div class="form-group">
             <label for="phone_number">fijo</label>
-            <input type="tel" maxlength="7" class="form-control ml-2" id="phone_number" name="phone_number"
+            <input type="tel" maxlength="7" class="form-control ml-2" id="phone_number" name="phone_number" size="7"
                 value="{{$user->phone_number}}" placeholder="numero">
         </div>
     </div>

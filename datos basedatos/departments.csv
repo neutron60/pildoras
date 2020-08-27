@@ -1,0 +1,15 @@
+id,name,title,description,image,is_active,created_at,updated_at
+1,COMPUTACION,"COMPUTACION Y REDES","Los mejores componentes para su PC o Laptop. Redes de computacion, redes inalambricas y mucho mas ...",images/qkq8gY1E1zcTFvCCtZPfqPEzk3GjiIuADEMT2bT0.png,1,"2020-04-30 02:29:06","2020-07-02 01:46:13"
+2,ROPA,"ROPA  PARA DAMAS Y CABALLEROS","Lo mejor en moda de vestir para damas, caballeros, ninos y ninas.
+Coleccion renovada",images/lyFURsnfbBaM3eM5AHv862dvQ7Txbo4RfwyOgWFc.png,1,"2020-04-30 02:31:29","2020-07-02 01:50:25"
+3,VEHICULOS,"ACCESORIO PARA CARROS","Todo lo que busque para su vehiculo en accesorios. Las mejores marcas",images/oSbGcq4oMojdcwUeyOzBtxxc27hcUnwWjVpKNDGr.jpeg,1,"2020-04-30 02:34:19","2020-07-02 01:46:56"
+4,DEPORTES,"IMPLEMENTOS DEPORTIVOS","Todo sport los mejores uniformes e implementos deportivos.
+Las mejores marcas deportivas representadas aqui",images/XWxftuRl2r93HLAUaDbLEAvy2HICJha7J6DGw34F.jpeg,1,"2020-04-30 02:36:31","2020-08-20 19:28:41"
+5,departamento10,"titulo departamento10","fffffffffff
+ffffffffffffff
+fffffffffffffff
+ffffffffffffffff",images/7jKi4HW6XxsCW1HPqGnhDWepJbZ8hyfrUJXS0O4W.jpeg,1,"2020-08-25 01:15:33","2020-08-25 01:47:47"
+6,departamento20,"titulo departamento20","dddddddddddddd
+fffffffffff
+
+gggggggggggggggg",images/l0mswarTgwXgTe73xoz7inU7qVuesSrSwItPjO5b.jpeg,1,"2020-08-27 18:55:51","2020-08-27 18:55:51"

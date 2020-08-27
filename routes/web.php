@@ -36,10 +36,11 @@ Route::get('/neutron-contact', 'NeutronController@contact');
 /*        CLIENTE    */
 /* rutas de purchase */
 Route::get('/neutron/inactive', 'PurchaseClientController@neutron_inactive');
+Route::post('/client/purchase/create-purchase', 'PurchaseClientController@create_purchase');
 
 Route::middleware('auth')->middleware('is_admin_seller_client')->middleware('is_inactive')->group(function(){
 
-Route::post('/client/purchase/create-purchase', 'PurchaseClientController@create_purchase');
+
 Route::get('/client/purchase/create-order/{purchased_amount}/{purchased_item}', 'PurchaseClientController@create_order');
 
 
@@ -163,3 +164,23 @@ Route::get('/neutron-login', 'Auth\LoginController@neutron_login');
 Route::get('/neutron-register', 'Auth\RegisterController@neutron_register');
 
 Auth::routes();
+
+
+
+/*category_id: {
+                required: true,
+                range: [1, 100]
+            },*/
+          /*  price: {
+                required: true,
+                range: [1, 100000000]
+            },
+            stock: {
+                required: true,
+                range: [0, 1000]
+            },*/
+          /*  messages: {
+                category_id: {
+                    required: "este campo es requerido",
+                    range: "este campo es requerido"
+                }*/

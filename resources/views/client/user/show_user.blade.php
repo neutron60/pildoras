@@ -1,4 +1,4 @@
-@extends('neutron.layout')
+@extends('client.layout')
 @section('content')
 
 @include('client.user.fragment.info')
@@ -85,7 +85,7 @@
 <br>
 <br><br>
 <div class="">
-    <a class="btn btn-primary" href="/neutron"> seguir comprando   </a>
+    <a class="btn btn-primary" href="/neutron/index"> seguir comprando   </a>
 
 </div>
 

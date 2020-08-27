@@ -1,7 +1,7 @@
 
+ @include('neutron.fragment.info')
 
-
-<img class="image" src="{{asset($advertising->image_header)}}" alt="imagen" height=330px />
+<img class="image" src="{{asset($advertising->image_header)}}" alt="imagen" height=380px />
 
 
 <br><br><br>

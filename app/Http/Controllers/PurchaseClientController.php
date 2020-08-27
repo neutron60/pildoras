@@ -23,11 +23,16 @@ class PurchaseClientController extends Controller
 
     public function create_purchase(Request $request){
 
+
         $id = Auth::id();
         $user=User::find($id);
 
+        if(empty($user)){
+            return back()->with('info', 'Para comprar debe hacer login o registrarse como nuevo usuario ');
+            }
+
         if(empty($user->id_number) || empty($user->id_type) ){
-        return back()->with('info', 'Para comprar debe tener registrado un ID');
+        return back()->with('info', 'Para comprar debe tener registrado un ID. Ir a mis datos/registrar id ');
         }
 
         $purchased_amount=$request->get('purchased_amount');
@@ -56,22 +61,22 @@ class PurchaseClientController extends Controller
     $user = Auth::user();
 
     if(empty($user)){
-        return back()->with('info', 'Para comprar debe tener registrado un ID');
+        return back()->with('info', 'Para comprar debe registrarse o entrar a su cuenta');
     }
 
     $role_type=$user->role;
 
 if($role_type->role_name == "administrador"){
-return view("admin.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("admin.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
 if($role_type->role_name == "vendedor"){
-return view("seller.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("seller.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
 if($role_type->role_name == "cliente"){
-return view("client.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("client.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
  if($role_type->role_name == "inactivo"){
-    return back()->with('info', 'Para comprar debe tener registrado un ID');}
+    return back()->with('info', 'Su cuenta esta inactiva para comprar');}
 
 }
 
@@ -113,15 +118,16 @@ public function store_order(PurchaseRequest $request)
         }
 
         $role_type=$user->role;
+        $user = Auth::user();
 
     if($role_type->role_name == "administrador"){
-    return view("admin.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising"));}
+    return view("admin.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
     if($role_type->role_name == "vendedor"){
-    return view("seller.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising"));}
+    return view("seller.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
     if($role_type->role_name == "cliente"){
-    return view("client.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising"));}
+    return view("client.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
      if($role_type->role_name == "inactivo"){
         return back()->with('info', 'Comuniquese con el administrador');}
@@ -150,20 +156,6 @@ public function store_order(PurchaseRequest $request)
 /*----------------------------------------------------------------------*/
 /*  INTERN FUNCTION */
 
-    public function index_order_basic()
-    {
-        $purchases_basic=Purchase::join('users','users.id','=','purchases.user_id')
-        ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
-        ->join('articles','articles.id','=','purchase_details.article_id')
-        ->select('purchases.id','purchases.order_number', 'purchases.verified_payment', 'purchases.requires_shipping', 'purchases.invoice_number',
-        'purchases.created_at', 'purchases.user_id',
-        'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number', 'users.id as id_list',
-        'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva',
-        'purchase_details.created_at as purchase_details_created_at',
-        'articles.code')
-        ->orderBy('purchase_details_created_at','desc');
-        return $purchases_basic;
-   }
 
    public function order_calculation($article, $purchased_amount)
     {

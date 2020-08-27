@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Role;
 use App\AsideAdvertising;
 use App\Advertising;
+use Illuminate\Support\Facades\Auth;
 
 class RolController extends Controller
 {
@@ -20,8 +21,9 @@ class RolController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.role.index", compact("roles", "aside_advertisings", "advertising"));
+        return view("admin.role.index", compact("roles", "aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -34,8 +36,9 @@ class RolController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.role.create", compact("aside_advertisings", "advertising"));
+        return view("admin.role.create", compact("aside_advertisings", "advertising", "user"));
     }
 
     /**
@@ -75,8 +78,9 @@ class RolController extends Controller
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $user = Auth::user();
 
-        return view("admin.role.edit", compact("role", "aside_advertisings", "advertising"));
+        return view("admin.role.edit", compact("role", "aside_advertisings", "advertising", "user"));
     }
 
     /**

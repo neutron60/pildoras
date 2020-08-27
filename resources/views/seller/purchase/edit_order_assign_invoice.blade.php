@@ -53,7 +53,8 @@
         </label>
     </div>
 </div>
-<form action="/seller/purchase/update-order-assign-invoice/{{$purchase->id}}" method="POST" enctype="multipart/form-data" novalidate="novalidate">
+<form action="/seller/purchase/update-order-assign-invoice/{{$purchase->id}}" method="POST" enctype="multipart/form-data"
+    novalidate="novalidate" id="validar_forma">
     @csrf
     <input type="hidden" name="_method" value="PUT">
     <div class="form-row ">
@@ -61,7 +62,7 @@
             <label class="" for="nombre">numero de factura:</label>
         </div>
         <div class="ml-3">
-            <input type="text" maxlength="" pattern="" class="form-control" id="invoice_number" name="invoice_number"
+            <input type="text" maxlength="" pattern="" class="form-control required" id="invoice_number" name="invoice_number"
                 value="{{$purchase->invoice_number}}">
                 @include('seller.purchase.fragment.error_invoice_number')
         </div>

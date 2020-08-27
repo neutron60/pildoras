@@ -1,6 +1,3 @@
-
-
-
 <div class=" form-row ">
     <div class="ml-3">
         <label class="" for="nombre">
@@ -25,6 +22,7 @@
     </div>
 </div>
 
+@if ( $purchase->payment_type <> 'efectivo')
 <div class="form-row ">
     <div class="ml-3">
         <label class="" for="nombre">banco emisor::</label>
@@ -33,13 +31,16 @@
         <label for="">{{$purchase->issuing_bank}}</label>
     </div>
 
+    @if ( $purchase->payment_type <> 'deposito')
     <div class="ml-5">
         <label class="" for="nombre">banco receptor:</label>
     </div>
     <div class="ml-3">
         <label for="">{{$purchase->receiving_bank}}</label>
     </div>
+    @endif
 </div>
+@endif
 
 <div class="form-row ">
     <div class="ml-3">
@@ -49,12 +50,14 @@
         <label for="">{{$payment_day}}</label>
     </div>
 
+    @if ( $purchase->payment_type <> 'efectivo')
     <div class="ml-5">
         <label class="" for="nombre">numero de operacion:</label>
     </div>
     <div class="ml-3">
         <label for="">{{$purchase->operation_number}}</label>
     </div>
+    @endif
 </div>
 <br>
 
@@ -77,6 +80,3 @@
         <label for="">{{$purchase->invoice_number}}</label>
     </div>
 </div>
-
-
-
