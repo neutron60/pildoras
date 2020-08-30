@@ -1,56 +1,5 @@
-<style>
-    .back1 {
-        background: rgb(171, 229, 235);
-    }
 
-    .centrar3 {
-        margin-right: 60%;
-
-    }
-
-    .margen {
-        margin-left: 30%;
-
-    }
-
-    .texto {
-        text-shadow: 2px 2px gray;
-        font-style: oblique;
-        text-align: center
-    }
-
-   .image4{
-height: 100px;
-
-   }
-
-
-   @media screen and (max-width: 1200px) {
-            .image4 {
-                /* usado en neutron/index  */
-                height: 80px;
-            }
-   }
-
-   @media screen and (max-width: 992px) {
-            .image4 {
-                /* usado en neutron/index  */
-                height: 120px;
-            }
-   }
-
-
-   @media screen and (max-width: 768px) {
-            .image4 {
-                /* usado en neutron/index  */
-                height: 80px;
-            }
-   }
-
-</style>
-
-
-<div class="form-row ml-3 back1">
+<div class="form-row ml-3 back">
 
     <div class="col-sm-1 col-md-2 col-lg-1">
         <div class="my-2">

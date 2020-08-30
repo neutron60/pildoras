@@ -73,7 +73,7 @@ class ArticleController extends Controller
      */
     public function create($id)
     {
-        $section=Section::find($id);
+        $section=Section::findOrFail($id);
         $department=$section->department;
         $categories=$section->categories;
         $advertisings=Advertising::all();
@@ -121,7 +121,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article=Article::find($id);
+        $article=Article::findOrFail($id);
         $category=$article->category;
         $section=$category->section;
         $department=$section->department;
@@ -144,7 +144,7 @@ class ArticleController extends Controller
      */
     public function edit($id)
     {
-        $article=Article::find($id);
+        $article=Article::findOrFail($id);
         $category=$article->category;
         $section=$category->section;
         $department=$section->department;
@@ -167,7 +167,7 @@ class ArticleController extends Controller
 
     public function update(ArticleRequest $request, $id)
     {
-        $entrada=Article::findOrfail($id);
+        $entrada=Article::findOrFail($id);
         $entrada->update($request->only('name','brand','model','size','use','price','stock',
         'description','is_active','is_bargain','is_new_collection'));
 
@@ -192,7 +192,7 @@ class ArticleController extends Controller
             $entrada->fill(['image3'=>$path])->update();   //guardar en base de datos la ruta
         }
 
-        return redirect()->route('article.show', $entrada->id)->with('info', 'el articulo con el codigo ' . $entrada->code . ' fue actualizado');
+        return redirect()->route('article.index', $entrada->id)->with('info', 'el articulo con el codigo ' . $entrada->code . ' fue actualizado');
     }
 
     /**
@@ -204,7 +204,7 @@ class ArticleController extends Controller
     public function destroy ($id)
     {
 
-        $article=Article::findOrfail($id);
+        $article=Article::findOrFail($id);
         $path1=$article->image1;
         Storage::disk('public')->delete($path1);
         $path2=$article->image2;
@@ -230,7 +230,7 @@ class ArticleController extends Controller
     public function selectSection ($id)
     {
 
-        $department=Department::find($id);
+        $department=Department::findOrFail($id);
         $sections=$department->sections;
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();

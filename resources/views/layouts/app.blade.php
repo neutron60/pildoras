@@ -18,6 +18,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+      <!-- Styles neutron-->
+    <link rel="stylesheet" href="/css/estilos.css">
 </head>
 <body>
     @isset($advertising)

@@ -23,7 +23,9 @@ class PurchaseClientController extends Controller
 
     public function create_purchase(Request $request){
 
-        $user = Auth::user();
+
+        $id = Auth::id();
+        $user=User::find($id);
 
         if(empty($user)){
             return back()->with('info', 'Para comprar debe hacer login o registrarse como nuevo usuario ');
@@ -42,31 +44,36 @@ class PurchaseClientController extends Controller
     public function create_order($purchased_amount, $purchased_item)
 {
 
-    $user = Auth::user();
-    if(empty($user)){
-        return back()->with('info', 'Para comprar debe registrarse o entrar a su cuenta');
-    }
+    $id = Auth::id();
+    $user=User::find($id);
 
-    $article=Article::findOrFail($purchased_item);
-    if($purchased_amount > 6 || $purchased_amount > $article->stock) {return back();}
+    $departments=Department::where('is_active', 1)->get();
+
+    $article=Article::find($purchased_item);
 
     $order_calculation=$this->order_calculation($article, $purchased_amount);
 
-    $departments=Department::where('is_active', 1)->get();
     $advertisings=Advertising::all();
     $advertising=$advertisings->first();
     $aside_advertisings=AsideAdvertising::all();
 
+
+    $user = Auth::user();
+
+    if(empty($user)){
+        return back()->with('info', 'Para comprar debe registrarse o entrar a su cuenta');
+    }
+
     $role_type=$user->role;
 
 if($role_type->role_name == "administrador"){
-return view("admin.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("admin.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
 if($role_type->role_name == "vendedor"){
-return view("seller.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("seller.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
 if($role_type->role_name == "cliente"){
-return view("client.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising"));}
+return view("client.purchase.create_order", compact("user", "departments", "article", "purchased_amount", "order_calculation", "aside_advertisings", "advertising", "user"));}
 
  if($role_type->role_name == "inactivo"){
     return back()->with('info', 'Su cuenta esta inactiva para comprar');}
@@ -77,14 +84,10 @@ public function store_order(PurchaseRequest $request)
     {
         $entrada=$request->only('requires_shipping', 'courier_name', 'shipping_address', 'shipping_city', 'shipping_state', 'shipping_zip_code');
 
-        $user = Auth::user();
-
-        if(empty($user)){
-            return back()->with('info', 'Comuniquese con el administrador');
-        }
-
         $id = Auth::id();
         $entrada['user_id'] = $id;
+
+        $departments=Department::where('is_active', 1)->get();
 
         $order_number=$this->order_number();
         $entrada['order_number'] =$order_number;
@@ -92,11 +95,10 @@ public function store_order(PurchaseRequest $request)
 
         $entrada1=$request->only('article_id', 'purchased_amount');
 
-        $article=Article::findOrFail($request->get('article_id'));
+        $article=Article::find($request->get('article_id'));
         $entrada1['article_id'] = $article->id;
         $entrada1['price'] = $article->price;
         $entrada1['article_name'] = $article->name;
-        $entrada1['article_code'] = $article->code;
         $purchase=Purchase::all()->last();
         $entrada1['purchase_id'] = $purchase->id;
         $entrada1['iva'] = $this->iva;
@@ -104,31 +106,65 @@ public function store_order(PurchaseRequest $request)
         $article['stock']=$article->stock - $request->get('purchased_amount');
         $article->update($request->only('stock'));
 
-        return redirect()->action('PurchaseClientController@order_shipped', compact("order_number"));
+
+
+        $advertisings=Advertising::all();
+        $advertising=$advertisings->first();
+        $aside_advertisings=AsideAdvertising::all();
+
+
+        $user = Auth::user();
+
+        if(empty($user)){
+            return back()->with('info', 'Comuniquese con el administrador');
+        }
+
+        $role_type=$user->role;
+        $user = Auth::user();
+
+    if($role_type->role_name == "administrador"){
+    return view("admin.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+
+    if($role_type->role_name == "vendedor"){
+    return view("seller.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+
+    if($role_type->role_name == "cliente"){
+    return view("client.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+
+     if($role_type->role_name == "inactivo"){
+        return back()->with('info', 'Comuniquese con el administrador');}
 
     }
 
-    public function order_shipped($order_number)
+    public function order_shipped()
     {
         $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
+        $order_number=$archivo->order_number;
+
 
         $user = Auth::user();
+
+        if(empty($user)){
+            return back()->with('info', 'Comuniquese con el administrador');
+        }
+
         $role_type=$user->role;
+        $user = Auth::user();
 
-        if($role_type->role_name == "administrador"){
-            return view("admin.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+    if($role_type->role_name == "administrador"){
+    return view("admin.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
-            if($role_type->role_name == "vendedor"){
-            return view("seller.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+    if($role_type->role_name == "vendedor"){
+    return view("seller.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
-            if($role_type->role_name == "cliente"){
-            return view("client.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
+    if($role_type->role_name == "cliente"){
+    return view("client.purchase.order_shipped", compact("departments", "order_number", "aside_advertisings", "advertising", "user"));}
 
-            if($role_type->role_name == "inactivo"){
-            return back()->with('info', 'Su cuenta esta suspendida, comuniquese con el administrador');}
+     if($role_type->role_name == "inactivo"){
+        return back()->with('info', 'Comuniquese con el administrador');}
     }
 
     public function neutron_inactive()

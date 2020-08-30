@@ -1,14 +1,4 @@
-<style>
-    .imagen {
-        padding-right: ;
-        padding-left: ;
-        padding-top: ;
-        padding-bottom: ;
-        height: 200px;
-        margin-left: ;
-        width: 100%
-    }
-</style>
+
     @extends('admin.layout')
     @section('content')
 
@@ -174,7 +164,7 @@
             <div class="">
                 <a href="{{route('article.edit', $article->id)}}" class="btn btn-primary centrar1" name="editar" id="">editar
                 </a>
-                <a class="btn btn-primary centrar2" href="{{route('article.index')}}">ver articulos </a>
+                <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
             </div>
 
     </div>

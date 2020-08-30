@@ -105,6 +105,8 @@
 
                 </table>
                 {{$purchases->withQueryString()->links()}}
+                <br><br>
+    <a class="btn btn-primary" href="/neutron/index"> retornar </a>
 </div>
 
 

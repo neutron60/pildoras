@@ -84,7 +84,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function show($id) {
-        $user=User::find($id);
+        $user=User::findOrFail($id);
         $roles=Role::all();
         $user->created_at->toFormattedDateString();
         $user->updated_at->toFormattedDateString();
@@ -96,8 +96,7 @@ class UserController extends Controller {
     }
 
     public function show_user() {
-        $id = Auth::id();
-        $user=User::find($id);
+        $user = Auth::user();
 
         $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
@@ -115,7 +114,7 @@ class UserController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $user=User::find($id);
+        $user=User::findOrFail($id);
         $roles=Role::all();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -125,8 +124,7 @@ class UserController extends Controller {
     }
 
     public function edit_user_id_number() {
-        $id = Auth::id();
-        $user=User::find($id);
+        $user = Auth::user();
 
         $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
@@ -142,8 +140,7 @@ class UserController extends Controller {
     }
 
     public function edit_user_phone() {
-        $id = Auth::id();
-        $user=User::find($id);
+        $user = Auth::user();
 
         $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
@@ -155,8 +152,7 @@ class UserController extends Controller {
     }
 
     public function edit_user_address() {
-        $id = Auth::id();
-        $user=User::find($id);
+        $user = Auth::user();
 
         $user->id_number=number_format($user->id_number,0,",",".");
         $departments=Department::where('is_active', 1)->get();
@@ -175,28 +171,28 @@ class UserController extends Controller {
      */
     /*public function update(Request $request, $id) {*/
     public function update(UserRequest $request, $id) {
-        $entrada=user::findOrfail($id);
+        $entrada=user::findOrFail($id);
         $entrada->update($request->only('name','lastname','role_id','id_type','id_number','mobil_phone_code','mobil_phone','area_code','phone_number','address','city','state','zip_code'));
 
         return redirect()->route('user.show', $entrada->id)->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_id_number(UserRequest $request, $id) {
-        $entrada=user::findOrfail($id);
+        $entrada=user::findOrFail($id);
         $entrada->update($request->only('id_type','id_number'));
 
         return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_phone(UserRequest $request, $id) {
-        $entrada=user::findOrfail($id);
+        $entrada=user::findOrFail($id);
         $entrada->update($request->only('mobil_phone_code','mobil_phone','area_code','phone_number'));
 
         return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
     }
 
     public function update_user_address(UserRequest $request, $id) {
-        $entrada=user::findOrfail($id);
+        $entrada=user::findOrFail($id);
         $entrada->update($request->only('address','city','state','zip_code'));
 
         return redirect()->action('UserController@show_user', compact("id"))->with('info', 'la informacion de ' . $entrada->name . ' fue actualizada');
@@ -210,7 +206,7 @@ class UserController extends Controller {
      */
     public function destroy($id) {
 
-        $user=User::findOrfail($id);
+        $user=User::findOrFail($id);
         $user->delete();
         return redirect()->route('user.index')->with('info', 'El usuario fue eliminado');
     }

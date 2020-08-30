@@ -74,7 +74,7 @@ class RolController extends Controller
      */
     public function edit($id)
     {
-        $role=Role::findOrfail($id);
+        $role=Role::findOrFail($id);
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -92,7 +92,7 @@ class RolController extends Controller
      */
     public function update(RoleRequest $request, $id)
     {
-        $entrada=Role::findOrfail($id);
+        $entrada=Role::findOrFail($id);
         $entrada->update($request->only('role_name'));
 
         return redirect()->route('role.index')->with('info', 'el rol fue actualizado');
@@ -106,7 +106,7 @@ class RolController extends Controller
      */
     public function destroy($id)
     {
-        $role=Role::findOrfail($id);
+        $role=Role::findOrFail($id);
         $role->delete();
         return redirect()->route('role.index')->with('info', 'el rol fue eliminado');
     }

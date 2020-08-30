@@ -81,7 +81,7 @@
 
                     <br><br>
                     <div class="form-row ml-3">
-                        <a href="/neutron">
+                        <a href="/neutron/index">
                             <button class="btn btn-secondary" type="button"> cancelar compra </button>
                         </a>
                     </div>
@@ -190,7 +190,7 @@
                         </form>
                         <br><br>
                         <div class="form-row ml-3">
-                            <a href="/neutron">
+                            <a href="/neutron/index">
                                 <button class="btn btn-secondary" type="button"> cancelar compra </button>
                             </a>
                         </div>
@@ -280,7 +280,7 @@
                             </form>
                             <br><br>
                             <div class="form-row ml-3">
-                                <a href="/neutron">
+                                <a href="/neutron/index">
                                     <button class="btn btn-secondary" type="button" id="registered_address"> cancelar
                                         compra </button>
                                 </a>
@@ -402,7 +402,7 @@
 
                                 <br><br>
                                 <div class="form-row ml-3">
-                                    <a href="/neutron">
+                                    <a href="/neutron/index">
                                         <button class="btn btn-secondary" type="button"> cancelar compra </button>
                                     </a>
                                 </div>

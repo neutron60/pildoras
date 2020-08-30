@@ -8,7 +8,7 @@
 <h4 class="text-center">En su email recibira los detalles para el pago de su compra</h4>
 
 <br><br>
-<a href="/neutron/index" class="btn btn-primary" type="button"> seguir comprando </button></a>
+<a href="/neutron/index" class="btn btn-primary centrar1" type="button"> seguir comprando </button></a>
 
 
 

@@ -71,7 +71,7 @@ class AsideAdvertisingController extends Controller
     {
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
-        $aside_advertising=AsideAdvertising::findOrfail($id);
+        $aside_advertising=AsideAdvertising::findOrFail($id);
         $aside_advertisings=AsideAdvertising::all();
         $aside_advertising->created_at->toFormattedDateString();
         $aside_advertising->updated_at->toFormattedDateString();
@@ -90,7 +90,7 @@ class AsideAdvertisingController extends Controller
     {
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
-        $aside_advertising=AsideAdvertising::findOrfail($id);
+        $aside_advertising=AsideAdvertising::findOrFail($id);
         $aside_advertisings=AsideAdvertising::all();
         $user = Auth::user();
 
@@ -106,7 +106,7 @@ class AsideAdvertisingController extends Controller
      */
     public function update(AdvertisingRequest $request, $id)
     {
-        $entrada=AsideAdvertising::findOrfail($id);
+        $entrada=AsideAdvertising::findOrFail($id);
 
         $entrada->update($request->only('advertising_text','advertising_url'));
         if($request->file('advertising_image')){        // verifica si hay un archivo
@@ -129,7 +129,7 @@ class AsideAdvertisingController extends Controller
     public function destroy($id)
     {
 
-        $aside_advertising=AsideAdvertising::findOrfail($id);
+        $aside_advertising=AsideAdvertising::findOrFail($id);
         $path=$aside_advertising->image;
         Storage::disk('public')->delete($path);
         $aside_advertising->delete();

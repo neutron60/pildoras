@@ -109,7 +109,7 @@
     <div class="">
         <a href="{{route('user.edit', $user->id)}}" class="btn btn-primary centrar1" name="editar" id="">editar
         </a>
-        <a class="btn btn-primary centrar2" href="{{route('user.index')}}">ver usuarios </a>
+        <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
     </div>
 
 </div>

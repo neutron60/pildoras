@@ -136,7 +136,7 @@
     <br><br>
     <div class="centrar1">
         <input class=" btn btn-secondary" type="submit" name="actualizar" value="actualizar" id="">
-        <a class="btn btn-secondary centrar2" href="{{route('user.index')}}">ver usuarios </a>
+        <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
     </div>
 </form>
 

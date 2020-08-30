@@ -9,6 +9,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark ml-3" href="/client/purchase/index-my-purchases">mis compras</a>
+
             </li>
             <li class="nav-item dropdown ml-5"id="borrar_id" >
 

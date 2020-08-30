@@ -67,7 +67,7 @@
         <a href="{{route('category.edit', $category->id)}}" class="btn btn-primary centrar1" name="editar" id="">editar
             categoria
         </a>
-        <a class="btn btn-primary centrar2" href="{{route('category.index')}}">ver categorias </a>
+        <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
     </div>
 
 </div>

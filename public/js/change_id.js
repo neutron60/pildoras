@@ -21,8 +21,6 @@ $(document).ready(function () {
         }
     });
 
-
-
     $("#validar_forma").validate(); // valida un form de create_order_basic, create en aside-advertising, create y
     //  edit de section, create y edit de section, edit-order-requested de purchase,
     //edit-order-payment-details de purchase, edit-order-assign-invoice de purchase
@@ -141,7 +139,6 @@ $(document).ready(function () {
             }
         }
     });
-
 
 
 

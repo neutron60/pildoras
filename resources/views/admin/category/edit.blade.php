@@ -45,7 +45,7 @@
         <br><br>
         <div class="centrar1">
             <input class=" btn btn-secondary" type="submit" name="actualizar" value="actualizar" id="">
-            <a class="btn btn-secondary centrar2" href="{{route('category.index')}}">ver categorias </a>
+            <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
         </div>
         <input type="hidden" maxlength="" pattern="" class="" id="category_id" name="category_id" value="{{$category->section_id}}">
     </form>

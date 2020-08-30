@@ -45,6 +45,7 @@ Route::get('/client/purchase/create-order/{purchased_amount}/{purchased_item}', 
 
 
 Route::post('/client/purchase/store-order', 'PurchaseClientController@store_order');
+Route::get('/client/purchase/order-shipped/{order_number}', 'PurchaseClientController@order_shipped');
 
 /*Route::get('/client/purchase/order-shipped', 'PurchaseClientController@order_shipped');*/
 

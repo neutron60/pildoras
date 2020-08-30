@@ -1,11 +1,4 @@
-<style>
-    .texto {
-        font-size: 30px;
-        margin-right: 20%;
-        margin-left: 20%;
-    }
 
-</style>
 @extends('neutron.layout')
 @section('content')
 

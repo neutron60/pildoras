@@ -97,7 +97,7 @@ class SectionController extends Controller
     public function show($id)
     {
         $departments=Department::all();
-        $section=Section::find($id);
+        $section=Section::findOrFail($id);
         $department=$section->department;
         $section->created_at->toFormattedDateString();
         $section->updated_at->toFormattedDateString();
@@ -120,7 +120,7 @@ class SectionController extends Controller
     {
         //
 
-        $section=Section::find($id);
+        $section=Section::findOrFail($id);
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -140,7 +140,7 @@ class SectionController extends Controller
     public function update(SectionRequest $request, $id)
     {
 
-        $entrada=Section::findOrfail($id);
+        $entrada=Section::findOrFail($id);
         $entrada->update($request->only('name','is_active'));
 
         return redirect()->route('section.show', $entrada->id)->with('info', 'la seccion ' . $entrada->name . ' fue actualizada');
@@ -156,7 +156,7 @@ class SectionController extends Controller
      */
     public function destroy($id)
     {
-        $section=Section::findOrfail($id);
+        $section=Section::findOrFail($id);
         $section->delete();
         return redirect()->route('section.index')->with('info', 'la seccion junto con sus productos asociados fueron eliminados');
     }

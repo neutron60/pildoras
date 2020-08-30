@@ -9,7 +9,7 @@ class PurchaseDetail extends Model
     protected $dates=['created_at','updated_at',];
 
     protected $fillable = [
-        'purchase_id', 'article_id', 'article_name', 'price', 'purchased_amount', 'iva'
+        'purchase_id', 'article_id', 'article_name', 'article_code', 'price', 'purchased_amount', 'iva'
     ];
 
     public function purchase(){

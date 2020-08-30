@@ -71,7 +71,7 @@ class CategoryController extends Controller
      */
     public function create($id)
     {
-        $department=Department::find($id);
+        $department=Department::findOrFail($id);
 
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -109,7 +109,7 @@ class CategoryController extends Controller
     {
         $departments=Department::all();
         $section=Section::all();
-        $category=Category::find($id);
+        $category=Category::findOrFail($id);
         $section=$category->section;
         $department=$section->department;
         $category->created_at->toFormattedDateString();
@@ -134,7 +134,7 @@ class CategoryController extends Controller
     {
         //
 
-        $category=Category::find($id);
+        $category=Category::findOrFail($id);
 
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
@@ -154,7 +154,7 @@ class CategoryController extends Controller
 
     public function update(CategoryRequest $request, $id)
     {
-        $entrada=Category::findOrfail($id);
+        $entrada=Category::findOrFail($id);
         $entrada->update($request->only('name','is_active'));
 
         return redirect()->route('category.show', $entrada->id)->with('info', 'la categoria ' . $entrada->name . ' fue actualizada');
@@ -171,7 +171,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
-        $section=Category::findOrfail($id);
+        $section=Category::findOrFail($id);
         $section->delete();
         return redirect()->route('category.index')->with('info', 'la categoria junto con sus productos asociados fueron eliminados');
     }

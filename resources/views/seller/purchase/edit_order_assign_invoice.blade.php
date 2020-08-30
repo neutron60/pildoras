@@ -62,7 +62,7 @@
             <label class="" for="nombre">numero de factura:</label>
         </div>
         <div class="ml-3">
-            <input type="text" maxlength="" pattern="" class="form-control required" id="invoice_number" name="invoice_number"
+            <input type="text" maxlength="20" pattern="" class="form-control required" id="invoice_number" name="invoice_number"
                 value="{{$purchase->invoice_number}}">
                 @include('seller.purchase.fragment.error_invoice_number')
         </div>

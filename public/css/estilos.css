@@ -1,189 +1,254 @@
+img {
+    width: 100%;
+}
 
-        img {
-            width: 100%;
-        }
+.image {
+    /* usado en neutron/index  */
+    height: 330px;
+}
 
-        .image {
-            /* usado en neutron/index  */
-            height: 330px;
-        }
+.image1 {
+    /* usado en neutron/index  */
+    height: 240px;
+}
 
-        .image1 {
-            /* usado en neutron/index  */
-            height: 240px;
-        }
+.image2 {
+    /* usado en neutron/index  */
+    height: 240px;
+}
 
-        .image2 {
-            /* usado en neutron/index  */
+.image4 {
+    /*usado en header*/
+    height: 100px;
+}
 
-            height: 240px;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+.image6 {
+    /* usado en neutron/index  */
+    height: 430px;
+}
 
-            height: 430px;
-        }
+.image5 {
+    /* usado en admin/article/edityshow  admin/aside-advertising/index show edit admin/advertising/edit*/
+    height: auto;
+}
 
+.centrar {
+    margin-left: auto;
+    margin-right: auto;
+}
 
-        .image5 {
-            /* usado en admin/article/edityshow  admin/aside-advertising/index show edit admin/advertising/edit*/
-            height: auto;
-        }
+.centrar1 {
+    margin-left: 20%;
+    margin-right: auto;
+}
 
-        .centrar {
-            margin-left: auto;
-            margin-right: auto;
-        }
+.centrar2 {
+    margin-left: 5%;
+}
 
-        .centrar1 {
-            margin-left: 20%;
-            margin-right: auto;
-        }
+.centrar3 {
+    /*usado en header*/
+    margin-right: 60%;
+}
 
-        .centrar2 {
-            margin-left: 5%;
-            margin-right:
-        }
+.texto {
+    /* usado en who are*/
+    font-size: 30px;
+    margin-right: 20%;
+    margin-left: 20%;
+}
 
-        .contenedor {
-            overflow-x: scroll;
-        }
+.letra {
+    /*usado en left aside*/
+    font-size: 1rem
+}
 
-        .gray {
-            background: #EDEFEF;
-        }
+.contenedor {
+    overflow-x: scroll;
+}
 
-        @media screen and (max-width: 1450px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 270px;
-            }
+.gray {
+    /*usado en left aside*/
+    background: #EDEFEF;
+}
 
-            .image1 {
-                /* usado en neutron/index  */
-                height: 200px;
-            }
-            .image2 {
-            /* usado en neutron/index  */
-            height: 200px;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+.back {
+    /*usado en header*/
+    background: rgb(171, 229, 235);
+}
 
-            height: 380px;
-        }
-        }
-        @media screen and (max-width: 1320px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 270px;
-            }
+.margen {
+    /*usado en header*/
+    margin-left: 30%;
+}
 
-            .image1 {
-                /* usado en neutron/index  */
-                height: 190px;
-            }
-            .image2 {
-            /* usado en neutron/index  */
-            height: 180px;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+.texto {
+    /*usado en header*/
+    text-shadow: 2px 2px gray;
+    font-style: oblique;
+    text-align: center
+}
 
-            height: 350px;
-        }
-        }
-        @media screen and (max-width: 1200px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 290px;
-            }
+@media screen and (max-width: 1450px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 270px;
+    }
 
-            .image1 {
-                /* usado en neutron/index  */
-                height: 180px;
-            }
-            .image2 {
-            /* usado en neutron/index  */
-            height: 160px;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+    .image1 {
+        /* usado en neutron/index  */
+        height: 200px;
+    }
 
-            height: 300px;
-        }
-        }
+    .image2 {
+        /* usado en neutron/index  */
+        height: 200px;
+    }
 
-        @media screen and (max-width: 992px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 250px;
-            }
+    .image6 {
+        /* usado en neutron/index  */
 
-            .image1 {
-                /* usado en neutron/index  */
-                height: 120px;
-            }
-            .image2 {
-            /* usado en neutron/index  */
-            height: 140px;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+        height: 380px;
+    }
+}
 
-            height: 250px;
-        }
-        }
+@media screen and (max-width: 1320px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 270px;
+    }
 
-        @media screen and (max-width: 768px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 260px;
-            }
+    .image1 {
+        /* usado en neutron/index  */
+        height: 190px;
+    }
 
-            .image1 {
-                /* usado en neutron/index  */
-                height: 250px;
-                padding-left: 20%;
-                padding-right: 20%;
-                padding-top: 5%;
-            }
-            .image2 {
-            /* usado en neutron/index  */
-            height: 220px;
-            padding-left: 20%;
-                padding-right: 20%;
-                padding-top: 5%;
-        }
-        .image6 {
-            /* usado en neutron/index  */
+    .image2 {
+        /* usado en neutron/index  */
+        height: 180px;
+    }
 
-            height: 400px;
-            padding-left: 10%;
-            padding-right: 10%;
+    .image6 {
+        /* usado en neutron/index  */
 
-        }
-        }
+        height: 350px;
+    }
+}
 
-        @media screen and (max-width: 576px) {
-            .image {
-                /* usado en neutron/index  */
-                height: 220px;
-            }
+@media screen and (max-width: 1200px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 290px;
+    }
 
-            .image1 {
-                height: 250px;
-                padding-left: 20%;
-                padding-right: 20%;
-                padding-top: 5%;
-            }
-            .image6 {
-                /* usado en neutron/index  */
+    .image1 {
+        /* usado en neutron/index  */
+        height: 180px;
+    }
 
-                height: 330px;
-                padding-left: 10%;
-                padding-right: 10%;
+    .image2 {
+        /* usado en neutron/index  */
+        height: 160px;
+    }
 
-            }
-        }
+    .image4 {
+        /* usado en header  */
+        height: 80px;
+    }
 
+    .image6 {
+        /* usado en neutron/index  */
+
+        height: 300px;
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 250px;
+    }
+
+    .image1 {
+        /* usado en neutron/index  */
+        height: 120px;
+    }
+
+    .image2 {
+        /* usado en neutron/index  */
+        height: 140px;
+    }
+
+    .image4 {
+        /* usado en header */
+        height: 120px;
+    }
+
+    .image6 {
+        /* usado en neutron/index  */
+
+        height: 250px;
+    }
+
+    .letra {
+        font-size: 0.8rem
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 260px;
+    }
+
+    .image1 {
+        /* usado en neutron/index  */
+        height: 250px;
+        padding-left: 20%;
+        padding-right: 20%;
+        padding-top: 5%;
+    }
+
+    .image2 {
+        /* usado en neutron/index  */
+        height: 220px;
+        padding-left: 20%;
+        padding-right: 20%;
+        padding-top: 5%;
+    }
+
+    .image4 {
+        /* usado en header  */
+        height: 80px;
+    }
+
+    .image6 {
+        /* usado en neutron/index  */
+
+        height: 400px;
+        padding-left: 10%;
+        padding-right: 10%;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .image {
+        /* usado en neutron/index  */
+        height: 220px;
+    }
+
+    .image1 {
+        height: 250px;
+        padding-left: 20%;
+        padding-right: 20%;
+        padding-top: 5%;
+    }
+
+    .image6 {
+        /* usado en neutron/index  */
+        height: 330px;
+        padding-left: 10%;
+        padding-right: 10%;
+
+    }
+}

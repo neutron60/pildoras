@@ -1,20 +1,5 @@
 <br><br>
 
-<style>
-.letra{
-font-size: 1rem
-}
-
-@media screen and (max-width: 992px) {
-    .letra{
-font-size: 0.8rem
-}
-        }
-
-
-
-</style>
-
 @empty($departments)
 @else
 

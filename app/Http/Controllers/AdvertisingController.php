@@ -110,7 +110,7 @@ class AdvertisingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $entrada=Advertising::findOrfail($id);
+        $entrada=Advertising::findOrFail($id);
         $entrada->update($request->only('advertising_header', 'bargain_header', 'new_collection_header', 'who_are', 'contact'));
         if($request->file('image_header')){        // verifica si hay un archivo
             $path1=$entrada->image_header;

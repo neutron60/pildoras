@@ -1,17 +1,5 @@
 
 
-<style>
-    .imagen {
-            padding-right: ;
-            padding-left: ;
-            padding-top: ;
-            padding-bottom: ;
-            height: 200px;
-            margin-left: ;
-            width: 100%
-        }
-    </style>
-
     @extends('admin.layout')
     @section('content')
 
@@ -82,14 +70,14 @@
                 <div class="col-5  col-lg-4 col-xl-3">
                     <input type="file" maxlength="50" pattern="[A-Za-z]" class=" " id="image" name="image">
                     <br><br>
-                    <img class="imagen5" src="{{asset($department->image)}}" alt="imagen" />
+                    <img class="image5" src="{{asset($department->image)}}" alt="imagen" />
                     @include('admin.department.fragment.error_image')
                 </div>
             </div>
             <br><br>
             <div class="centrar1">
                 <input class=" btn btn-secondary" type="submit" name="actualizar" value="actualizar" id="">
-                <a class="btn btn-secondary centrar2" href="{{route('department.index')}}">ver departamentos </a>
+                <a class="btn btn-primary ml-5" href="{{URL::previous()}}">retornar</a>
             </div>
         </form>
         <br>

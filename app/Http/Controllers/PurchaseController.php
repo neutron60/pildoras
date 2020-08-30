@@ -31,9 +31,8 @@ class PurchaseController extends Controller
 
     public function index_my_purchases()
     {
+        $user=Auth::user();
         $id = Auth::id();
-        $user=User::find($id);
-        $departments=Department::where('is_active', 1)->get();
 
         $purchases=$this->index_order_basic()
         ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
@@ -49,6 +48,7 @@ class PurchaseController extends Controller
       $query1='%';
       $query2='%';
 
+      $departments=Department::where('is_active', 1)->get();
       $advertisings=Advertising::all();
       $advertising=$advertisings->first();
       $aside_advertisings=AsideAdvertising::all();
@@ -58,9 +58,8 @@ class PurchaseController extends Controller
 
     public function index_search_my_purchases(Request $request)
     {
+    $user=Auth::user();
     $id = Auth::id();
-    $user=User::find($id);
-    $departments=Department::where('is_active', 1)->get();
 
     $query1=trim($request->get('search_order'));
     $query2=trim($request->get('search_article'));
@@ -80,6 +79,7 @@ class PurchaseController extends Controller
         $purchase->price=number_format($purchase->price,2,",",".");
     }
 
+    $departments=Department::where('is_active', 1)->get();
     $advertisings=Advertising::all();
     $advertising=$advertisings->first();
     $aside_advertisings=AsideAdvertising::all();
@@ -88,34 +88,25 @@ class PurchaseController extends Controller
 
     public function show_my_purchase($id)
     {
-
-        $purchase=Purchase::find($id);
-        if($purchase->verified_payment <> 1){
+        $purchase=Purchase::findOrFail($id);
+        if($purchase->verified_payment <> 1 || empty($purchase->invoice_number)){
             return redirect()->action('PurchaseController@index_my_purchases');
         }
-        $departments=Department::where('is_active', 1)->get();
 
         $purchase_detail=$purchase->purchase_details->first();
 
-
         $user=$purchase->user;
-
-        $identification = Auth::id();
-        $userId=User::find($identification);
-        if($userId->id <> $user->id){
+        $id = Auth::id();
+            if($id <> $user->id){
             return redirect()->action('PurchaseController@index_my_purchases');
         }
-
-
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
 
+        $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -131,13 +122,9 @@ class PurchaseController extends Controller
     {
         $id = Auth::id();
         $user=User::find($id);
-        $departments=Department::where('is_active', 1)->get();
 
         $purchases=$this->index_order_basic()
-        /*->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')*/
-        ->where('purchases.verified_payment', '=', 0)
-        /*->whereNotNull('purchases.invoice_number')*/
-        ->where('purchases.user_id', '=', $id)
+        ->where('purchases.user_id', '=', $id)->whereNull('purchases.invoice_number')
         ->paginate(20);
 
         foreach($purchases as $purchase){
@@ -145,6 +132,7 @@ class PurchaseController extends Controller
             $purchase->price=number_format($purchase->price,2,",",".");
         }
 
+        $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -154,30 +142,23 @@ class PurchaseController extends Controller
 
     public function show_my_orders($id)
     {
-
-        $purchase=Purchase::find($id);
-        if($purchase->verified_payment <> 0){
-            return redirect()->action('PurchaseController@index_my_orders');
-        }
-        $departments=Department::where('is_active', 1)->get();
+        $purchase=Purchase::findOrFail($id);
+        if (!empty($purchase->invoice_number)){return redirect()->action('PurchaseController@index_my_orders');}
 
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-
-        $identification = Auth::id();
-        $userId=User::find($identification);
-        if($userId->id <> $user->id){
+        $id = Auth::id();
+        if($id <> $user->id){
             return redirect()->action('PurchaseController@index_my_orders');
         }
 
-        /*$article=$purchase_detail->article;*/
-        /*$article_code=$article->code;*/
         $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         $user->id_number=number_format($user->id_number,0,",",".");
 
+        $departments=Department::where('is_active', 1)->get();
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -230,15 +211,7 @@ public function index_order_requested()
     $purchases=$this->index_order_basic()
         ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
         ->where('purchases.verified_payment', 0)
-        ->paginate(50);
-
-/*foreach ($purchases as $purchase){
-           echo $purchase->id . ' , ' ;
-
-        }*
-
-        $a='hola';
-        dd($a);*/
+        ->paginate(20);
 
     foreach($purchases as $purchase){
         $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
@@ -389,15 +362,13 @@ public function index_order_requested()
     public function show_order_requested($id)
     {
 
-        $purchase=Purchase::find($id);
+        $purchase=Purchase::findOrFail($id);
+        if(!empty($purchase->invoice_number)){return back();}
 
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
-
+        /*    revisar*/
         $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
@@ -421,8 +392,7 @@ public function index_order_requested()
 
     public function show_sales_detail($id)
     {
-
-        $purchase=Purchase::find($id);
+        $purchase=Purchase::findOrFail($id);
         if($purchase->verified_payment == 0 || empty($purchase->invoice_number)){
             return redirect()->action('PurchaseController@index_sales');
         }
@@ -430,9 +400,6 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
@@ -443,7 +410,6 @@ public function index_order_requested()
         $user->id_number=number_format($user->id_number,0,",",".");
         $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
 
-        /*$price=number_format($purchase_detail->price,2,",",".");*/
         $advertisings=Advertising::all();
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
@@ -461,7 +427,7 @@ public function index_order_requested()
     public function edit_order_requested($id)
     {
 
-        $purchase=Purchase::find($id);
+        $purchase=Purchase::findOrFail($id);
         if($purchase->verified_payment == 1 || $purchase->amount_paid > 0){
             return redirect()->action('PurchaseController@index_order_requested');
         }
@@ -469,9 +435,6 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
@@ -491,8 +454,7 @@ public function index_order_requested()
 
     public function edit_order_payment_details($id)
     {
-        $purchase=Purchase::find($id);
-
+        $purchase=Purchase::findOrFail($id);
         if($purchase->verified_payment == 1 || $purchase->amount_paid > 0){
             return redirect()->action('PurchaseController@index_order_requested');
         }
@@ -500,9 +462,6 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
@@ -522,8 +481,7 @@ public function index_order_requested()
 
     public function edit_order_verified_payment($id)
     {
-        $purchase=Purchase::find($id);
-
+        $purchase=Purchase::findOrFail($id);
         if($purchase->verified_payment == 1 || $purchase->amount_paid == 0){
             return redirect()->action('PurchaseController@index_order_verified_payment');
         }
@@ -531,9 +489,6 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*$article=$purchase_detail->article;*/
-
-        /*$article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
@@ -558,7 +513,7 @@ public function index_order_requested()
 
     public function edit_order_assign_invoice($id)
     {
-        $purchase=Purchase::find($id);
+        $purchase=Purchase::findOrFail($id);
         if($purchase->verified_payment == 0 || !empty($purchase->invoice_number)){
             return redirect()->action('PurchaseController@index_order_assign_invoice');
         }
@@ -566,9 +521,6 @@ public function index_order_requested()
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-       /* $article=$purchase_detail->article;*/
-
-       /* $article_code=$article->code;*/
 
         $order_calculation=$this->order_calculation($purchase_detail);
 
@@ -606,7 +558,7 @@ public function index_order_requested()
     public function update_order_payment_details(PurchaseRequest $request, $id)
     {
 
-        $purchase=Purchase::findOrfail($id);
+        $purchase=Purchase::findOrFail($id);
         $purchase_detail=$purchase->purchase_details->first();
 
 
@@ -626,7 +578,7 @@ public function index_order_requested()
     public function update_order_verified_payment(PurchaseRequest $request, $id)
     {
 
-        $entrada=Purchase::findOrfail($id);
+        $entrada=Purchase::findOrFail($id);
 
         if($request->get('verified_payment') == 0){
             return redirect()->action('PurchaseController@index_order_requested')->with('info', 'los datos del pago de la orden ' . $entrada-> order_number . ' NO fueron verificados');
@@ -639,7 +591,7 @@ public function index_order_requested()
 
     public function update_order_assign_invoice(PurchaseRequest $request, $id)
     {
-        $purchase=Purchase::findOrfail($id);
+        $purchase=Purchase::findOrFail($id);
 
         if(!$purchase->verified_payment){
             return redirect()->route('seller.purchase', $purchase->id)->with('info', 'el pago de la orden ' . $purchase-> order_number . ' no ha sido confirmado');
@@ -664,7 +616,6 @@ public function index_order_requested()
 
         $purchase_detail=$purchase->purchase_details->first();
 
-       /* $purchase_detail=PurchaseDetail::findOrfail($id);*/
         $purchase_detail->delete();
 
         return redirect()->action('PurchaseController@index_order_requested')->with('info', 'la orden ' . $purchase-> order_number . ' fue eliminada');
@@ -678,7 +629,6 @@ public function index_order_requested()
     {
         $purchases_basic=Purchase::join('users','users.id','=','purchases.user_id')
         ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
-        /*->leftjoin('articles','articles.id','=','purchase_details.article_id')*/
         ->select('purchases.id','purchases.order_number', 'purchases.verified_payment', 'purchases.requires_shipping', 'purchases.invoice_number',
         'purchases.created_at',  'purchases.amount_paid',
         'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number', 'users.id as id_list',
