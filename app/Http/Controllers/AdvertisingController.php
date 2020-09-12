@@ -96,7 +96,7 @@ class AdvertisingController extends Controller
         $user = Auth::user();
 
         if(empty($advertising)){
-            return view('admin.advertising.pagina_en_construccion');}
+            return back();}
 
         return view("admin.advertising.edit", compact("advertising", "aside_advertisings", "user"));
     }

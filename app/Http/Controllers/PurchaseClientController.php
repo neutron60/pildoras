@@ -22,7 +22,6 @@ class PurchaseClientController extends Controller
 
 
     public function create_purchase(Request $request){
-
         $user = Auth::user();
 
         if(empty($user)){
@@ -41,7 +40,6 @@ class PurchaseClientController extends Controller
 
     public function create_order($purchased_amount, $purchased_item)
 {
-
     $user = Auth::user();
     if(empty($user)){
         return back()->with('info', 'Para comprar debe registrarse o entrar a su cuenta');
@@ -88,6 +86,10 @@ public function store_order(PurchaseRequest $request)
 
         $order_number=$this->order_number();
         $entrada['order_number'] =$order_number;
+        $entrada['amount_paid'] =0.0;
+        $entrada['payment_type'] ='0';
+        $entrada['invoice_number'] ='0';
+
         $archivo=Purchase::create($entrada);
 
         $entrada1=$request->only('article_id', 'purchased_amount');
@@ -104,7 +106,7 @@ public function store_order(PurchaseRequest $request)
         $article['stock']=$article->stock - $request->get('purchased_amount');
         $article->update($request->only('stock'));
 
-        return redirect()->action('PurchaseClientController@order_shipped', compact("order_number"));
+      return redirect()->action('PurchaseClientController@order_shipped', compact("order_number"));
 
     }
 

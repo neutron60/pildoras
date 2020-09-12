@@ -35,8 +35,9 @@ class PurchaseController extends Controller
         $id = Auth::id();
 
         $purchases=$this->index_order_basic()
-        ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
-        ->where('purchases.verified_payment', '=', 1)->whereNotNull('purchases.invoice_number')
+        ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid','>',0)
+        ->where('purchases.verified_payment', '=', 1)
+        ->where('purchases.invoice_number','<>','0')
         ->where('purchases.user_id', '=', $id)
         ->paginate(20);
 
@@ -67,8 +68,8 @@ class PurchaseController extends Controller
     if (!$query2) {$query2='%';}
 
     $purchases=$this->index_order_basic()
-    ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
-    ->where('purchases.verified_payment', '=', 1)->whereNotNull('purchases.invoice_number')
+    ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid','>',0)
+    ->where('purchases.verified_payment', '=', 1)->where('purchases.invoice_number','<>','0')
     ->where('purchases.user_id', '=', $id)
     ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
     ->where('purchase_details.article_name', 'LIKE', '%'. $query2. '%')
@@ -124,7 +125,7 @@ class PurchaseController extends Controller
         $user=User::find($id);
 
         $purchases=$this->index_order_basic()
-        ->where('purchases.user_id', '=', $id)->whereNull('purchases.invoice_number')
+        ->where('purchases.user_id', '=', $id)->where('purchases.invoice_number','0')
         ->paginate(20);
 
         foreach($purchases as $purchase){
@@ -184,7 +185,8 @@ public function index_search_order_requested(Request $request)
     if (!$query3) {$query3='%';}
 
     $purchases=$this->index_order_basic()
-        ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
+        ->where('purchases.payment_type','0')
+        ->where('purchases.amount_paid',0.0)
         ->where('purchases.verified_payment', 0)
         ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
         ->where('users.name', 'LIKE', '%'. $query2. '%')
@@ -209,9 +211,10 @@ public function index_search_order_requested(Request $request)
 public function index_order_requested()
     {
     $purchases=$this->index_order_basic()
-        ->whereNull('purchases.payment_type')->whereNull('purchases.amount_paid')
-        ->where('purchases.verified_payment', 0)
-        ->paginate(20);
+       ->where('purchases.payment_type','0')
+       ->where('purchases.amount_paid',0.0)
+       ->where('purchases.verified_payment', 0)
+       ->paginate(20);
 
     foreach($purchases as $purchase){
         $created_at[$purchase->id]=Carbon::parse($purchase->created_at)->format('d-m-Y');
@@ -235,7 +238,7 @@ public function index_order_requested()
     {
 
         $purchases=$this->index_order_basic()
-        ->whereNotNull('purchases.payment_type')->where('purchases.amount_paid', '>', 0)
+        ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid', '>', 0)
         ->where('purchases.verified_payment', 0)
         ->paginate(20);
 
@@ -260,8 +263,8 @@ public function index_order_requested()
     {
 
         $purchases=$this->index_order_basic()
-        ->whereNotNull('purchases.payment_type')->where('purchases.amount_paid', '>', 0)
-        ->where('purchases.verified_payment', 1)->whereNull('purchases.invoice_number')
+        ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid', '>', 0)
+        ->where('purchases.verified_payment', 1)->where('purchases.invoice_number','0')
         ->paginate(20);
 
         foreach($purchases as $purchase){
@@ -292,8 +295,8 @@ public function index_order_requested()
             if (!$query3) {$query3='%';}
 
             $purchases=$this->index_order_basic()
-            ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
-            ->where('purchases.verified_payment', 1)->whereNotNull('purchases.invoice_number')
+            ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid','<>',0)
+            ->where('purchases.verified_payment', 1)->where('purchases.invoice_number','<>','0')
                 ->where('purchases.order_number', 'LIKE', '%'. $query1. '%')
                 ->where('users.name', 'LIKE', '%'. $query2. '%')
                 ->where('users.id_number', 'LIKE', '%'. $query3. '%')
@@ -317,8 +320,8 @@ public function index_order_requested()
     {
 
         $purchases=$this->index_order_basic()
-        ->whereNotNull('purchases.payment_type')->whereNotNull('purchases.amount_paid')
-        ->where('purchases.verified_payment', 1)->whereNotNull('purchases.invoice_number')
+        ->where('purchases.payment_type','<>','0')->where('purchases.amount_paid','<>',0)
+        ->where('purchases.verified_payment', 1)->where('purchases.invoice_number','<>','0')
         ->paginate(20);
 
         foreach($purchases as $purchase){
@@ -363,18 +366,18 @@ public function index_order_requested()
     {
 
         $purchase=Purchase::findOrFail($id);
-        if(!empty($purchase->invoice_number)){return back();}
+
+        if($purchase->invoice_number <> '0') {return back();}
 
         $purchase_detail=$purchase->purchase_details->first();
 
         $user=$purchase->user;
-        /*    revisar*/
+
         $order_calculation=$this->order_calculation($purchase_detail);
 
         $created_at=Carbon::parse($purchase->created_at)->format('d-m-Y');
         if(empty($purchase->payment_day)){$payment_day=$purchase->payment_day;}
         else{$payment_day=Carbon::parse($purchase->payment_day)->format('d-m-Y');}
-
 
         $user->id_number=number_format($user->id_number,0,",",".");
         $purchase->amount_paid=number_format($purchase->amount_paid,2,",",".");
@@ -630,7 +633,7 @@ public function index_order_requested()
         $purchases_basic=Purchase::join('users','users.id','=','purchases.user_id')
         ->join('purchase_details','purchase_details.purchase_id','=','purchases.id')
         ->select('purchases.id','purchases.order_number', 'purchases.verified_payment', 'purchases.requires_shipping', 'purchases.invoice_number',
-        'purchases.created_at',  'purchases.amount_paid',
+        'purchases.created_at',  'purchases.amount_paid', 'purchases.payment_type',
         'users.name as user_name', 'users.lastname as user_lastname', 'users.id_number', 'users.id as id_list',
         'purchase_details.article_name', 'purchase_details.purchased_amount', 'purchase_details.price', 'purchase_details.iva', 'purchase_details.article_code',
         'purchase_details.created_at as purchase_details_created_at')

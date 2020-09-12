@@ -24,18 +24,20 @@ class NeutronController extends Controller
         $advertising=$advertisings->first();
         $aside_advertisings=AsideAdvertising::all();
 
+        $user = Auth::user();
+        if(!empty($user)){
+            $role_type=$user->role;
+            if(empty($advertising) && $role_type->role_name == 'administrador'){
+                return view('admin.pagina_de_arranque', compact("aside_advertisings", "advertising", "user"));}
+        }
 
         if(empty($advertising)){
             return view('neutron.pagina_en_construccion');}
-
-            $user = Auth::user();
 
             if(empty($user)){
                 return view("neutron.index", compact("article_bargains", "article_new_collections", "departments",
          "flag", "flag1", "advertising", "aside_advertisings"));
             }
-
-            $role_type=$user->role;
 
         if($role_type->role_name == "administrador"){
         return view("admin.neutron.index", compact("article_bargains", "article_new_collections", "departments",
