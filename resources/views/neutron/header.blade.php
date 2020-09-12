@@ -1,12 +1,17 @@
 
 <div class="form-row ml-3 back">
 
+
     <div class="col-sm-1 col-md-2 col-lg-1">
+        @if(!empty($advertising->logo))
         <div class="my-2">
             <img class="image4" src="{{asset($advertising->logo)}}" alt="logo"  />
         </div>
-
+        @else
+        <p>sin logo</p>
+        @endif
     </div>
+
 
     <div class="col-sm-6 col-md-7 col-lg-8 mp-2 ml-5">
         <div class="mt-3 ml-5">

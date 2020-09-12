@@ -54,7 +54,7 @@
         <br><br>
         <div class="form-row">
             <div class="">
-                <label class="" for="nombre">IMAGEN:</label>
+                <label class="" for="nombre">IMAGEN ENCABEZADO:</label>
             </div>
             <div class="ml-3">
                 <input type="file" maxlength="100" pattern="" class=" " id="image_header" name="image_header">
